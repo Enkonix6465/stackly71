@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architectura - Commercial Architecture & Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add Google Fonts for Arabic and Hebrew -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* RTL-specific styles */
+        .rtl .header-container {
+            direction: rtl;
+        }
+        
+        .rtl .nav-container {
+            direction: rtl;
+        }
+        
+        .rtl .right-side-container {
+            direction: rtl;
+        }
+        
+        .rtl .dropdown-menu {
+            text-align: right;
+        }
+        
+        .rtl .chevron-rotate {
+            transform: rotate(180deg);
+        }
+        
+        /* Font classes for Arabic and Hebrew */
+        .arabic-font {
+            font-family: 'Amiri', serif;
+        }
+        
+        .hebrew-font {
+            font-family: 'Heebo', sans-serif;
+        }
+        
+        /* Animation classes */
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        /* Custom scrollbar for mobile menu */
+        .mobile-menu-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 #f1f5f9;
+        }
+        
+        .mobile-menu-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .mobile-menu-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        .mobile-menu-scroll::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+        
+        /* Sticky header effect */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .dark .sticky-header {
+            background: rgba(17, 24, 39, 0.95);
+        }
+        
+        .sticky-header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .sticky-header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Hero section styles */
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        
+        .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Rotating keywords animation */
+        .rotating-keywords {
+            height: 60px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .keyword {
+            display: block;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #3b82f6;
+            animation: rotateKeywords 12s infinite;
+        }
+        
+        @keyframes rotateKeywords {
+            0%, 20% { transform: translateY(0); }
+            25%, 45% { transform: translateY(-60px); }
+            50%, 70% { transform: translateY(-120px); }
+            75%, 95% { transform: translateY(-180px); }
+            100% { transform: translateY(0); }
+        }
+        
+        /* RTL text alignment */
+        .rtl-text-right {
+            text-align: right;
+        }
+        
+        /* Ensure proper text direction for RTL languages */
+        [dir="rtl"] .footer-rtl .en-text {
+            display: none;
+        }
+        
+        [dir="rtl"] .footer-rtl .ar-text,
+        [dir="rtl"] .footer-rtl .he-text {
+            display: inline !important;
+        }
+        
+        /* Specific language display */
+        [dir="rtl"][lang="ar"] .footer-rtl .he-text {
+            display: none !important;
+        }
+        
+        [dir="rtl"][lang="he"] .footer-rtl .ar-text {
+            display: none !important;
+        }
+        
+        /* LTR text display */
+        [dir="ltr"] .footer-rtl .ar-text,
+        [dir="ltr"] .footer-rtl .he-text {
+            display: none !important;
+        }
+        
+        [dir="ltr"] .footer-rtl .en-text {
+            display: inline !important;
+        }
+        
+        /* RTL specific adjustments */
+        .rtl .footer-rtl .flex.items-start.ltr\:space-x-3.rtl\:space-x-reverse,
+        .rtl .footer-rtl .flex.items-center.ltr\:space-x-3.rtl\:space-x-reverse {
+            direction: rtl;
+        }
+        
+        .rtl .footer-rtl .text-left.rtl\:text-right {
+            text-align: right;
+        }
+        
+        .rtl .footer-rtl ul.space-y-3.rtl\:text-right {
+            text-align: right;
+            padding-right: 0;
+        }
+        
+        /* Hero section with background image */
+        .hero-section {
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://i.pinimg.com/1200x/15/8e/43/158e43b45e9cf8b4780543845d8a6f36.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        /* Section background colors */
+        .section-light {
+            background-color: #f8fafc;
+        }
+        
+        .dark .section-light {
+            background-color: #1e293b;
+        }
+        
+        .section-blue {
+            background-color: #3b82f6;
+        }
+        
+        .section-dark-blue {
+            background-color: #1e3a8a;
+        }
+        
+        /* Custom blue theme */
+        .blue-primary {
+            background-color: #1e40af;
+        }
+        
+        .blue-secondary {
+            background-color: #3b82f6;
+        }
+        
+        .blue-accent {
+            background-color: #60a5fa;
+        }
+        
+        /* Gallery Styles */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Filter buttons */
+        .filter-btn {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        /* Lightbox styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-prev {
+            left: 20px;
+        }
+        
+        .lightbox-next {
+            right: 20px;
+        }
+        
+        /* Masonry gallery */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: 10px;
+            gap: 15px;
+        }
+        
+        .masonry-item {
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Carousel gallery */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .carousel-prev {
+            left: 15px;
+        }
+        
+        .carousel-next {
+            right: 15px;
+        }
+        
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d1d5db;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: #3b82f6;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#3b82f6',
+                        accent: '#60a5fa',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-gray-900">
+    <!-- Header -->
+    <header class="sticky-header">
+        <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+            <!-- Logo -->
+            <div class="logo-container">
+                <div class="flex items-center">
+                    <div class="w-40 h-12 rounded-xl flex items-center justify-center bg-transparent">
+                        <a href="index.html" class="flex items-center justify-center">
+                            <img src="logo.png" alt="Company Logo" class="h-10 w-auto object-contain">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="hidden lg:flex items-center space-x-8 rtl:space-x-reverse nav-container">
+                <!-- Home Dropdown -->
+                <div class="relative group">
+                    <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-home">Home</span>
+                        <i class="fas fa-chevron-down ml-1 rtl:mr-1 rtl:ml-0 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute dropdown-menu top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600">
+                        <a href="index.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Home 1</a>
+                        <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Home 2</a>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-about">
+                    About
+                </a>
+
+                <!-- Services Dropdown -->
+                <div class="relative group">
+                    <a href="services.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-services">Services</span>
+                        <i class="fas fa-chevron-down ml-1 rtl:mr-1 rtl:ml-0 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute dropdown-menu top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600">
+                        <a href="residential-architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Residential Architecture</a>
+                        <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Commercial Projects</a>
+                        <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Interior Design</a>
+                        <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Architectural Planning</a>
+                        <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Renovation & Remodeling</a>
+                    </div>
+                </div>
+
+                
+
+                <!-- Blog Dropdown -->
+                <div class="relative group">
+                    <a href="blog.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-blog">Blog</span>
+                        <i class="fas fa-chevron-down ml-1 rtl:mr-1 rtl:ml-0 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute dropdown-menu top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600">
+                        <a href="blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Design Trends</a>
+                        <a href="blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Sustainable Homes</a>
+                        <a href="blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Modern Materials</a>
+                    </div>
+                </div>
+
+                <!-- Contact Us -->
+                <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-contact">
+                    Contact Us
+                </a>
+            </nav>
+
+            <!-- Right Side -->
+            <div class="right-side-container">
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <!-- Language Selector -->
+                    <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                        <option value="en">English</option>
+                        <option value="ar">العربية</option>
+                        <option value="he">עברית</option>
+                    </select>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="themeToggle" class="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <!-- Login Button -->
+                    <div class="hidden md:flex items-center space-x-3 rtl:space-x-reverse">
+                        <a href="login.html" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm" id="logout-btn">
+                            Log Out
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden fixed top-0 left-0 w-full h-full bg-white dark:bg-gray-800 z-50 transform transition-transform duration-300 translate-x-full rtl:-translate-x-full">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <div class="h-10 w-10 bg-blue-600 rounded-md flex items-center justify-center text-white font-bold">A</div>
+                    <span class="text-xl font-bold text-gray-800 dark:text-white">Architectura</span>
+                </div>
+                <button id="closeMobileMenu" class="text-primary dark:text-white text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-4 overflow-y-auto h-full mobile-menu-scroll">
+                <div class="space-y-4">
+                    <!-- Mobile Home Dropdown -->
+                    <div>
+                        <button class="mobile-dropdown-toggle flex items-center justify-between w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <span class="font-medium text-gray-800 dark:text-white" id="mobile-nav-home">Home</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </button>
+                        <div class="mobile-dropdown-content hidden mt-2 space-y-2 pl-4">
+                            <a href="index.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Home 1</a>
+                            <a href="home2.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Home 2</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile About -->
+                    <a href="about.html" class="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg font-medium text-gray-800 dark:text-white" id="mobile-nav-about">
+                        About
+                    </a>
+                    
+                    <!-- Mobile Services Dropdown -->
+                    <div>
+                        <button class="mobile-dropdown-toggle flex items-center justify-between w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <span class="font-medium text-gray-800 dark:text-white" id="mobile-nav-services">Services</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </button>
+                        <div class="mobile-dropdown-content hidden mt-2 space-y-2 pl-4">
+                            <a href="residential-architecture.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Residential Architecture</a>
+                            <a href="commercial-projects.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Commercial Projects</a>
+                            <a href="interior-design.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Interior Design</a>
+                            <a href="architectural-planning.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Architectural Planning</a>
+                            <a href="project-management.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Project Management</a>
+                            <a href="renovation-remodeling.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Renovation & Remodeling</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Portfolio -->
+                    <a href="portfolio.html" class="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg font-medium text-gray-800 dark:text-white" id="mobile-nav-portfolio">
+                        Portfolio
+                    </a>
+                    
+                    <!-- Mobile Blog Dropdown -->
+                    <div>
+                        <button class="mobile-dropdown-toggle flex items-center justify-between w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <span class="font-medium text-gray-800 dark:text-white" id="mobile-nav-blog">Blog</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </button>
+                        <div class="mobile-dropdown-content hidden mt-2 space-y-2 pl-4">
+                            <a href="blog1.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Design Trends</a>
+                            <a href="blog2.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Sustainable Homes</a>
+                            <a href="blog3.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Modern Materials</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Contact -->
+                    <a href="contact.html" class="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg font-medium text-gray-800 dark:text-white" id="mobile-nav-contact">
+                        Contact Us
+                    </a>
+                    
+                    <!-- Mobile Logout -->
+                    <a href="login.html" class="block p-3 bg-primary text-white rounded-lg font-medium text-center" id="mobile-logout-btn">
+                        Log Out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="pt-20">
+        <!-- Hero Section -->
+        <section class="hero-section flex items-center justify-center text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate-fade-in" id="hero-title">
+                    Innovative Commercial Architecture
+                </h1>
+                <p class="text-xl sm:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in" id="hero-subtitle">
+                    Designing functional, sustainable commercial spaces that enhance business operations and brand identity.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="portfolio.html" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105">
+                        <span class="en-text">Our Projects</span>
+                        <span class="ar-text" style="display: none;">مشاريعنا</span>
+                        <span class="he-text" style="display: none;">הפרויקטים שלנו</span>
+                    </a>
+                    <a href="contact.html" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105">
+                        <span class="en-text">Contact Us</span>
+                        <span class="ar-text" style="display: none;">اتصل بنا</span>
+                        <span class="he-text" style="display: none;">צור קשר</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="py-20 section-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4" id="services-title">
+                        Our Commercial Services
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span class="en-text">Comprehensive architectural solutions for your business needs</span>
+                        <span class="ar-text" style="display: none;">حلول معمارية شاملة لاحتياجات عملك</span>
+                        <span class="he-text" style="display: none;">פתרונות אדריכליים מקיפים לצרכי העסק שלך</span>
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full mb-4 flex items-center justify-center">
+                            <i class="fas fa-building text-blue-600 dark:text-blue-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="service1-title">
+                            Office Design
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="service1-desc">
+                            <span class="en-text">Innovative office spaces that enhance productivity, collaboration, and employee well-being.</span>
+                            <span class="ar-text" style="display: none;">مساحات مكتبية مبتكرة تعزز الإنتاجية والتعاون ورفاهية الموظفين.</span>
+                            <span class="he-text" style="display: none;">חללי משרד חדשניים המגבירים פרודוקטיביות, שיתוף פעולה ורווחת העובדים.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Service 2 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full mb-4 flex items-center justify-center">
+                            <i class="fas fa-store text-blue-600 dark:text-blue-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="service2-title">
+                            Retail & Hospitality
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="service2-desc">
+                            <span class="en-text">Engaging retail and hospitality environments that create memorable customer experiences.</span>
+                            <span class="ar-text" style="display: none;">بيئات البيع بالتجزئة والضيافة الجذابة التي تخلق تجارب عملاء لا تنسى.</span>
+                            <span class="he-text" style="display: none;">סביבות קמעונאות ואירוח מרתקות היוצרות חוויות לקוח בלתי נשכחות.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Service 3 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full mb-4 flex items-center justify-center">
+                            <i class="fas fa-industry text-blue-600 dark:text-blue-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="service3-title">
+                            Industrial Facilities
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="service3-desc">
+                            <span class="en-text">Efficient industrial and manufacturing facilities designed for optimal workflow and safety.</span>
+                            <span class="ar-text" style="display: none;">مرافق صناعية وتصنيعية فعالة مصممة لتحقيق سير عمل وأمان مثاليين.</span>
+                            <span class="he-text" style="display: none;">מתקנים תעשייתיים וייצוריים יעילים המתוכננים לזרימת עבודה ובטיחות מיטביים.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Preview Section -->
+        <section class="py-20 bg-white dark:bg-gray-800">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4" id="portfolio-title">
+                        Featured Commercial Projects
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span class="en-text">Explore our recent commercial architecture projects</span>
+                        <span class="ar-text" style="display: none;">استكشف مشاريعنا الحديثة في العمارة التجارية</span>
+                        <span class="he-text" style="display: none;">גלה את פרויקטי האדריכלות המסחרית האחרונים שלנו</span>
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <div class="card-hover bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden shadow-lg">
+                        <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Corporate Headquarters</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Modern office building with sustainable features and collaborative workspaces.</p>
+                            <a href="portfolio.html" class="text-blue-600 hover:text-blue-700 font-medium">View Project →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2 -->
+                    <div class="card-hover bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden shadow-lg">
+                        <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Shopping Center Renovation</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Complete transformation of a retail center with modern amenities and improved circulation.</p>
+                            <a href="portfolio.html" class="text-blue-600 hover:text-blue-700 font-medium">View Project →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3 -->
+                    <div class="card-hover bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden shadow-lg">
+                        <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Industrial Manufacturing Facility</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Efficient production facility with optimized workflow and safety features.</p>
+                            <a href="portfolio.html" class="text-blue-600 hover:text-blue-700 font-medium">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="portfolio.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105">
+                        <span class="en-text">View All Projects</span>
+                        <span class="ar-text" style="display: none;">عرض جميع المشاريع</span>
+                        <span class="he-text" style="display: none;">הצג את כל הפרויקטים</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="py-20 section-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4" id="process-title">
+                        Our Commercial Design Process
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span class="en-text">A strategic approach to creating successful commercial spaces</span>
+                        <span class="ar-text" style="display: none;">نهج استراتيجي لخلق مساحات تجارية ناجحة</span>
+                        <span class="he-text" style="display: none;">גישה אסטרטגית ליצירת חללים מסחריים מצליחים</span>
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Step 1 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">1</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                            <span class="en-text">Needs Analysis</span>
+                            <span class="ar-text" style="display: none;">تحليل الاحتياجات</span>
+                            <span class="he-text" style="display: none;">ניתוח צרכים</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">We analyze your business requirements, brand identity, and operational needs.</span>
+                            <span class="ar-text" style="display: none;">نقوم بتحليل متطلبات عملك وهوية علامتك التجارية واحتياجاتك التشغيلية.</span>
+                            <span class="he-text" style="display: none;">אנו מנתחים את דרישות העסק שלך, זהות המותג שלך וצרכיך התפעוליים.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">2</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                            <span class="en-text">Concept Development</span>
+                            <span class="ar-text" style="display: none;">تطوير المفهوم</span>
+                            <span class="he-text" style="display: none;">פיתוח קונספט</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">We develop design concepts that align with your business goals and brand values.</span>
+                            <span class="ar-text" style="display: none;">نطور مفاهيم تصميم تتماشى مع أهداف عملك وقيم علامتك التجارية.</span>
+                            <span class="he-text" style="display: none;">אנו מפתחים קונספטים עיצוביים התואמים את יעדי העסק שלך וערכי המותג שלך.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">3</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                            <span class="en-text">Technical Design</span>
+                            <span class="ar-text" style="display: none;">التصميم الفني</span>
+                            <span class="he-text" style="display: none;">עיצוב טכני</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">We create detailed technical drawings and specifications for construction.</span>
+                            <span class="ar-text" style="display: none;">نقوم بإنشاء رسومات فنية مفصلة ومواصفات للبناء.</span>
+                            <span class="he-text" style="display: none;">אנו יוצרים שרטוטים טכניים מפורטים ומפרטים לבנייה.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">4</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                            <span class="en-text">Implementation</span>
+                            <span class="ar-text" style="display: none;">التنفيذ</span>
+                            <span class="he-text" style="display: none;">יישום</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">We oversee construction to ensure quality and adherence to design specifications.</span>
+                            <span class="ar-text" style="display: none;">نشرف على البناء لضمان الجودة والالتزام بالمواصفات التصميمية.</span>
+                            <span class="he-text" style="display: none;">אנו מפקחים על הבנייה כדי להבטיח איכות ועמידה במפרטי העיצוב.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Interactive Gallery with Filtering -->
+        <section id="interactive-gallery" class="py-20 bg-gray-100 dark:bg-gray-900">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4">Commercial Project Gallery</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span class="en-text">Explore our diverse range of commercial architectural projects</span>
+                        <span class="ar-text" style="display: none;">استكشف مجموعة متنوعة من مشاريعنا المعمارية التجارية</span>
+                        <span class="he-text" style="display: none;">גלה את המגוון הרחב של פרויקטי האדריכלות המסחרית שלנו</span>
+                    </p>
+                </div>
+                
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button class="filter-btn active" data-filter="all">
+                        <span class="en-text">All Projects</span>
+                        <span class="ar-text" style="display: none;">جميع المشاريع</span>
+                        <span class="he-text" style="display: none;">כל הפרויקטים</span>
+                    </button>
+                    <button class="filter-btn" data-filter="office">
+                        <span class="en-text">Office</span>
+                        <span class="ar-text" style="display: none;">مكتب</span>
+                        <span class="he-text" style="display: none;">משרד</span>
+                    </button>
+                    <button class="filter-btn" data-filter="retail">
+                        <span class="en-text">Retail</span>
+                        <span class="ar-text" style="display: none;">بيع بالتجزئة</span>
+                        <span class="he-text" style="display: none;">קמעונאות</span>
+                    </button>
+                    <button class="filter-btn" data-filter="industrial">
+                        <span class="en-text">Industrial</span>
+                        <span class="ar-text" style="display: none;">صناعي</span>
+                        <span class="he-text" style="display: none;">תעשייתי</span>
+                    </button>
+                </div>
+                
+                <!-- Gallery Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Office Project 1 -->
+                    <div class="gallery-item office" data-category="office">
+                        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Modern Office">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">Corporate Headquarters</div>
+                            <div class="gallery-description">Modern office building with collaborative workspaces</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Retail Project 1 -->
+                    <div class="gallery-item retail" data-category="retail">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Shopping Center">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">Shopping Center</div>
+                            <div class="gallery-description">Renovated retail space with modern amenities</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Industrial Project 1 -->
+                    <div class="gallery-item industrial" data-category="industrial">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Manufacturing Facility">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">Manufacturing Facility</div>
+                            <div class="gallery-description">Efficient industrial facility with optimized workflow</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Office Project 2 -->
+                    <div class="gallery-item office" data-category="office">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Co-working Space">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">Co-working Space</div>
+                            <div class="gallery-description">Flexible workspace for modern businesses</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Retail Project 2 -->
+                    <div class="gallery-item retail" data-category="retail">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Boutique Store">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">Boutique Store</div>
+                            <div class="gallery-description">Custom retail design for luxury brand</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Industrial Project 2 -->
+                    <div class="gallery-item industrial" data-category="industrial">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Warehouse Facility">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">Warehouse Facility</div>
+                            <div class="gallery-description">Modern distribution center with advanced logistics</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-20 bg-white dark:bg-gray-800">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4" id="testimonials-title">
+                        Client Testimonials
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span class="en-text">What our commercial clients say about our services</span>
+                        <span class="ar-text" style="display: none;">ما يقوله عملاؤنا التجاريون عن خدماتنا</span>
+                        <span class="he-text" style="display: none;">מה הלקוחות המסחריים שלנו אומרים על השירותים שלנו</span>
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-4">JD</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 dark:text-white">John Davidson</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">CEO, Tech Innovations Inc.</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 italic">
+                            "The team at Architectura transformed our outdated office into a modern, collaborative workspace that has significantly improved employee satisfaction and productivity."
+                        </p>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-4">SR</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 dark:text-white">Sarah Rodriguez</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">Owner, Urban Retail Group</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 italic">
+                            "Our shopping center renovation exceeded all expectations. The design not only improved customer flow but also increased retail sales by 25% in the first quarter."
+                        </p>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-4">MK</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 dark:text-white">Michael Kim</h4>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">Operations Director, Global Manufacturing</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 italic">
+                            "The industrial facility design optimized our workflow and reduced operational costs by 18%. The attention to safety features has been particularly impressive."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox -->
+        <div class="lightbox">
+            <div class="lightbox-close">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="lightbox-nav lightbox-prev">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="lightbox-nav lightbox-next">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <img src="" alt="">
+        </div>
+
+        <!-- CTA Section -->
+        <section class="py-20 section-blue text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="en-text">Ready to Transform Your Commercial Space?</span>
+                    <span class="ar-text" style="display: none;">مستعد لتحويل مساحتك التجارية؟</span>
+                    <span class="he-text" style="display: none;">מוכן לשנות את החלל המסחרי שלך?</span>
+                </h2>
+                <p class="text-xl max-w-2xl mx-auto mb-8">
+                    <span class="en-text">Contact us today for a free consultation and discover how we can enhance your business environment.</span>
+                    <span class="ar-text" style="display: none;">اتصل بنا اليوم للحصول على استشارة مجانية واكتشف كيف يمكننا تحسين بيئة عملك.</span>
+                    <span class="he-text" style="display: none;">צור איתנו קשר היום לייעוץ חינם וגלה כיצד נוכל לשפר את סביבת העסק שלך.</span>
+                </p>
+                <a href="contact.html" class="inline-block bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105">
+                    <span class="en-text">Get Started</span>
+                    <span class="ar-text" style="display: none;">ابدأ الآن</span>
+                    <span class="he-text" style="display: none;">התחל עכשיו</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12 footer-rtl">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                   <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse mb-6">
+  <img src="logo.png" alt="Company Logo" class="h-10 w-auto object-contain rounded-md">
+</div>
+
+                    <p class="mb-6 text-gray-400 rtl:text-right" id="footer-desc">
+                        <span class="en-text">Creating beautiful, functional spaces that stand the test of time.</span>
+                        <span class="ar-text" style="display: none;">خلق مساحات جميلة وعملية تثبت جدارتها مع مرور الزمن.</span>
+                        <span class="he-text" style="display: none;">יצירת חללים יפים ופונקציונליים שעומדים במבחן הזמן.</span>
+                    </p>
+                    <div class="flex ltr:space-x-4 rtl:space-x-reverse">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 rtl:text-right" id="footer-links-title">
+                        <span class="en-text">Quick Links</span>
+                        <span class="ar-text" style="display: none;">روابط سريعة</span>
+                        <span class="he-text" style="display: none;">קישורים מהירים</span>
+                    </h3>
+                    <ul class="space-y-3 rtl:text-right">
+                        <li><a href="index.html" class="hover:text-blue-400 transition-colors" id="footer-link-home">
+                            <span class="en-text">Home</span>
+                            <span class="ar-text" style="display: none;">الرئيسية</span>
+                            <span class="he-text" style="display: none;">בית</span>
+                        </a></li>
+                        <li><a href="about.html" class="hover:text-blue-400 transition-colors" id="footer-link-about">
+                            <span class="en-text">About</span>
+                            <span class="ar-text" style="display: none;">من نحن</span>
+                            <span class="he-text" style="display: none;">אודות</span>
+                        </a></li>
+                        <li><a href="services.html" class="hover:text-blue-400 transition-colors" id="footer-link-services">
+                            <span class="en-text">Services</span>
+                            <span class="ar-text" style="display: none;">الخدمات</span>
+                            <span class="he-text" style="display: none;">שירותים</span>
+                        </a></li>
+                        
+                        <li><a href="contact.html" class="hover:text-blue-400 transition-colors" id="footer-link-contact">
+                            <span class="en-text">Contact Us</span>
+                            <span class="ar-text" style="display: none;">اتصل بنا</span>
+                            <span class="he-text" style="display: none;">צור קשר</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 text-left rtl:text-right" id="footer-services-title">
+                        <span class="en-text">Services</span>
+                        <span class="ar-text" style="display: none;">الخدمات</span>
+                        <span class="he-text" style="display: none;">שירותים</span>
+                    </h3>
+                    <ul class="space-y-3 rtl:text-right">
+                        <li>
+                            <a href="residential-architecture.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Residential Architecture</span>
+                                <span class="ar-text" style="display: none;">العمارة السكنية</span>
+                                <span class="he-text" style="display: none;">אדריכלות למגורים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="commercial-projects.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Commercial Projects</span>
+                                <span class="ar-text" style="display: none;">المشاريع التجارية</span>
+                                <span class="he-text" style="display: none;">פרויקטים מסחריים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="interior-design.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Interior Design</span>
+                                <span class="ar-text" style="display: none;">التصميم الداخلي</span>
+                                <span class="he-text" style="display: none;">עיצוב פנים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="architectural-planning.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Architectural Planning</span>
+                                <span class="ar-text" style="display: none;">التخطيط المعماري</span>
+                                <span class="he-text" style="display: none;">תכנון אדריכלי</span>
+                            </a>
+                        </li>
+                         <li>
+                                <a href="project-management.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Project Management</span>
+                                    <span class="ar-text" style="display: none;">إدارة المشاريع</span>
+                                    <span class="he-text" style="display: none;">ניהול פרויקטים</span>
+                                </a>
+                            </li>
+                        <li>
+                            <a href="renovation-remodeling.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Renovation & Remodeling</span>
+                                <span class="ar-text" style="display: none;">التجديد وإعادة التصميم</span>
+                                <span class="he-text" style="display: none;">שיפוץ ועיצוב מחדש</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 rtl:text-right" id="footer-contact-title">
+                        <span class="en-text">Contact Info</span>
+                        <span class="ar-text" style="display: none;">معلومات الاتصال</span>
+                        <span class="he-text" style="display: none;">פרטי יצירת קשר</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <div class="rtl:text-right">
+                                <p id="footer-address-1">
+                                    <span class="en-text">123 Design Avenue</span>
+                                    <span class="ar-text" style="display: none;">123 شارع التصميم</span>
+                                    <span class="he-text" style="display: none;">שדרת העיצוב 123</span>
+                                </p>
+                                <p id="footer-address-2">
+                                    <span class="en-text">Creative District, CD 10001</span>
+                                    <span class="ar-text" style="display: none;">الحي الإبداعي، CD 10001</span>
+                                    <span class="he-text" style="display: none;">רובע יצירתי, CD 10001</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors rtl:text-right" id="footer-phone">
+                                +1 (555) 123-4567
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <a href="mailto:info@architectura.com" class="hover:text-blue-400 transition-colors rtl:text-right" id="footer-email">
+                                info@architectura.com
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span class="rtl:text-right" id="footer-hours">
+                                <span class="en-text">Mon-Fri: 9AM-6PM</span>
+                                <span class="ar-text" style="display: none;">الإثنين-الجمعة: 9 صباحًا-6 مساءً</span>
+                                <span class="he-text" style="display: none;">א'-ה': 9:00-18:00</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p id="footer-copyright">
+                    <span class="en-text">© 2023 Architectura. All Rights Reserved.</span>
+                    <span class="ar-text" style="display: none;">© 2023 أركيتيكتورا. جميع الحقوق محفوظة.</span>
+                    <span class="he-text" style="display: none;">© 2023 Architectura. כל הזכויות שמורות.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Complete Language translations for entire page
+        const translations = {
+            en: {
+                // Header
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-portfolio": "Portfolio",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact",
+                "logout-btn": "Log Out",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-portfolio": "Portfolio",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact",
+                "mobile-logout-btn": "Log Out",
+                
+                // Hero Section
+                "hero-title": "Innovative Commercial Architecture",
+                "hero-subtitle": "Designing functional, sustainable commercial spaces that enhance business operations and brand identity.",
+                
+                // Services Section
+                "services-title": "Our Commercial Services",
+                "service1-title": "Office Design",
+                "service1-desc": "Innovative office spaces that enhance productivity, collaboration, and employee well-being.",
+                "service2-title": "Retail & Hospitality",
+                "service2-desc": "Engaging retail and hospitality environments that create memorable customer experiences.",
+                "service3-title": "Industrial Facilities",
+                "service3-desc": "Efficient industrial and manufacturing facilities designed for optimal workflow and safety.",
+                
+                // Portfolio Section
+                "portfolio-title": "Featured Commercial Projects",
+                
+                // Process Section
+                "process-title": "Our Commercial Design Process",
+                
+                // Testimonials Section
+                "testimonials-title": "Client Testimonials",
+                
+                // Footer Section
+                "footer-desc": "Creating beautiful, functional spaces that stand the test of time.",
+                "footer-links-title": "Quick Links",
+                "footer-link-home": "Home",
+                "footer-link-about": "About",
+                "footer-link-services": "Services",
+                "footer-link-portfolio": "Portfolio",
+                "footer-link-contact": "Contact Us",
+                "footer-services-title": "Services",
+                "footer-contact-title": "Contact Info",
+                "footer-address-1": "123 Design Avenue",
+                "footer-address-2": "Creative District, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@architectura.com",
+                "footer-hours": "Mon-Fri: 9AM-6PM",
+                "footer-copyright": "© 2023 Architectura. All Rights Reserved."
+            },
+            ar: {
+                // Header
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-portfolio": "معرض الأعمال",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                "logout-btn": "تسجيل خروج",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-portfolio": "معرض الأعمال",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                "mobile-logout-btn": "تسجيل خروج",
+                
+                // Hero Section
+                "hero-title": "العمارة التجارية المبتكرة",
+                "hero-subtitle": "تصميم مساحات تجارية وظيفية ومستدامة تعزز عمليات الأعمال وهوية العلامة التجارية.",
+                
+                // Services Section
+                "services-title": "خدماتنا التجارية",
+                "service1-title": "تصميم المكاتب",
+                "service1-desc": "مساحات مكتبية مبتكرة تعزز الإنتاجية والتعاون ورفاهية الموظفين.",
+                "service2-title": "التجزئة والضيافة",
+                "service2-desc": "بيئات البيع بالتجزئة والضيافة الجذابة التي تخلق تجارب عملاء لا تنسى.",
+                "service3-title": "المرافق الصناعية",
+                "service3-desc": "مرافق صناعية وتصنيعية فعالة مصممة لتحقيق سير عمل وأمان مثاليين.",
+                
+                // Portfolio Section
+                "portfolio-title": "المشاريع التجارية المميزة",
+                
+                // Process Section
+                "process-title": "عملية التصميم التجاري لدينا",
+                
+                // Testimonials Section
+                "testimonials-title": "شهادات العملاء",
+                
+                // Footer Section
+                "footer-desc": "خلق مساحات جميلة وعملية تثبت جدارتها مع مرور الزمن.",
+                "footer-links-title": "روابط سريعة",
+                "footer-link-home": "الرئيسية",
+                "footer-link-about": "من نحن",
+                "footer-link-services": "الخدمات",
+                "footer-link-portfolio": "معرض الأعمال",
+                "footer-link-contact": "اتصل بنا",
+                "footer-services-title": "الخدمات",
+                "footer-contact-title": "معلومات الاتصال",
+                "footer-address-1": "123 شارع التصميم",
+                "footer-address-2": "الحي الإبداعي، CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@architectura.com",
+                "footer-hours": "الإثنين-الجمعة: 9 صباحًا-6 مساءً",
+                "footer-copyright": "© 2023 أركيتيكتورا. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Header
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-portfolio": "תיק עבודות",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                "logout-btn": "התנתק",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-portfolio": "תיק עבודות",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                "mobile-logout-btn": "התנתק",
+                
+                // Hero Section
+                "hero-title": "אדריכלות מסחרית חדשנית",
+                "hero-subtitle": "עיצוב חללים מסחריים פונקציונליים וברי קיימא המגבירים את פעילות העסק ואת זהות המותג.",
+                
+                // Services Section
+                "services-title": "השירותים המסחריים שלנו",
+                "service1-title": "עיצוב משרדים",
+                "service1-desc": "חללי משרד חדשניים המגבירים פרודוקטיביות, שיתוף פעולה ורווחת העובדים.",
+                "service2-title": "קמעונאות ואירוח",
+                "service2-desc": "סביבות קמעונאות ואירוח מרתקות היוצרות חוויות לקוח בלתי נשכחות.",
+                "service3-title": "מתקנים תעשייתיים",
+                "service3-desc": "מתקנים תעשייתיים וייצוריים יעילים המתוכננים לזרימת עבודה ובטיחות מיטביים.",
+                
+                // Portfolio Section
+                "portfolio-title": "פרויקטים מסחריים נבחרים",
+                
+                // Process Section
+                "process-title": "תהליך העיצוב המסחרי שלנו",
+                
+                // Testimonials Section
+                "testimonials-title": "המלצות לקוחות",
+                
+                // Footer Section
+                "footer-desc": "יצירת חללים יפים ופונקציונליים שעומדים במבחן הזמן.",
+                "footer-links-title": "קישורים מהירים",
+                "footer-link-home": "בית",
+                "footer-link-about": "אודות",
+                "footer-link-services": "שירותים",
+                "footer-link-portfolio": "תיק עבודות",
+                "footer-link-contact": "צור קשר",
+                "footer-services-title": "שירותים",
+                "footer-contact-title": "פרטי יצירת קשר",
+                "footer-address-1": "שדרת העיצוב 123",
+                "footer-address-2": "רובע יצירתי, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@architectura.com",
+                "footer-hours": "א'-ה': 9:00-18:00",
+                "footer-copyright": "© 2023 Architectura. כל הזכויות שמורות."
+            }
+        };
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            initializeLanguage();
+            initializeMobileMenu();
+            initializeStickyHeader();
+            initializeGalleryFilter();
+            initializeCarousel();
+            initializeLightbox();
+        });
+
+        // Theme functionality
+        function initializeTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or default to system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+            
+            // Theme toggle event
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // Language functionality
+        function initializeLanguage() {
+            const languageSelect = document.getElementById('languageSelect');
+            
+            languageSelect.addEventListener('change', function() {
+                const selectedLanguage = this.value;
+                changeLanguage(selectedLanguage);
+            });
+
+            // Initialize with English language
+            changeLanguage('en');
+        }
+
+        // Function to change language for entire page
+        function changeLanguage(language) {
+            // Update HTML direction and lang attribute
+            if (language === 'ar' || language === 'he') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = language;
+                document.body.classList.add('rtl');
+                
+                // Add appropriate font class
+                if (language === 'ar') {
+                    document.body.classList.add('arabic-font');
+                    document.body.classList.remove('hebrew-font');
+                } else {
+                    document.body.classList.add('hebrew-font');
+                    document.body.classList.remove('arabic-font');
+                }
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = language;
+                document.body.classList.remove('rtl', 'arabic-font', 'hebrew-font');
+            }
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[language] && translations[language][id]) {
+                    element.textContent = translations[language][id];
+                }
+            });
+            
+            // Update footer language spans
+            updateFooterLanguage(language);
+        }
+
+        // Footer language update function
+        function updateFooterLanguage(language) {
+            // Hide all language spans first
+            document.querySelectorAll('.en-text, .ar-text, .he-text').forEach(span => {
+                span.style.display = 'none';
+            });
+            
+            // Show the appropriate language text
+            if (language === 'ar') {
+                document.querySelectorAll('.ar-text').forEach(span => {
+                    span.style.display = 'inline';
+                });
+            } else if (language === 'he') {
+                document.querySelectorAll('.he-text').forEach(span => {
+                    span.style.display = 'inline';
+                });
+            } else {
+                document.querySelectorAll('.en-text').forEach(span => {
+                    span.style.display = 'inline';
+                });
+            }
+        }
+
+        // Mobile menu functionality
+        function initializeMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('translate-x-full', 'rtl:-translate-x-full');
+            });
+            
+            closeMobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full', 'rtl:-translate-x-full');
+            });
+            
+            // Mobile dropdown functionality
+            document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('i');
+                    
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            });
+            
+            // Close mobile menu when clicking on links
+            const mobileLinks = document.querySelectorAll('#mobileMenu a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full', 'rtl:-translate-x-full');
+                });
+            });
+        }
+
+        // Sticky header effect
+        function initializeStickyHeader() {
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.sticky-header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Gallery filter functionality
+        function initializeGalleryFilter() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    const filterValue = button.getAttribute('data-filter');
+                    
+                    // Show/hide gallery items based on filter
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Carousel functionality
+        function initializeCarousel() {
+            const track = document.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const nextButton = document.querySelector('.carousel-next');
+            const prevButton = document.querySelector('.carousel-prev');
+            const dotsNav = document.querySelector('.carousel-dots');
+            const dots = Array.from(dotsNav.children);
+            
+            const slideWidth = slides[0].getBoundingClientRect().width;
+            
+            // Arrange slides next to one another
+            slides.forEach((slide, index) => {
+                slide.style.left = slideWidth * index + 'px';
+            });
+            
+            let currentSlide = 0;
+            
+            // Move to slide function
+            const moveToSlide = (track, currentSlide, targetSlide) => {
+                track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+                currentSlide = targetSlide;
+                
+                // Update dots
+                const currentDot = dotsNav.querySelector('.active');
+                const targetDot = dots[slides.indexOf(targetSlide)];
+                
+                currentDot.classList.remove('active');
+                targetDot.classList.add('active');
+            };
+            
+            // When I click next, move slides to the left
+            nextButton.addEventListener('click', e => {
+                const currentSlide = track.querySelector('.carousel-slide');
+                const nextSlide = currentSlide.nextElementSibling || slides[0];
+                
+                moveToSlide(track, currentSlide, nextSlide);
+            });
+            
+            // When I click prev, move slides to the right
+            prevButton.addEventListener('click', e => {
+                const currentSlide = track.querySelector('.carousel-slide');
+                const prevSlide = currentSlide.previousElementSibling || slides[slides.length - 1];
+                
+                moveToSlide(track, currentSlide, prevSlide);
+            });
+            
+            // When I click the nav indicators, move to that slide
+            dotsNav.addEventListener('click', e => {
+                const targetDot = e.target.closest('.carousel-dot');
+                
+                if (!targetDot) return;
+                
+                const targetIndex = dots.findIndex(dot => dot === targetDot);
+                const targetSlide = slides[targetIndex];
+                
+                moveToSlide(track, currentSlide, targetSlide);
+            });
+            
+            // Auto slide every 5 seconds
+            setInterval(() => {
+                const currentSlide = track.querySelector('.carousel-slide');
+                const nextSlide = currentSlide.nextElementSibling || slides[0];
+                
+                moveToSlide(track, currentSlide, nextSlide);
+            }, 5000);
+        }
+
+        // Lightbox functionality
+        function initializeLightbox() {
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImg = lightbox.querySelector('img');
+            const lightboxClose = lightbox.querySelector('.lightbox-close');
+            const lightboxPrev = lightbox.querySelector('.lightbox-prev');
+            const lightboxNext = lightbox.querySelector('.lightbox-next');
+            
+            const galleryItems = document.querySelectorAll('.gallery-item img, .masonry-item img');
+            let currentImageIndex = 0;
+            const images = Array.from(galleryItems).map(img => img.src);
+            
+            // Open lightbox when clicking on gallery images
+            galleryItems.forEach((img, index) => {
+                img.addEventListener('click', () => {
+                    currentImageIndex = index;
+                    lightboxImg.src = images[currentImageIndex];
+                    lightbox.classList.add('active');
+                });
+            });
+            
+            // Close lightbox
+            lightboxClose.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+            
+            // Navigate to previous image
+            lightboxPrev.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex];
+            });
+            
+            // Navigate to next image
+            lightboxNext.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex];
+            });
+            
+            // Close lightbox when clicking on background
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('active');
+                } else if (e.key === 'ArrowLeft') {
+                    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                    lightboxImg.src = images[currentImageIndex];
+                } else if (e.key === 'ArrowRight') {
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                    lightboxImg.src = images[currentImageIndex];
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architectura - Architectural Planning & Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add Google Fonts for Arabic and Hebrew -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* RTL-specific styles */
+        .rtl .header-container {
+            direction: rtl;
+        }
+        
+        .rtl .nav-container {
+            direction: rtl;
+        }
+        
+        .rtl .right-side-container {
+            direction: rtl;
+        }
+        
+        .rtl .dropdown-menu {
+            text-align: right;
+        }
+        
+        .rtl .chevron-rotate {
+            transform: rotate(180deg);
+        }
+        
+        /* Font classes for Arabic and Hebrew */
+        .arabic-font {
+            font-family: 'Amiri', serif;
+        }
+        
+        .hebrew-font {
+            font-family: 'Heebo', sans-serif;
+        }
+        
+        /* Animation classes */
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        /* Custom scrollbar for mobile menu */
+        .mobile-menu-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 #f1f5f9;
+        }
+        
+        .mobile-menu-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .mobile-menu-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        .mobile-menu-scroll::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+        
+        /* Sticky header effect */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .dark .sticky-header {
+            background: rgba(17, 24, 39, 0.95);
+        }
+        
+        .sticky-header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .sticky-header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Hero section styles */
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        
+        .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Rotating keywords animation */
+        .rotating-keywords {
+            height: 60px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .keyword {
+            display: block;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #3b82f6;
+            animation: rotateKeywords 12s infinite;
+        }
+        
+        @keyframes rotateKeywords {
+            0%, 20% { transform: translateY(0); }
+            25%, 45% { transform: translateY(-60px); }
+            50%, 70% { transform: translateY(-120px); }
+            75%, 95% { transform: translateY(-180px); }
+            100% { transform: translateY(0); }
+        }
+        
+        /* RTL text alignment */
+        .rtl-text-right {
+            text-align: right;
+        }
+        
+        /* Ensure proper text direction for RTL languages */
+        [dir="rtl"] .footer-rtl .en-text {
+            display: none;
+        }
+        
+        [dir="rtl"] .footer-rtl .ar-text,
+        [dir="rtl"] .footer-rtl .he-text {
+            display: inline !important;
+        }
+        
+        /* Specific language display */
+        [dir="rtl"][lang="ar"] .footer-rtl .he-text {
+            display: none !important;
+        }
+        
+        [dir="rtl"][lang="he"] .footer-rtl .ar-text {
+            display: none !important;
+        }
+        
+        /* LTR text display */
+        [dir="ltr"] .footer-rtl .ar-text,
+        [dir="ltr"] .footer-rtl .he-text {
+            display: none !important;
+        }
+        
+        [dir="ltr"] .footer-rtl .en-text {
+            display: inline !important;
+        }
+        
+        /* RTL specific adjustments */
+        .rtl .footer-rtl .flex.items-start.ltr\:space-x-3.rtl\:space-x-reverse,
+        .rtl .footer-rtl .flex.items-center.ltr\:space-x-3.rtl\:space-x-reverse {
+            direction: rtl;
+        }
+        
+        .rtl .footer-rtl .text-left.rtl\:text-right {
+            text-align: right;
+        }
+        
+        .rtl .footer-rtl ul.space-y-3.rtl\:text-right {
+            text-align: right;
+            padding-right: 0;
+        }
+        
+        /* Hero section with background image */
+        .hero-section {
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://i.pinimg.com/1200x/46/9a/f7/469af73674363bdd1c5431f02254ab39.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        /* Section background colors */
+        .section-light {
+            background-color: #f8fafc;
+        }
+        
+        .dark .section-light {
+            background-color: #1e293b;
+        }
+        
+        .section-blue {
+            background-color: #3b82f6;
+        }
+        
+        .section-dark-blue {
+            background-color: #1e3a8a;
+        }
+        
+        /* Custom blue theme */
+        .blue-primary {
+            background-color: #1e40af;
+        }
+        
+        .blue-secondary {
+            background-color: #3b82f6;
+        }
+        
+        .blue-accent {
+            background-color: #60a5fa;
+        }
+        
+        /* Gallery Styles */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Filter buttons */
+        .filter-btn {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        /* Lightbox styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-prev {
+            left: 20px;
+        }
+        
+        .lightbox-next {
+            right: 20px;
+        }
+        
+        /* Carousel gallery */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .carousel-prev {
+            left: 15px;
+        }
+        
+        .carousel-next {
+            right: 15px;
+        }
+        
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d1d5db;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: #3b82f6;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#3b82f6',
+                        accent: '#60a5fa',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-gray-900">
+    <!-- Header -->
+    <header class="sticky-header">
+        <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+            <!-- Logo -->
+            <div class="logo-container">
+                <div class="flex items-center">
+                    <div class="w-40 h-12 rounded-xl flex items-center justify-center bg-transparent">
+                        <a href="index.html" class="flex items-center justify-center">
+                            <div class="h-10 w-10 bg-blue-600 rounded-md flex items-center justify-center text-white font-bold">A</div>
+                            <span class="ml-3 text-xl font-bold text-gray-800 dark:text-white">Architectura</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="hidden lg:flex items-center space-x-8 rtl:space-x-reverse nav-container">
+                <!-- Home Dropdown -->
+                <div class="relative group">
+                    <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-home">Home</span>
+                        <i class="fas fa-chevron-down ml-1 rtl:mr-1 rtl:ml-0 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute dropdown-menu top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600">
+                        <a href="home.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Home 1</a>
+                        <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Home 2</a>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-about">
+                    About
+                </a>
+
+                <!-- Services Dropdown -->
+                <div class="relative group">
+                    <a href="services.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-services">Services</span>
+                        <i class="fas fa-chevron-down ml-1 rtl:mr-1 rtl:ml-0 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute dropdown-menu top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600">
+                        <a href="residential-architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Residential Architecture</a>
+                        <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Commercial Projects</a>
+                        <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Interior Design</a>
+                        <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Architectural Planning</a>
+                        <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Renovation & Remodeling</a>
+                    </div>
+                </div>
+
+               
+                <!-- Blog Dropdown -->
+                <div class="relative group">
+                    <a href="blog.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-blog">Blog</span>
+                        <i class="fas fa-chevron-down ml-1 rtl:mr-1 rtl:ml-0 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute dropdown-menu top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600">
+                        <a href="blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Design Trends</a>
+                        <a href="blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Sustainable Homes</a>
+                        <a href="blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Modern Materials</a>
+                    </div>
+                </div>
+
+                <!-- Contact Us -->
+                <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-contact">
+                    Contact Us
+                </a>
+            </nav>
+
+            <!-- Right Side -->
+            <div class="right-side-container">
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <!-- Language Selector -->
+                    <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                        <option value="en">English</option>
+                        <option value="ar">العربية</option>
+                        <option value="he">עברית</option>
+                    </select>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="themeToggle" class="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <!-- Login Button -->
+                    <div class="hidden md:flex items-center space-x-3 rtl:space-x-reverse">
+                        <a href="login.html" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm" id="logout-btn">
+                            Log Out
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden fixed top-0 left-0 w-full h-full bg-white dark:bg-gray-800 z-50 transform transition-transform duration-300 translate-x-full rtl:-translate-x-full">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <div class="h-10 w-10 bg-blue-600 rounded-md flex items-center justify-center text-white font-bold">A</div>
+                    <span class="text-xl font-bold text-gray-800 dark:text-white">Architectura</span>
+                </div>
+                <button id="closeMobileMenu" class="text-primary dark:text-white text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-4 overflow-y-auto h-full mobile-menu-scroll">
+                <div class="space-y-4">
+                    <!-- Mobile Home Dropdown -->
+                    <div>
+                        <button class="mobile-dropdown-toggle flex items-center justify-between w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <span class="font-medium text-gray-800 dark:text-white" id="mobile-nav-home">Home</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </button>
+                        <div class="mobile-dropdown-content hidden mt-2 space-y-2 pl-4">
+                            <a href="index.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Home 1</a>
+                            <a href="home2.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Home 2</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile About -->
+                    <a href="about.html" class="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg font-medium text-gray-800 dark:text-white" id="mobile-nav-about">
+                        About
+                    </a>
+                    
+                    <!-- Mobile Services Dropdown -->
+                    <div>
+                        <button class="mobile-dropdown-toggle flex items-center justify-between w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <span class="font-medium text-gray-800 dark:text-white" id="mobile-nav-services">Services</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </button>
+                        <div class="mobile-dropdown-content hidden mt-2 space-y-2 pl-4">
+                            <a href="residential-architecture.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Residential Architecture</a>
+                            <a href="commercial-projects.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Commercial Projects</a>
+                            <a href="interior-design.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Interior Design</a>
+                            <a href="architectural-planning.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Architectural Planning</a>
+                            <a href="project-management.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Project Management</a>
+                            <a href="renovation-remodeling.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Renovation & Remodeling</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Portfolio -->
+                    <a href="portfolio.html" class="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg font-medium text-gray-800 dark:text-white" id="mobile-nav-portfolio">
+                        Portfolio
+                    </a>
+                    
+                    <!-- Mobile Blog Dropdown -->
+                    <div>
+                        <button class="mobile-dropdown-toggle flex items-center justify-between w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <span class="font-medium text-gray-800 dark:text-white" id="mobile-nav-blog">Blog</span>
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </button>
+                        <div class="mobile-dropdown-content hidden mt-2 space-y-2 pl-4">
+                            <a href="blog1.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Design Trends</a>
+                            <a href="blog2.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Sustainable Homes</a>
+                            <a href="blog3.html" class="block p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">Modern Materials</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Contact -->
+                    <a href="contact.html" class="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg font-medium text-gray-800 dark:text-white" id="mobile-nav-contact">
+                        Contact Us
+                    </a>
+                    
+                    <!-- Mobile Logout -->
+                    <a href="login.html" class="block p-3 bg-primary text-white rounded-lg font-medium text-center" id="mobile-logout-btn">
+                        Log Out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="pt-20">
+        <!-- Hero Section -->
+        <section class="hero-section flex items-center justify-center text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate-fade-in" id="hero-title">
+                    Architectural Planning Excellence
+                </h1>
+                <p class="text-xl sm:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in" id="hero-subtitle">
+                    Transforming visions into meticulously planned architectural realities with precision and creativity.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="architectural-planning.html" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105">
+                        <span class="en-text">Our Planning Services</span>
+                        <span class="ar-text" style="display: none;">خدمات التخطيط لدينا</span>
+                        <span class="he-text" style="display: none;">שירותי התכנון שלנו</span>
+                    </a>
+                    <a href="contact.html" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105">
+                        <span class="en-text">Consult Our Planners</span>
+                        <span class="ar-text" style="display: none;">استشر مخططينا</span>
+                        <span class="he-text" style="display: none;">התייעץ עם המתכננים שלנו</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="py-20 section-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4" id="services-title">
+                        Our Architectural Planning Services
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span class="en-text">Comprehensive planning solutions for visionary architectural projects</span>
+                        <span class="ar-text" style="display: none;">حلول تخطيط شاملة للمشاريع المعمارية الرؤيوية</span>
+                        <span class="he-text" style="display: none;">פתרונות תכנון מקיפים לפרויקטים אדריכליים חזוניים</span>
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full mb-4 flex items-center justify-center">
+                            <i class="fas fa-drafting-compass text-blue-600 dark:text-blue-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="service1-title">
+                            Master Planning
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="service1-desc">
+                            <span class="en-text">Comprehensive site analysis and strategic development planning for large-scale projects.</span>
+                            <span class="ar-text" style="display: none;">تحليل موقع شامل والتخطيط الاستراتيجي للتطوير للمشاريع واسعة النطاق.</span>
+                            <span class="he-text" style="display: none;">ניתוח אתר מקיף ותכנון פיתוח אסטרטגי לפרויקטים בקנה מידה גדול.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Service 2 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full mb-4 flex items-center justify-center">
+                            <i class="fas fa-layer-group text-blue-600 dark:text-blue-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="service2-title">
+                            Zoning & Code Analysis
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="service2-desc">
+                            <span class="en-text">Detailed analysis of zoning regulations and building codes to ensure compliance and optimization.</span>
+                            <span class="ar-text" style="display: none;">تحليل مفصل للوائح تقسيم المناطق ومدونات البناء لضمان الامتثال والتحسين.</span>
+                            <span class="he-text" style="display: none;">ניתוח מפורט של תקנות חלוקה לאזורים וקודי בנייה כדי להבטיח עמידה ואופטימיזציה.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Service 3 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full mb-4 flex items-center justify-center">
+                            <i class="fas fa-sitemap text-blue-600 dark:text-blue-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="service3-title">
+                            Space Programming
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="service3-desc">
+                            <span class="en-text">Strategic allocation and organization of spaces based on functional requirements and user needs.</span>
+                            <span class="ar-text" style="display: none;">تخصيص وتنظيم استراتيجي للمساحات بناءً على المتطلبات الوظيفية واحتياجات المستخدم.</span>
+                            <span class="he-text" style="display: none;">הקצאה וארגון אסטרטגי של חללים על בסיס דרישות פונקציונליות וצרכי משתמש.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <!-- Portfolio Preview Section -->
+<section class="py-20 bg-white dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4" id="portfolio-title">
+                <span class="en-text">Planning Projects</span>
+                <span class="ar-text" style="display: none;">مشاريع التخطيط</span>
+                <span class="he-text" style="display: none;">פרויקטי תכנון</span>
+            </h2>
+            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                <span class="en-text">Explore our comprehensive architectural planning projects</span>
+                <span class="ar-text" style="display: none;">استكشف مشاريع التخطيط المعماري الشاملة لدينا</span>
+                <span class="he-text" style="display: none;">גלה את פרויקטי התכנון האדריכלי המקיפים שלנו</span>
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Project 1 -->
+            <div class="card-hover bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden shadow-lg">
+                <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
+                <div class="p-6 rtl:text-right">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">
+                        <span class="en-text">Urban Development Master Plan</span>
+                        <span class="ar-text" style="display: none;">الخطة الرئيسية للتنمية الحضرية</span>
+                        <span class="he-text" style="display: none;">תכנון אב לפיתוח עירוני</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        <span class="en-text">Comprehensive planning for mixed-use urban development with sustainable infrastructure.</span>
+                        <span class="ar-text" style="display: none;">تخطيط شامل للتنمية الحضرية متعددة الاستخدامات مع البنية التحتية المستدامة.</span>
+                        <span class="he-text" style="display: none;">תכנון מקיף לפיתוח עירוני לשימוש מעורב עם תשתיות ברות קיימא.</span>
+                    </p>
+                    <a href="portfolio.html" class="text-blue-600 hover:text-blue-700 font-medium">
+                        <span class="en-text">View Project →</span>
+                        <span class="ar-text" style="display: none;">← عرض المشروع</span>
+                        <span class="he-text" style="display: none;">← צפה בפרויקט</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="card-hover bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden shadow-lg">
+                <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
+                <div class="p-6 rtl:text-right">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">
+                        <span class="en-text">Campus Planning Strategy</span>
+                        <span class="ar-text" style="display: none;">استراتيجية تخطيط الحرم الجامعي</span>
+                        <span class="he-text" style="display: none;">אסטרטגיית תכנון קמפוס</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        <span class="en-text">Strategic campus expansion plan with integrated green spaces and pedestrian pathways.</span>
+                        <span class="ar-text" style="display: none;">خطة توسيع الحرم الجامعي الاستراتيجية مع المساحات الخضراء المتكاملة وممرات المشاة.</span>
+                        <span class="he-text" style="display: none;">תוכנית הרחבת קמפוס אסטרטגית עם שטחים ירוקים משולבים ומסלולי הולכי רגל.</span>
+                    </p>
+                    <a href="portfolio.html" class="text-blue-600 hover:text-blue-700 font-medium">
+                        <span class="en-text">View Project →</span>
+                        <span class="ar-text" style="display: none;">← عرض المشروع</span>
+                        <span class="he-text" style="display: none;">← צפה בפרויקט</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="card-hover bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden shadow-lg">
+                <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1541976590-713941681591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
+                <div class="p-6 rtl:text-right">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">
+                        <span class="en-text">Mixed-Use Complex Planning</span>
+                        <span class="ar-text" style="display: none;">تخطيط المجمع متعدد الاستخدامات</span>
+                        <span class="he-text" style="display: none;">תכנון מתחם לשימוש מעורב</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        <span class="en-text">Integrated planning for residential, commercial, and recreational spaces in urban context.</span>
+                        <span class="ar-text" style="display: none;">تخطيط متكامل للمساحات السكنية والتجارية والترفيهية في السياق الحضري.</span>
+                        <span class="he-text" style="display: none;">תכנון משולב לחללים למגורים, מסחר ופנאי בהקשר עירוני.</span>
+                    </p>
+                    <a href="portfolio.html" class="text-blue-600 hover:text-blue-700 font-medium">
+                        <span class="en-text">View Project →</span>
+                        <span class="ar-text" style="display: none;">← عرض المشروع</span>
+                        <span class="he-text" style="display: none;">← צפה בפרויקט</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="portfolio.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105">
+                <span class="en-text">View All Projects</span>
+                <span class="ar-text" style="display: none;">عرض جميع المشاريع</span>
+                <span class="he-text" style="display: none;">צפה בכל הפרויקטים</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+        <!-- Process Section -->
+        <section class="py-20 section-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4" id="process-title">
+                        Our Planning Process
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span class="en-text">A systematic approach to transforming architectural concepts into executable plans</span>
+                        <span class="ar-text" style="display: none;">نهج منهجي لتحويل المفاهيم المعمارية إلى خطط قابلة للتنفيذ</span>
+                        <span class="he-text" style="display: none;">גישה שיטתית להפיכת קונספטים אדריכליים לתוכניות ברות ביצוע</span>
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Step 1 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">1</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                            <span class="en-text">Site Analysis</span>
+                            <span class="ar-text" style="display: none;">تحليل الموقع</span>
+                            <span class="he-text" style="display: none;">ניתוח אתר</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">Comprehensive assessment of site conditions, constraints, and opportunities.</span>
+                            <span class="ar-text" style="display: none;">تقييم شامل لظروف الموقع والقيود والفرص.</span>
+                            <span class="he-text" style="display: none;">הערכה מקיפה של תנאי האתר, מגבלות והזדמנויות.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">2</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                            <span class="en-text">Concept Development</span>
+                            <span class="ar-text" style="display: none;">تطوير المفهوم</span>
+                            <span class="he-text" style="display: none;">פיתוח קונספט</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">Creating strategic planning concepts that align with project goals and regulations.</span>
+                            <span class="ar-text" style="display: none;">إنشاء مفاهيم تخطيط استراتيجية تتماشى مع أهداف المشروع واللوائح.</span>
+                            <span class="he-text" style="display: none;">יצירת קונספטים לתכנון אסטרטגי התואמים את יעדי הפרויקט והתקנות.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">3</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                            <span class="en-text">Detailed Planning</span>
+                            <span class="ar-text" style="display: none;">التخطيط التفصيلي</span>
+                            <span class="he-text" style="display: none;">תכנון מפורט</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">Developing comprehensive plans with zoning, circulation, and infrastructure details.</span>
+                            <span class="ar-text" style="display: none;">تطوير خطط شاملة مع تفاصيل تقسيم المناطق والتداول والبنية التحتية.</span>
+                            <span class="he-text" style="display: none;">פיתוח תוכניות מקיפות עם פרטי חלוקה לאזורים, תנועה ותשתיות.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">4</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                            <span class="en-text">Implementation Strategy</span>
+                            <span class="ar-text" style="display: none;">استراتيجية التنفيذ</span>
+                            <span class="he-text" style="display: none;">אסטרטגיית יישום</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">Creating phased implementation plans with timelines and resource allocation.</span>
+                            <span class="ar-text" style="display: none;">إنشاء خطط تنفيذ مرحلية مع الجداول الزمنية وتخصيص الموارد.</span>
+                            <span class="he-text" style="display: none;">יצירת תוכניות יישום בשלבים עם לוחות זמנים והקצאת משאבים.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Gallery Section -->
+        <section id="interactive-gallery" class="py-20 bg-gray-100 dark:bg-gray-900">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4" id="gallery-title">
+                        Interactive Planning Gallery
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="gallery-subtitle">
+                        <span class="en-text">Explore our diverse range of architectural planning projects with interactive filtering</span>
+                        <span class="ar-text" style="display: none;">استكشف مجموعة متنوعة من مشاريع التخطيط المعماري مع التصفية التفاعلية</span>
+                        <span class="he-text" style="display: none;">גלה את מגוון פרויקטי התכנון האדריכלי שלנו עם סינון אינטראקטיבי</span>
+                    </p>
+                </div>
+                
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button class="filter-btn active" data-filter="all">
+                        <span class="en-text">All Projects</span>
+                        <span class="ar-text" style="display: none;">جميع المشاريع</span>
+                        <span class="he-text" style="display: none;">כל הפרויקטים</span>
+                    </button>
+                    <button class="filter-btn" data-filter="site">
+                        <span class="en-text">Site Planning</span>
+                        <span class="ar-text" style="display: none;">تخطيط الموقع</span>
+                        <span class="he-text" style="display: none;">תכנון אתר</span>
+                    </button>
+                    <button class="filter-btn" data-filter="urban">
+                        <span class="en-text">Urban Planning</span>
+                        <span class="ar-text" style="display: none;">التخطيط الحضري</span>
+                        <span class="he-text" style="display: none;">תכנון עירוני</span>
+                    </button>
+                    <button class="filter-btn" data-filter="master">
+                        <span class="en-text">Master Planning</span>
+                        <span class="ar-text" style="display: none;">التخطيط الشامل</span>
+                        <span class="he-text" style="display: none;">תכנון אב</span>
+                    </button>
+                </div>
+                
+                <!-- Gallery Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Site Planning Project 1 -->
+                    <div class="gallery-item site" data-category="site">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Site Plan">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">
+                                <span class="en-text">Residential Site Plan</span>
+                                <span class="ar-text" style="display: none;">مخطط موقع سكني</span>
+                                <span class="he-text" style="display: none;">תכנון אתר למגורים</span>
+                            </div>
+                            <div class="gallery-description">
+                                <span class="en-text">Strategic planning for residential community with green spaces</span>
+                                <span class="ar-text" style="display: none;">تخطيط استراتيجي لمجتمع سكني مع مساحات خضراء</span>
+                                <span class="he-text" style="display: none;">תכנון אסטרטגי לקהילה מגורים עם שטחים ירוקים</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Urban Planning Project 1 -->
+                    <div class="gallery-item urban" data-category="urban">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Urban Development">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">
+                                <span class="en-text">Urban Redevelopment</span>
+                                <span class="ar-text" style="display: none;">إعادة التطوير الحضري</span>
+                                <span class="he-text" style="display: none;">פיתוח מחדש עירוני</span>
+                            </div>
+                            <div class="gallery-description">
+                                <span class="en-text">Strategic planning for urban regeneration and infrastructure</span>
+                                <span class="ar-text" style="display: none;">تخطيط استراتيجي للتجديد الحضري والبنية التحتية</span>
+                                <span class="he-text" style="display: none;">תכנון אסטרטגי להתחדשות עירונית ותשתיות</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Master Planning Project 1 -->
+                    <div class="gallery-item master" data-category="master">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Master Plan">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">
+                                <span class="en-text">Campus Master Plan</span>
+                                <span class="ar-text" style="display: none;">المخطط الشامل للحرم الجامعي</span>
+                                <span class="he-text" style="display: none;">תכנון אב לקמפוס</span>
+                            </div>
+                            <div class="gallery-description">
+                                <span class="en-text">Comprehensive planning for educational institution expansion</span>
+                                <span class="ar-text" style="display: none;">تخطيط شامل لتوسيع المؤسسة التعليمية</span>
+                                <span class="he-text" style="display: none;">תכנון מקיף להרחבת מוסד חינוכי</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Planning Project 2 -->
+                    <div class="gallery-item site" data-category="site">
+                        <img src="https://images.unsplash.com/photo-1541976590-713941681591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Mixed-Use Site">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">
+                                <span class="en-text">Mixed-Use Site Plan</span>
+                                <span class="ar-text" style="display: none;">مخطط موقع متعدد الاستخدامات</span>
+                                <span class="he-text" style="display: none;">תכנון אתר לשימוש מעורב</span>
+                            </div>
+                            <div class="gallery-description">
+                                <span class="en-text">Integrated planning for residential and commercial development</span>
+                                <span class="ar-text" style="display: none;">تخطيط متكامل للتطوير السكني والتجاري</span>
+                                <span class="he-text" style="display: none;">תכנון משולב לפיתוח מגורים ומסחר</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Urban Planning Project 2 -->
+                    <div class="gallery-item urban" data-category="urban">
+                        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="City Planning">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">
+                                <span class="en-text">City Center Planning</span>
+                                <span class="ar-text" style="display: none;">تخطيط مركز المدينة</span>
+                                <span class="he-text" style="display: none;">תכנון מרכז העיר</span>
+                            </div>
+                            <div class="gallery-description">
+                                <span class="en-text">Comprehensive planning for urban core development</span>
+                                <span class="ar-text" style="display: none;">تخطيط شامل لتطوير النواة الحضرية</span>
+                                <span class="he-text" style="display: none;">תכנון מקיף לפיתוח הליבה העירונית</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Master Planning Project 2 -->
+                    <div class="gallery-item master" data-category="master">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Development Plan">
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">
+                                <span class="en-text">Regional Development Plan</span>
+                                <span class="ar-text" style="display: none;">مخطط التنمية الإقليمية</span>
+                                <span class="he-text" style="display: none;">תכנון פיתוח אזורי</span>
+                            </div>
+                            <div class="gallery-description">
+                                <span class="en-text">Strategic planning for regional growth and infrastructure</span>
+                                <span class="ar-text" style="display: none;">تخطيط استراتيجي للنمو الإقليمي والبنية التحتية</span>
+                                <span class="he-text" style="display: none;">תכנון אסטרטגי לצמיחה אזורית ותשתיות</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Team Section -->
+        <section class="py-20 section-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4" id="team-title">
+                        Our Planning Team
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span class="en-text">Meet our experienced team of architectural planners and strategists</span>
+                        <span class="ar-text" style="display: none;">تعرف على فريقنا المتمرس من مخططي العمارة والاستراتيجيين</span>
+                        <span class="he-text" style="display: none;">פגשו את הצוות המנוסה שלנו של מתכננים אדריכליים ואסטרטגים</span>
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Team Member 1 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+                        <div class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">JD</div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">John Davidson</h3>
+                        <p class="text-blue-600 dark:text-blue-400 mb-4">Senior Planning Director</p>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">20+ years experience in urban planning and large-scale development projects.</span>
+                            <span class="ar-text" style="display: none;">أكثر من 20 عامًا من الخبرة في التخطيط الحضري ومشاريع التطوير واسعة النطاق.</span>
+                            <span class="he-text" style="display: none;">יותר מ-20 שנות ניסיון בתכנון עירוני ופרויקטי פיתוח בקנה מידה גדול.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Team Member 2 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+                        <div class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">SR</div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Sarah Rodriguez</h3>
+                        <p class="text-blue-600 dark:text-blue-400 mb-4">Master Planning Specialist</p>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">Expert in campus planning and institutional development strategies.</span>
+                            <span class="ar-text" style="display: none;">خبيرة في تخطيط الحرم الجامعي واستراتيجيات التطوير المؤسسي.</span>
+                            <span class="he-text" style="display: none;">מומחית בתכנון קמפוסים ואסטרטגיות פיתוח מוסדיות.</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Team Member 3 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+                        <div class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">MK</div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Michael Kim</h3>
+                        <p class="text-blue-600 dark:text-blue-400 mb-4">Zoning & Code Analyst</p>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            <span class="en-text">Specializes in regulatory compliance and optimization strategies.</span>
+                            <span class="ar-text" style="display: none;">يتخصص في الامتثال التنظيمي واستراتيجيات التحسين.</span>
+                            <span class="he-text" style="display: none;">מתמחה בעמידה רגולטורית ואסטרטגיות אופטימיזציה.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox -->
+        <div class="lightbox">
+            <div class="lightbox-close">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="lightbox-nav lightbox-prev">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="lightbox-nav lightbox-next">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <img src="" alt="">
+        </div>
+
+        <!-- CTA Section -->
+        <section class="py-20 section-blue text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="en-text">Ready to Plan Your Architectural Vision?</span>
+                    <span class="ar-text" style="display: none;">مستعد لتخطيط رؤيتك المعمارية؟</span>
+                    <span class="he-text" style="display: none;">מוכן לתכנן את החזון האדריכלי שלך?</span>
+                </h2>
+                <p class="text-xl max-w-2xl mx-auto mb-8">
+                    <span class="en-text">Contact us today for a comprehensive planning consultation and discover how we can transform your vision into a strategic architectural plan.</span>
+                    <span class="ar-text" style="display: none;">اتصل بنا اليوم للحصول على استشارة تخطيط شاملة واكتشف كيف يمكننا تحويل رؤيتك إلى خطة معمارية استراتيجية.</span>
+                    <span class="he-text" style="display: none;">צור איתנו קשר היום לייעוץ תכנון מקיף וגלה כיצד נוכל להפוך את החזון שלך לתוכנית אדריכלית אסטרטגית.</span>
+                </p>
+                <a href="contact.html" class="inline-block bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105">
+                    <span class="en-text">Start Planning</span>
+                    <span class="ar-text" style="display: none;">ابدأ التخطيط</span>
+                    <span class="he-text" style="display: none;">התחל לתכנן</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12 footer-rtl">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse mb-6">
+                        <div class="h-10 w-10 bg-blue-600 rounded-md flex items-center justify-center text-white font-bold">A</div>
+                        <span class="text-xl font-bold text-white">Architectura</span>
+                    </div>
+                    <p class="mb-6 text-gray-400 rtl:text-right" id="footer-desc">
+                        <span class="en-text">Transforming architectural visions into meticulously planned realities.</span>
+                        <span class="ar-text" style="display: none;">تحويل الرؤى المعمارية إلى واقع مخطط بدقة.</span>
+                        <span class="he-text" style="display: none;">הפיכת חזונות אדריכליים למציאות מתוכננת בקפידה.</span>
+                    </p>
+                    <div class="flex ltr:space-x-4 rtl:space-x-reverse">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 rtl:text-right" id="footer-links-title">
+                        <span class="en-text">Quick Links</span>
+                        <span class="ar-text" style="display: none;">روابط سريعة</span>
+                        <span class="he-text" style="display: none;">קישורים מהירים</span>
+                    </h3>
+                    <ul class="space-y-3 rtl:text-right">
+                        <li><a href="index.html" class="hover:text-blue-400 transition-colors" id="footer-link-home">
+                            <span class="en-text">Home</span>
+                            <span class="ar-text" style="display: none;">الرئيسية</span>
+                            <span class="he-text" style="display: none;">בית</span>
+                        </a></li>
+                        <li><a href="about.html" class="hover:text-blue-400 transition-colors" id="footer-link-about">
+                            <span class="en-text">About</span>
+                            <span class="ar-text" style="display: none;">من نحن</span>
+                            <span class="he-text" style="display: none;">אודות</span>
+                        </a></li>
+                        <li><a href="services.html" class="hover:text-blue-400 transition-colors" id="footer-link-services">
+                            <span class="en-text">Services</span>
+                            <span class="ar-text" style="display: none;">الخدمات</span>
+                            <span class="he-text" style="display: none;">שירותים</span>
+                        </a></li>
+                        <li><a href="portfolio.html" class="hover:text-blue-400 transition-colors" id="footer-link-portfolio">
+                            <span class="en-text">Portfolio</span>
+                            <span class="ar-text" style="display: none;">معرض الأعمال</span>
+                            <span class="he-text" style="display: none;">תיק עבודות</span>
+                        </a></li>
+                        <li><a href="contact.html" class="hover:text-blue-400 transition-colors" id="footer-link-contact">
+                            <span class="en-text">Contact Us</span>
+                            <span class="ar-text" style="display: none;">اتصل بنا</span>
+                            <span class="he-text" style="display: none;">צור קשר</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 text-left rtl:text-right" id="footer-services-title">
+                        <span class="en-text">Services</span>
+                        <span class="ar-text" style="display: none;">الخدمات</span>
+                        <span class="he-text" style="display: none;">שירותים</span>
+                    </h3>
+                    <ul class="space-y-3 rtl:text-right">
+                        <li>
+                            <a href="residential-architecture.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Residential Architecture</span>
+                                <span class="ar-text" style="display: none;">العمارة السكنية</span>
+                                <span class="he-text" style="display: none;">אדריכלות למגורים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="commercial-projects.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Commercial Projects</span>
+                                <span class="ar-text" style="display: none;">المشاريع التجارية</span>
+                                <span class="he-text" style="display: none;">פרויקטים מסחריים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="interior-design.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Interior Design</span>
+                                <span class="ar-text" style="display: none;">التصميم الداخلي</span>
+                                <span class="he-text" style="display: none;">עיצוב פנים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="architectural-planning.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Architectural Planning</span>
+                                <span class="ar-text" style="display: none;">التخطيط المعماري</span>
+                                <span class="he-text" style="display: none;">תכנון אדריכלי</span>
+                            </a>
+                        </li>
+                         <li>
+                                <a href="project-management.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Project Management</span>
+                                    <span class="ar-text" style="display: none;">إدارة المشاريع</span>
+                                    <span class="he-text" style="display: none;">ניהול פרויקטים</span>
+                                </a>
+                            </li>
+                        <li>
+                            <a href="renovation-remodeling.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Renovation & Remodeling</span>
+                                <span class="ar-text" style="display: none;">التجديد وإعادة التصميم</span>
+                                <span class="he-text" style="display: none;">שיפוץ ועיצוב מחדש</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 rtl:text-right" id="footer-contact-title">
+                        <span class="en-text">Contact Info</span>
+                        <span class="ar-text" style="display: none;">معلومات الاتصال</span>
+                        <span class="he-text" style="display: none;">פרטי יצירת קשר</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <div class="rtl:text-right">
+                                <p id="footer-address-1">
+                                    <span class="en-text">123 Design Avenue</span>
+                                    <span class="ar-text" style="display: none;">123 شارع التصميم</span>
+                                    <span class="he-text" style="display: none;">שדרת העיצוב 123</span>
+                                </p>
+                                <p id="footer-address-2">
+                                    <span class="en-text">Creative District, CD 10001</span>
+                                    <span class="ar-text" style="display: none;">الحي الإبداعي، CD 10001</span>
+                                    <span class="he-text" style="display: none;">רובע יצירתי, CD 10001</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors rtl:text-right" id="footer-phone">
+                                +1 (555) 123-4567
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <a href="mailto:info@architectura.com" class="hover:text-blue-400 transition-colors rtl:text-right" id="footer-email">
+                                info@architectura.com
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span class="rtl:text-right" id="footer-hours">
+                                <span class="en-text">Mon-Fri: 9AM-6PM</span>
+                                <span class="ar-text" style="display: none;">الإثنين-الجمعة: 9 صباحًا-6 مساءً</span>
+                                <span class="he-text" style="display: none;">א'-ה': 9:00-18:00</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p id="footer-copyright">
+                    <span class="en-text">© 2023 Architectura. All Rights Reserved.</span>
+                    <span class="ar-text" style="display: none;">© 2023 أركيتيكتورا. جميع الحقوق محفوظة.</span>
+                    <span class="he-text" style="display: none;">© 2023 Architectura. כל הזכויות שמורות.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Complete Language translations for entire page
+        const translations = {
+            en: {
+                // Header
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-portfolio": "Portfolio",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact",
+                "logout-btn": "Log Out",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-portfolio": "Portfolio",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact",
+                "mobile-logout-btn": "Log Out",
+                
+                // Hero Section
+                "hero-title": "Architectural Planning Excellence",
+                "hero-subtitle": "Transforming visions into meticulously planned architectural realities with precision and creativity.",
+                
+                // Services Section
+                "services-title": "Our Architectural Planning Services",
+                "service1-title": "Master Planning",
+                "service1-desc": "Comprehensive site analysis and strategic development planning for large-scale projects.",
+                "service2-title": "Zoning & Code Analysis",
+                "service2-desc": "Detailed analysis of zoning regulations and building codes to ensure compliance and optimization.",
+                "service3-title": "Space Programming",
+                "service3-desc": "Strategic allocation and organization of spaces based on functional requirements and user needs.",
+                
+                // Portfolio Section
+                "portfolio-title": "Planning Projects",
+                
+                // Process Section
+                "process-title": "Our Planning Process",
+                
+                // Gallery Section
+                "gallery-title": "Interactive Planning Gallery",
+                "gallery-subtitle": "Explore our diverse range of architectural planning projects with interactive filtering",
+                
+                // Testimonials Section
+                "testimonials-title": "Client Testimonials",
+                
+                // Team Section
+                "team-title": "Our Planning Team",
+                
+                // Footer Section
+                "footer-desc": "Transforming architectural visions into meticulously planned realities.",
+                "footer-links-title": "Quick Links",
+                "footer-link-home": "Home",
+                "footer-link-about": "About",
+                "footer-link-services": "Services",
+                "footer-link-portfolio": "Portfolio",
+                "footer-link-contact": "Contact Us",
+                "footer-services-title": "Services",
+                "footer-contact-title": "Contact Info",
+                "footer-address-1": "123 Design Avenue",
+                "footer-address-2": "Creative District, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@architectura.com",
+                "footer-hours": "Mon-Fri: 9AM-6PM",
+                "footer-copyright": "© 2023 Architectura. All Rights Reserved."
+            },
+            ar: {
+                // Header
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-portfolio": "معرض الأعمال",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                "logout-btn": "تسجيل خروج",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-portfolio": "معرض الأعمال",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                "mobile-logout-btn": "تسجيل خروج",
+                
+                // Hero Section
+                "hero-title": "التميز في التخطيط المعماري",
+                "hero-subtitle": "تحويل الرؤى إلى واقع معماري مخطط بدقة مع الإبداع والدقة.",
+                
+                // Services Section
+                "services-title": "خدمات التخطيط المعماري لدينا",
+                "service1-title": "التخطيط الشامل",
+                "service1-desc": "تحليل موقع شامل والتخطيط الاستراتيجي للتطوير للمشاريع واسعة النطاق.",
+                "service2-title": "تحليل تقسيم المناطق والمدونات",
+                "service2-desc": "تحليل مفصل للوائح تقسيم المناطق ومدونات البناء لضمان الامتثال والتحسين.",
+                "service3-title": "برمجة المساحات",
+                "service3-desc": "تخصيص وتنظيم استراتيجي للمساحات بناءً على المتطلبات الوظيفية واحتياجات المستخدم.",
+                
+                // Portfolio Section
+                "portfolio-title": "مشاريع التخطيط",
+                
+                // Process Section
+                "process-title": "عملية التخطيط لدينا",
+                
+                // Gallery Section
+                "gallery-title": "معرض التخطيط التفاعلي",
+                "gallery-subtitle": "استكشف مجموعة متنوعة من مشاريع التخطيط المعماري مع التصفية التفاعلية",
+                
+                // Testimonials Section
+                "testimonials-title": "شهادات العملاء",
+                
+                // Team Section
+                "team-title": "فريق التخطيط لدينا",
+                
+                // Footer Section
+                "footer-desc": "تحويل الرؤى المعمارية إلى واقع مخطط بدقة.",
+                "footer-links-title": "روابط سريعة",
+                "footer-link-home": "الرئيسية",
+                "footer-link-about": "من نحن",
+                "footer-link-services": "الخدمات",
+                "footer-link-portfolio": "معرض الأعمال",
+                "footer-link-contact": "اتصل بنا",
+                "footer-services-title": "الخدمات",
+                "footer-contact-title": "معلومات الاتصال",
+                "footer-address-1": "123 شارع التصميم",
+                "footer-address-2": "الحي الإبداعي، CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@architectura.com",
+                "footer-hours": "الإثنين-الجمعة: 9 صباحًا-6 مساءً",
+                "footer-copyright": "© 2023 أركيتيكتورا. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Header
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-portfolio": "תיק עבודות",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                "logout-btn": "התנתק",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-portfolio": "תיק עבודות",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                "mobile-logout-btn": "התנתק",
+                
+                // Hero Section
+                "hero-title": "מצוינות בתכנון אדריכלי",
+                "hero-subtitle": "הפיכת חזונות למציאות אדריכלית מתוכננת בקפידה עם דיוק ויצירתיות.",
+                
+                // Services Section
+                "services-title": "שירותי התכנון האדריכלי שלנו",
+                "service1-title": "תכנון אב",
+                "service1-desc": "ניתוח אתר מקיף ותכנון פיתוח אסטרטגי לפרויקטים בקנה מידה גדול.",
+                "service2-title": "ניתוח חלוקה לאזורים וקודים",
+                "service2-desc": "ניתוח מפורט של תקנות חלוקה לאזורים וקודי בנייה כדי להבטיח עמידה ואופטימיזציה.",
+                "service3-title": "תכנות חלל",
+                "service3-desc": "הקצאה וארגון אסטרטגי של חללים על בסיס דרישות פונקציונליות וצרכי משתמש.",
+                
+                // Portfolio Section
+                "portfolio-title": "פרויקטי תכנון",
+                
+                // Process Section
+                "process-title": "תהליך התכנון שלנו",
+                
+                // Gallery Section
+                "gallery-title": "גלריית תכנון אינטראקטיבית",
+                "gallery-subtitle": "גלה את מגוון פרויקטי התכנון האדריכלי שלנו עם סינון אינטראקטיבי",
+                
+                // Testimonials Section
+                "testimonials-title": "המלצות לקוחות",
+                
+                // Team Section
+                "team-title": "צוות התכנון שלנו",
+                
+                // Footer Section
+                "footer-desc": "הפיכת חזונות אדריכליים למציאות מתוכננת בקפידה.",
+                "footer-links-title": "קישורים מהירים",
+                "footer-link-home": "בית",
+                "footer-link-about": "אודות",
+                "footer-link-services": "שירותים",
+                "footer-link-portfolio": "תיק עבודות",
+                "footer-link-contact": "צור קשר",
+                "footer-services-title": "שירותים",
+                "footer-contact-title": "פרטי יצירת קשר",
+                "footer-address-1": "שדרת העיצוב 123",
+                "footer-address-2": "רובע יצירתי, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@architectura.com",
+                "footer-hours": "א'-ה': 9:00-18:00",
+                "footer-copyright": "© 2023 Architectura. כל הזכויות שמורות."
+            }
+        };
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            initializeLanguage();
+            initializeMobileMenu();
+            initializeStickyHeader();
+            initializeGalleryFilter();
+            initializeLightbox();
+        });
+
+        // Theme functionality
+        function initializeTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or default to system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+            
+            // Theme toggle event
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // Language functionality
+        function initializeLanguage() {
+            const languageSelect = document.getElementById('languageSelect');
+            
+            languageSelect.addEventListener('change', function() {
+                const selectedLanguage = this.value;
+                changeLanguage(selectedLanguage);
+            });
+
+            // Initialize with English language
+            changeLanguage('en');
+        }
+
+        // Function to change language for entire page
+        function changeLanguage(language) {
+            // Update HTML direction and lang attribute
+            if (language === 'ar' || language === 'he') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = language;
+                document.body.classList.add('rtl');
+                
+                // Add appropriate font class
+                if (language === 'ar') {
+                    document.body.classList.add('arabic-font');
+                    document.body.classList.remove('hebrew-font');
+                } else {
+                    document.body.classList.add('hebrew-font');
+                    document.body.classList.remove('arabic-font');
+                }
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = language;
+                document.body.classList.remove('rtl', 'arabic-font', 'hebrew-font');
+            }
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[language] && translations[language][id]) {
+                    element.textContent = translations[language][id];
+                }
+            });
+            
+            // Update footer language spans
+            updateFooterLanguage(language);
+        }
+
+        // Footer language update function
+        function updateFooterLanguage(language) {
+            // Hide all language spans first
+            document.querySelectorAll('.en-text, .ar-text, .he-text').forEach(span => {
+                span.style.display = 'none';
+            });
+            
+            // Show the appropriate language text
+            if (language === 'ar') {
+                document.querySelectorAll('.ar-text').forEach(span => {
+                    span.style.display = 'inline';
+                });
+            } else if (language === 'he') {
+                document.querySelectorAll('.he-text').forEach(span => {
+                    span.style.display = 'inline';
+                });
+            } else {
+                document.querySelectorAll('.en-text').forEach(span => {
+                    span.style.display = 'inline';
+                });
+            }
+        }
+
+        // Mobile menu functionality
+        function initializeMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('translate-x-full', 'rtl:-translate-x-full');
+            });
+            
+            closeMobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full', 'rtl:-translate-x-full');
+            });
+            
+            // Mobile dropdown functionality
+            document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('i');
+                    
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            });
+            
+            // Close mobile menu when clicking on links
+            const mobileLinks = document.querySelectorAll('#mobileMenu a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full', 'rtl:-translate-x-full');
+                });
+            });
+        }
+
+        // Sticky header effect
+        function initializeStickyHeader() {
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.sticky-header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Gallery filter functionality
+        function initializeGalleryFilter() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    const filterValue = button.getAttribute('data-filter');
+                    
+                    // Show/hide gallery items based on filter
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Lightbox functionality
+        function initializeLightbox() {
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImg = lightbox.querySelector('img');
+            const lightboxClose = lightbox.querySelector('.lightbox-close');
+            const lightboxPrev = lightbox.querySelector('.lightbox-prev');
+            const lightboxNext = lightbox.querySelector('.lightbox-next');
+            
+            const galleryItems = document.querySelectorAll('.gallery-item img');
+            let currentImageIndex = 0;
+            const images = Array.from(galleryItems).map(img => img.src);
+            
+            // Open lightbox when clicking on gallery images
+            galleryItems.forEach((img, index) => {
+                img.addEventListener('click', () => {
+                    currentImageIndex = index;
+                    lightboxImg.src = images[currentImageIndex];
+                    lightbox.classList.add('active');
+                });
+            });
+            
+            // Close lightbox
+            lightboxClose.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+            
+            // Navigate to previous image
+            lightboxPrev.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex];
+            });
+            
+            // Navigate to next image
+            lightboxNext.addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex];
+            });
+            
+            // Close lightbox when clicking on background
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('active');
+                } else if (e.key === 'ArrowLeft') {
+                    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                    lightboxImg.src = images[currentImageIndex];
+                } else if (e.key === 'ArrowRight') {
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                    lightboxImg.src = images[currentImageIndex];
+                }
+            });
+        }
+    </script>
+</body>
+</html>

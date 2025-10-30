@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchVision | Architecture & Construction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        /* Custom styles for enhanced visual effects */
+        .hero-overlay {
+            background: rgba(0, 0, 0, 0.4);
+        }
+        .floating-tag {
+            animation: float 6s ease-in-out infinite;
+        }
+        .floating-tag:nth-child(2) {
+            animation-delay: 1s;
+        }
+        .floating-tag:nth-child(3) {
+            animation-delay: 2s;
+        }
+        .floating-tag:nth-child(4) {
+            animation-delay: 3s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .process-step {
+            transition: all 0.3s ease;
+        }
+        .process-step:hover {
+            transform: scale(1.05);
+        }
+        .rtl {
+            direction: rtl;
+        }
+        .ltr {
+            direction: ltr;
+        }
+        .header-scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        .dark .header-scrolled {
+            background-color: rgba(30, 41, 59, 0.95);
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 20;
+        }
+        /* Smart Build Estimator Styles */
+        .estimator-container {
+            background: linear-gradient(135deg, #667eea 0%, #4c63b6 100%);
+            min-height: 100vh;
+        }
+        .dark .estimator-container {
+            background: linear-gradient(135deg, #4c63b6 0%,  #4c63b6 100%);
+        }
+        .step-container {
+            transition: all 0.5s ease-in-out;
+        }
+        .step-hidden {
+            opacity: 0;
+            transform: translateX(50px);
+            display: none;
+        }
+        .step-visible {
+            opacity: 1;
+            transform: translateX(0);
+            display: block;
+        }
+        .estimator-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .estimator-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+        }
+        .estimator-card.selected {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .material-option {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .material-option:hover {
+            transform: scale(1.05);
+        }
+        .material-option.selected {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        #buildingVisualization {
+            transition: all 1s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .building-wall {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+        }
+        .building-floor {
+            position: absolute;
+            background: repeating-linear-gradient(
+                45deg,
+                #f0f0f0,
+                #f0f0f0 10px,
+                #e0e0e0 10px,
+                #e0e0e0 20px
+            );
+            border: 1px solid #ccc;
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        .result-card {
+            animation: fadeInUp 0.8s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="font-sans bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <!-- Header -->
+   <header id="main-header" class="bg-white dark:bg-gray-800 fixed w-full top-0 left-0 z-50 transition-all duration-300">
+    <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+        <!-- Logo - Positioned in LEFT corner (LTR) or RIGHT corner (RTL) -->
+         <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                <img src="logo.png" alt="Logo" class="h-8 w-auto">
+            </div>
+        
+        <!-- Navigation - Stays in CENTER -->
+        <nav class="hidden lg:flex items-center ltr:space-x-8 rtl:space-x-reverse nav-container">
+            <!-- Home Dropdown -->
+            <div class="relative group">
+                <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                    <span class="en-text">Home</span>
+                    <span class="ar-text" style="display: none;">الرئيسية</span>
+                    <span class="he-text" style="display: none;">בית</span>
+                    <i class="fas fa-chevron-down ltr:ml-1 rtl:mr-1 text-xs chevron-rotate"></i>
+                </a>
+                <div class="absolute ltr:left-0 rtl:right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl:text-right">
+                    <a href="home.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">
+                        <span class="en-text">Home 1</span>
+                        <span class="ar-text" style="display: none;">الرئيسية 1</span>
+                        <span class="he-text" style="display: none;">בית 1</span>
+                    </a>
+                    <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">
+                        <span class="en-text">Home 2</span>
+                        <span class="ar-text" style="display: none;">الرئيسية 2</span>
+                        <span class="he-text" style="display: none;">בית 2</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- About -->
+            <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                <span class="en-text">About</span>
+                <span class="ar-text" style="display: none;">من نحن</span>
+                <span class="he-text" style="display: none;">אודות</span>
+            </a>
+
+            <!-- Services Dropdown -->
+            <div class="relative group">
+                <a href="servces.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                    <span class="en-text">Services</span>
+                    <span class="ar-text" style="display: none;">الخدمات</span>
+                    <span class="he-text" style="display: none;">שירותים</span>
+                    <i class="fas fa-chevron-down ltr:ml-1 rtl:mr-1 text-xs chevron-rotate"></i>
+                </a>
+                <div class="absolute ltr:left-0 rtl:right-0 top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl:text-right">
+                    <a href="Residential Architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">
+                        <span class="en-text">Residential Projects</span>
+                        <span class="ar-text" style="display: none;">المشاريع السكنية</span>
+                        <span class="he-text" style="display: none;">פרויקטים למגורים</span>
+                    </a>
+                    <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">
+                        <span class="en-text">Commercial Projects</span>
+                        <span class="ar-text" style="display: none;">المشاريع التجارية</span>
+                        <span class="he-text" style="display: none;">פרויקטים מסחריים</span>
+                    </a>
+                    <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">
+                        <span class="en-text">Interior Design</span>
+                        <span class="ar-text" style="display: none;">التصميم الداخلي</span>
+                        <span class="he-text" style="display: none;">עיצוב פנים</span>
+                    </a>
+                    <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">
+                        <span class="en-text">Architectural Planning</span>
+                        <span class="ar-text" style="display: none;">التخطيط المعماري</span>
+                        <span class="he-text" style="display: none;">תכנון אדריכלי</span>
+                    </a>
+                    <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">
+                        <span class="en-text">Project Management</span>
+                        <span class="ar-text" style="display: none;">إدارة المشاريع</span>
+                        <span class="he-text" style="display: none;">ניהול פרויקטים</span>
+                    </a>
+                    <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">
+                        <span class="en-text">Renovation & Remodeling</span>
+                        <span class="ar-text" style="display: none;">التجديد وإعادة التصميم</span>
+                        <span class="he-text" style="display: none;">שיפוץ ועיצוב מחדש</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Blog Dropdown -->
+            <div class="relative group">
+                <a href="Blog.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                    <span class="en-text">Blog</span>
+                    <span class="ar-text" style="display: none;">المدونة</span>
+                    <span class="he-text" style="display: none;">בלוג</span>
+                    <i class="fas fa-chevron-down ltr:ml-1 rtl:mr-1 text-xs chevron-rotate"></i>
+                </a>
+                <div class="absolute ltr:left-0 rtl:right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl:text-right">
+                    <a href="Blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">
+                        <span class="en-text">Design Trends</span>
+                        <span class="ar-text" style="display: none;">اتجاهات التصميم</span>
+                        <span class="he-text" style="display: none;">מגמות עיצוב</span>
+                    </a>
+                    <a href="Blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">
+                        <span class="en-text">Project Showcase</span>
+                        <span class="ar-text" style="display: none;">عرض المشاريع</span>
+                        <span class="he-text" style="display: none;">תצוגת פרויקטים</span>
+                    </a>
+                    <a href="Blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">
+                        <span class="en-text">Investment Insights</span>
+                        <span class="ar-text" style="display: none;">رؤى الاستثمار</span>
+                        <span class="he-text" style="display: none;">תובנות השקעה</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact Us -->
+            <a href="Contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                <span class="en-text">Contact Us</span>
+                <span class="ar-text" style="display: none;">اتصل بنا</span>
+                <span class="he-text" style="display: none;">צור קשר</span>
+            </a>
+        </nav>
+
+        <!-- Right Side - Positioned in RIGHT corner (LTR) or LEFT corner (RTL) -->
+        <div class="flex items-center ltr:space-x-4 rtl:space-x-reverse right-side-container">
+            <!-- Language Selector -->
+            <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+                <option value="he">עברית</option>
+            </select>
+            
+            <!-- Dark Mode Toggle -->
+            <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <!-- Login Button -->
+           <div class="hidden md:flex items-center ltr:space-x-3 rtl:space-x-reverse">
+    <button onclick="window.location.href='login.html'" class="text-lg font-medium text-primary dark:text-black py-2 px-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+        <span class="en-text">Log Out</span>
+        <span class="ar-text" style="display: none;">تسجيل خروج</span>
+        <span class="he-text" style="display: none;">התנתק</span>
+    </button>
+</div>
+            
+            <!-- Mobile Menu Button -->
+            <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="lg:hidden fixed inset-0 bg-white dark:bg-gray-800 z-50 transform ltr:translate-x-full rtl:-translate-x-full transition-transform duration-300">
+        <div class="flex justify-between items-center p-4 border-b dark:border-gray-700 rtl:flex-row-reverse">
+            <h2 class="text-xl font-bold text-primary dark:text-white">
+                <span class="en-text">Menu</span>
+                <span class="ar-text" style="display: none;">القائمة</span>
+                <span class="he-text" style="display: none;">תפריט</span>
+            </h2>
+            <button id="closeMobileMenu" class="text-gray-600 dark:text-gray-300 text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="p-4 space-y-4 rtl:text-right">
+            <div>
+                <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl:flex-row-reverse">
+                    <span class="en-text">Home</span>
+                    <span class="ar-text" style="display: none;">الرئيسية</span>
+                    <span class="he-text" style="display: none;">בית</span>
+                    <i class="fas fa-chevron-down chevron-rotate"></i>
+                </button>
+                <div class="mobile-dropdown-content hidden ltr:pl-4 rtl:pr-4 mt-2 space-y-2 ltr:border-l-2 rtl:border-r-2 border-gray-200 dark:border-gray-600">
+                    <a href="home.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Home 1</span>
+                        <span class="ar-text" style="display: none;">الرئيسية 1</span>
+                        <span class="he-text" style="display: none;">בית 1</span>
+                    </a>
+                    <a href="home2.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Home 2</span>
+                        <span class="ar-text" style="display: none;">الرئيسية 2</span>
+                        <span class="he-text" style="display: none;">בית 2</span>
+                    </a>
+                </div>
+            </div>
+            <a href="about.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2">
+                <span class="en-text">About</span>
+                <span class="ar-text" style="display: none;">من نحن</span>
+                <span class="he-text" style="display: none;">אודות</span>
+            </a>
+            <div>
+                <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl:flex-row-reverse">
+                    <span class="en-text">Services</span>
+                    <span class="ar-text" style="display: none;">الخدمات</span>
+                    <span class="he-text" style="display: none;">שירותים</span>
+                    <i class="fas fa-chevron-down chevron-rotate"></i>
+                </button>
+                <div class="mobile-dropdown-content hidden ltr:pl-4 rtl:pr-4 mt-2 space-y-2 ltr:border-l-2 rtl:border-r-2 border-gray-200 dark:border-gray-600">
+                    <a href="Residential Architecture.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Residential Projects</span>
+                        <span class="ar-text" style="display: none;">المشاريع السكنية</span>
+                        <span class="he-text" style="display: none;">פרויקטים למגורים</span>
+                    </a>
+                    <a href="commercial-projects.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Commercial Projects</span>
+                        <span class="ar-text" style="display: none;">المشاريع التجارية</span>
+                        <span class="he-text" style="display: none;">פרויקטים מסחריים</span>
+                    </a>
+                    <a href="interior-design.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Interior Design</span>
+                        <span class="ar-text" style="display: none;">التصميم الداخلي</span>
+                        <span class="he-text" style="display: none;">עיצוב פנים</span>
+                    </a>
+                    <a href="architectural-planning.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Architectural Planning</span>
+                        <span class="ar-text" style="display: none;">التخطيط المعماري</span>
+                        <span class="he-text" style="display: none;">תכנון אדריכלי</span>
+                    </a>
+                    <a href="project-management.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Project Management</span>
+                        <span class="ar-text" style="display: none;">إدارة المشاريع</span>
+                        <span class="he-text" style="display: none;">ניהול פרויקטים</span>
+                    </a>
+                    <a href="renovation.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Renovation & Remodeling</span>
+                        <span class="ar-text" style="display: none;">التجديد وإعادة التصميم</span>
+                        <span class="he-text" style="display: none;">שיפוץ ועיצוב מחדש</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl:flex-row-reverse">
+                    <span class="en-text">Blog</span>
+                    <span class="ar-text" style="display: none;">المدونة</span>
+                    <span class="he-text" style="display: none;">בלוג</span>
+                    <i class="fas fa-chevron-down chevron-rotate"></i>
+                </button>
+                <div class="mobile-dropdown-content hidden ltr:pl-4 rtl:pr-4 mt-2 space-y-2 ltr:border-l-2 rtl:border-r-2 border-gray-200 dark:border-gray-600">
+                    <a href="Blog1.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Design Trends</span>
+                        <span class="ar-text" style="display: none;">اتجاهات التصميم</span>
+                        <span class="he-text" style="display: none;">מגמות עיצוב</span>
+                    </a>
+                    <a href="Blog2.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Project Showcase</span>
+                        <span class="ar-text" style="display: none;">عرض المشاريع</span>
+                        <span class="he-text" style="display: none;">תצוגת פרויקטים</span>
+                    </a>
+                    <a href="Blog3.html" class="block py-2 text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Investment Insights</span>
+                        <span class="ar-text" style="display: none;">رؤى الاستثمار</span>
+                        <span class="he-text" style="display: none;">תובנות השקעה</span>
+                    </a>
+                </div>
+            </div>
+            <a href="Contact.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2">
+                <span class="en-text">Contact Us</span>
+                <span class="ar-text" style="display: none;">اتصل بنا</span>
+                <span class="he-text" style="display: none;">צור קשר</span>
+            </a>
+           <a href="login.html" class="block text-lg font-medium text-primary dark:text-black py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-center">
+    <span class="en-text">Log Out</span>
+    <span class="ar-text" style="display: none;">تسجيل خروج</span>
+    <span class="he-text" style="display: none;">התנתק</span>
+</a>
+        </nav>
+    </div>
+</header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Video -->
+        <div class="absolute top-0 left-0 w-full h-full z-0">
+            <video autoplay muted loop class="video-background">
+                <source src="home1.mp4" type="video/mp4">
+                <!-- Fallback image if video doesn't load -->
+                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Modern Architecture" class="w-full h-full object-cover">
+            </video>
+        </div>
+        
+        <!-- Dark Overlay -->
+        <div class="absolute top-0 left-0 w-full h-full hero-overlay z-10"></div>
+        
+        <!-- Content -->
+        <div class="hero-content text-center text-white px-4 max-w-4xl">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                <span class="en-text">Designing the Future, Building with Purpose</span>
+                <span class="ar-text" style="display: none;">تصميم المستقبل، البناء بغرض</span>
+                <span class="he-text" style="display: none;">עיצוב העתיד, בנייה עם מטרה</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-10">
+                <span class="en-text">We bring ideas to life through architecture that inspires and construction that endures.</span>
+                <span class="ar-text" style="display: none;">نحن نحول الأفكار إلى واقع من خلال الهندسة المعمارية الملهمة والبناء الدائم.</span>
+                <span class="he-text" style="display: none;">אנו מביאים רעיונות לחיים באמצעות אדריכלות מעוררת השראה ובנייה עמידה.</span>
+            </p>
+           
+        </div>
+        
+        <!-- Floating Tags -->
+        <div class="absolute bottom-10 left-0 w-full flex justify-center space-x-8 z-20">
+            <span class="floating-tag text-white opacity-70">
+                <span class="en-text">Architecture</span>
+                <span class="ar-text" style="display: none;">الهندسة المعمارية</span>
+                <span class="he-text" style="display: none;">אדריכלות</span>
+            </span>
+            <span class="floating-tag text-white opacity-70">
+                <span class="en-text">Construction</span>
+                <span class="ar-text" style="display: none;">البناء</span>
+                <span class="he-text" style="display: none;">בנייה</span>
+            </span>
+            <span class="floating-tag text-white opacity-70">
+                <span class="en-text">Innovation</span>
+                <span class="ar-text" style="display: none;">الابتكار</span>
+                <span class="he-text" style="display: none;">חדשנות</span>
+            </span>
+            <span class="floating-tag text-white opacity-70">
+                <span class="en-text">Sustainability</span>
+                <span class="ar-text" style="display: none;">الاستدامة</span>
+                <span class="he-text" style="display: none;">קיימות</span>
+            </span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Our Team" class="rounded-lg shadow-lg w-full h-96 object-cover">
+                </div>
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                        <span class="en-text">About Us</span>
+                        <span class="ar-text" style="display: none;">من نحن</span>
+                        <span class="he-text" style="display: none;">אודותינו</span>
+                    </h2>
+                    <p class="text-lg mb-6">
+                        <span class="en-text">We are a creative construction and architecture studio dedicated to crafting timeless structures and inspiring spaces.</span>
+                        <span class="ar-text" style="display: none;">نحن استوديو إبداعي للبناء والهندسة المعمارية مكرس لصنع هياكل خالدة ومساحات ملهمة.</span>
+                        <span class="he-text" style="display: none;">אנחנו סטודיו יצירתי לבנייה ואדריכלות המוקדש ליצירת מבנים נצחיים וחללים מעוררי השראה.</span>
+                    </p>
+                    <p class="text-lg mb-8">
+                        <span class="en-text">With a passion for design innovation and a commitment to quality, we combine modern architecture with functional building expertise to create projects that stand out and last.</span>
+                        <span class="ar-text" style="display: none;">مع شغف بالابتكار في التصميم والتزام بالجودة، نجمع بين الهندسة المعمارية الحديثة والخبرة في البناء الوظيفي لإنشاء مشاريع متميزة ودائمة.</span>
+                        <span class="he-text" style="display: none;">עם תשוקה לחדשנות בעיצוב ומחויבות לאיכות, אנו משלבים אדריכלות מודרנית עם מומחיות בנייה פונקציונלית ליצירת פרויקטים בולטים ועמידים.</span>
+                    </p>
+                    <a href="about.html" class="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                        <span class="en-text">Learn More</span>
+                        <span class="ar-text" style="display: none;">تعرف أكثر</span>
+                        <span class="he-text" style="display: none;">למד עוד</span>
+                        <i class="fas fa-arrow-right ltr:ml-2 rtl:mr-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section id="projects" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+                <span class="en-text">Our Work Speaks for Itself</span>
+                <span class="ar-text" style="display: none;">أعمالنا تتحدث عن نفسها</span>
+                <span class="he-text" style="display: none;">העבודה שלנו מדברת בעד עצמה</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-colors duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Urban Residence" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">
+                            <span class="en-text">Urban Residence</span>
+                            <span class="ar-text" style="display: none;">سكن حضري</span>
+                            <span class="he-text" style="display: none;">מגורים עירוניים</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            <span class="en-text">Modern design meets sustainable living in the heart of the city.</span>
+                            <span class="ar-text" style="display: none;">التصميم الحديث يلتقي بالعيش المستدام في قلب المدينة.</span>
+                            <span class="he-text" style="display: none;">עיצוב מודרני פוגש חיים ברי קיימא בלב העיר.</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-colors duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Skyline Tower" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">
+                            <span class="en-text">Skyline Tower</span>
+                            <span class="ar-text" style="display: none;">برج الأفق</span>
+                            <span class="he-text" style="display: none;">מגדל קו הרקיע</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            <span class="en-text">A symbol of innovation and strength in the business district.</span>
+                            <span class="ar-text" style="display: none;">رمز للابتكار والقوة في المنطقة التجارية.</span>
+                            <span class="he-text" style="display: none;">סמל לחדשנות וחוזק באזור העסקים.</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-colors duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Coastal Retreat" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">
+                            <span class="en-text">Coastal Retreat</span>
+                            <span class="ar-text" style="display: none;">منتجع ساحلي</span>
+                            <span class="he-text" style="display: none;">מקלט חופי</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            <span class="en-text">Elegant architecture in harmony with nature's beauty.</span>
+                            <span class="ar-text" style="display: none;">هندسة معمارية أنيقة بتناغم مع جمال الطبيعة.</span>
+                            <span class="he-text" style="display: none;">אדריכלות אלגנטית בהרמוניה עם יופי הטבע.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Philosophy Section -->
+    <section id="philosophy" class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+                <span class="en-text">Our Design Philosophy</span>
+                <span class="ar-text" style="display: none;">فلسفة التصميم لدينا</span>
+                <span class="he-text" style="display: none;">פילוסופיית העיצוב שלנו</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="process-step bg-white dark:bg-gray-700 rounded-lg p-6 text-center shadow-lg transition-colors duration-300">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">
+                        <span class="en-text">Vision & Concept</span>
+                        <span class="ar-text" style="display: none;">الرؤية والمفهوم</span>
+                        <span class="he-text" style="display: none;">חזון וקונספט</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Every project begins with understanding your story and vision.</span>
+                        <span class="ar-text" style="display: none;">كل مشروع يبدأ بفهم قصتك ورؤيتك.</span>
+                        <span class="he-text" style="display: none;">כל פרויקט מתחיל בהבנת הסיפור והחזון שלך.</span>
+                    </p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="process-step bg-white dark:bg-gray-700 rounded-lg p-6 text-center shadow-lg transition-colors duration-300">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">
+                        <span class="en-text">Design Development</span>
+                        <span class="ar-text" style="display: none;">تطوير التصميم</span>
+                        <span class="he-text" style="display: none;">פיתוח עיצוב</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Translating ideas into tangible forms and detailed plans.</span>
+                        <span class="ar-text" style="display: none;">ترجمة الأفكار إلى أشكال ملمسة وخطط مفصلة.</span>
+                        <span class="he-text" style="display: none;">תרגום רעיונות לצורות מוחשיות ותוכניות מפורטות.</span>
+                    </p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="process-step bg-white dark:bg-gray-700 rounded-lg p-6 text-center shadow-lg transition-colors duration-300">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">
+                        <span class="en-text">Construction</span>
+                        <span class="ar-text" style="display: none;">البناء</span>
+                        <span class="he-text" style="display: none;">בנייה</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Where precision meets creativity in the building process.</span>
+                        <span class="ar-text" style="display: none;">حيث تلتقي الدقة بالإبداع في عملية البناء.</span>
+                        <span class="he-text" style="display: none;">היכן שדיוק פוגש יצירתיות בתהליך הבנייה.</span>
+                    </p>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="process-step bg-white dark:bg-gray-700 rounded-lg p-6 text-center shadow-lg transition-colors duration-300">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-xl font-bold">4</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">
+                        <span class="en-text">Completion</span>
+                        <span class="ar-text" style="display: none;">الإنجاز</span>
+                        <span class="he-text" style="display: none;">השלמה</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        <span class="en-text">Delivering excellence that lasts for generations to come.</span>
+                        <span class="ar-text" style="display: none;">تقديم التميز الذي يدوم لأجيال قادمة.</span>
+                        <span class="he-text" style="display: none;">אספקת מצוינות שנמשכת לדורות הבאים.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+                <span class="en-text">What Our Clients Say</span>
+                <span class="ar-text" style="display: none;">ماذا يقول عملاؤنا</span>
+                <span class="he-text" style="display: none;">מה הלקוחות שלנו אומרים</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-8 shadow-lg transition-colors duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold ltr:mr-4 rtl:ml-4">
+                            RP
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Mr. R. Patel</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                <span class="en-text">Homeowner</span>
+                                <span class="ar-text" style="display: none;">مالك منزل</span>
+                                <span class="he-text" style="display: none;">בעל בית</span>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-lg italic">
+                        <span class="en-text">"The architecture perfectly captured our vision — functional, beautiful, and sustainable. We couldn't be happier with the results."</span>
+                        <span class="ar-text" style="display: none;">"التقطت الهندسة المعمارية رؤيتنا تمامًا - وظيفية وجميلة ومستدامة. لا يمكننا أن نكون أكثر سعادة بالنتائج."</span>
+                        <span class="he-text" style="display: none;">"האדריכלות תפסה באופן מושלם את החזון שלנו - פונקציונלית, יפה וברת קיימא. לא יכולנו להיות יותר מרוצים מהתוצאות."</span>
+                    </p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-8 shadow-lg transition-colors duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold ltr:mr-4 rtl:ml-4">
+                            CD
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Cityscape Developers</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                <span class="en-text">Commercial Client</span>
+                                <span class="ar-text" style="display: none;">عميل تجاري</span>
+                                <span class="he-text" style="display: none;">לקוח מסחרי</span>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-lg italic">
+                        <span class="en-text">"From design to delivery, their attention to detail is unmatched. They delivered our commercial project on time and within budget."</span>
+                        <span class="ar-text" style="display: none;">"من التصميم إلى التسليم، اهتمامهم بالتفاصيل لا مثيل له. قاموا بتسليم مشروعنا التجاري في الوقت المحدد وفي حدود الميزانية."</span>
+                        <span class="he-text" style="display: none;">"מהעיצוב ועד האספקה, תשומת הלב שלהם לפרטים היא חסרת תקדים. הם סיפקו את הפרויקט המסחרי שלנו בזמן ובתקציב."</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Build Estimator Section -->
+    <section class="estimator-container py-20 transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    <span class="en-text">Smart Build Estimator</span>
+                    <span class="ar-text" style="display: none;">مقدر البناء الذكي</span>
+                    <span class="he-text" style="display: none;">מעריך בנייה חכם</span>
+                </h2>
+                <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                    <span class="en-text">Get an instant visual estimate for your construction project</span>
+                    <span class="ar-text" style="display: none;">احصل على تقدير مرئي فوري لمشروع البناء الخاص بك</span>
+                    <span class="he-text" style="display: none;">קבל הערכה ויזואלית מיידית לפרויקט הבנייה שלך</span>
+                </p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="max-w-4xl mx-auto mb-8">
+                <div class="flex justify-between mb-2">
+                    <span class="text-white text-sm">
+                        <span class="en-text">Step 1: Project Type</span>
+                        <span class="ar-text" style="display: none;">الخطوة 1: نوع المشروع</span>
+                        <span class="he-text" style="display: none;">שלב 1: סוג הפרויקט</span>
+                    </span>
+                    <span class="text-white text-sm">
+                        <span class="en-text">Step 2: Dimensions</span>
+                        <span class="ar-text" style="display: none;">الخطوة 2: الأبعاد</span>
+                        <span class="he-text" style="display: none;">שלב 2: מידות</span>
+                    </span>
+                    <span class="text-white text-sm">
+                        <span class="en-text">Step 3: Materials</span>
+                        <span class="ar-text" style="display: none;">الخطوة 3: المواد</span>
+                        <span class="he-text" style="display: none;">שלב 3: חומרים</span>
+                    </span>
+                    <span class="text-white text-sm">
+                        <span class="en-text">Step 4: Results</span>
+                        <span class="ar-text" style="display: none;">الخطوة 4: النتائج</span>
+                        <span class="he-text" style="display: none;">שלב 4: תוצאות</span>
+                    </span>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-full h-3">
+                    <div id="progressBar" class="bg-white h-3 rounded-full progress-bar" style="width: 25%"></div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-6xl mx-auto overflow-hidden transition-colors duration-300">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <!-- Form Section -->
+                    <div class="p-8">
+                        <!-- Step 1: Project Type -->
+                        <div id="step1" class="step-container step-visible">
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+                                <span class="en-text">Choose Your Project Type</span>
+                                <span class="ar-text" style="display: none;">اختر نوع مشروعك</span>
+                                <span class="he-text" style="display: none;">בחר את סוג הפרויקט שלך</span>
+                            </h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="estimator-card p-6 rounded-xl border-2 cursor-pointer text-center" data-type="residential">
+                                    <i class="fas fa-home text-4xl text-blue-600 mb-3"></i>
+                                    <h4 class="font-semibold text-gray-800 dark:text-white">
+                                        <span class="en-text">Residential</span>
+                                        <span class="ar-text" style="display: none;">سكني</span>
+                                        <span class="he-text" style="display: none;">מגורים</span>
+                                    </h4>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-2">
+                                        <span class="en-text">Houses, Apartments, Villas</span>
+                                        <span class="ar-text" style="display: none;">منازل، شقق، فيلات</span>
+                                        <span class="he-text" style="display: none;">בתים, דירות, וילות</span>
+                                    </p>
+                                </div>
+                                <div class="estimator-card p-6 rounded-xl border-2 cursor-pointer text-center" data-type="commercial">
+                                    <i class="fas fa-building text-4xl text-blue-600 mb-3"></i>
+                                    <h4 class="font-semibold text-gray-800 dark:text-white">
+                                        <span class="en-text">Commercial</span>
+                                        <span class="ar-text" style="display: none;">تجاري</span>
+                                        <span class="he-text" style="display: none;">מסחרי</span>
+                                    </h4>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-2">
+                                        <span class="en-text">Offices, Retail, Restaurants</span>
+                                        <span class="ar-text" style="display: none;">مكاتب، تجارة، مطاعم</span>
+                                        <span class="he-text" style="display: none;">משרדים, קמעונאות, מסעדות</span>
+                                    </p>
+                                </div>
+                                <div class="estimator-card p-6 rounded-xl border-2 cursor-pointer text-center" data-type="interior">
+                                    <i class="fas fa-couch text-4xl text-blue-600 mb-3"></i>
+                                    <h4 class="font-semibold text-gray-800 dark:text-white">
+                                        <span class="en-text">Interior</span>
+                                        <span class="ar-text" style="display: none;">داخلي</span>
+                                        <span class="he-text" style="display: none;">פנים</span>
+                                    </h4>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-2">
+                                        <span class="en-text">Renovation, Design, Fit-out</span>
+                                        <span class="ar-text" style="display: none;">تجديد، تصميم، تشطيب</span>
+                                        <span class="he-text" style="display: none;">שיפוץ, עיצוב, גימור</span>
+                                    </p>
+                                </div>
+                                <div class="estimator-card p-6 rounded-xl border-2 cursor-pointer text-center" data-type="renovation">
+                                    <i class="fas fa-tools text-4xl text-blue-600 mb-3"></i>
+                                    <h4 class="font-semibold text-gray-800 dark:text-white">
+                                        <span class="en-text">Renovation</span>
+                                        <span class="ar-text" style="display: none;">تجديد</span>
+                                        <span class="he-text" style="display: none;">שיפוץ</span>
+                                    </h4>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-2">
+                                        <span class="en-text">Upgrades, Remodeling</span>
+                                        <span class="ar-text" style="display: none;">ترقيات، إعادة تصميم</span>
+                                        <span class="he-text" style="display: none;">שדרוגים, שיפוץ</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <button id="nextStep1" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold mt-8 hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                <span class="en-text">Continue to Dimensions</span>
+                                <span class="ar-text" style="display: none;">المتابعة إلى الأبعاد</span>
+                                <span class="he-text" style="display: none;">המשך למידות</span>
+                            </button>
+                        </div>
+
+                        <!-- Step 2: Dimensions -->
+                        <div id="step2" class="step-container step-hidden">
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+                                <span class="en-text">Enter Dimensions</span>
+                                <span class="ar-text" style="display: none;">أدخل الأبعاد</span>
+                                <span class="he-text" style="display: none;">הזן מידות</span>
+                            </h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                                        <span class="en-text">Length (feet)</span>
+                                        <span class="ar-text" style="display: none;">الطول (قدم)</span>
+                                        <span class="he-text" style="display: none;">אורך (רגל)</span>
+                                    </label>
+                                    <input type="number" id="length" min="1" max="500" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-colors duration-300" placeholder="Enter length">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                                        <span class="en-text">Width (feet)</span>
+                                        <span class="ar-text" style="display: none;">العرض (قدم)</span>
+                                        <span class="he-text" style="display: none;">רוחב (רגל)</span>
+                                    </label>
+                                    <input type="number" id="width" min="1" max="500" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-colors duration-300" placeholder="Enter width">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 dark:text-gray-300 mb-2">
+                                        <span class="en-text">Height (feet) - Optional</span>
+                                        <span class="ar-text" style="display: none;">الارتفاع (قدم) - اختياري</span>
+                                        <span class="he-text" style="display: none;">גובה (רגל) - אופציונלי</span>
+                                    </label>
+                                    <input type="number" id="height" min="1" max="100" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-colors duration-300" placeholder="Enter height" value="10">
+                                </div>
+                            </div>
+                            <div class="flex space-x-4 mt-8">
+                                <button id="prevStep2" class="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors duration-300">
+                                    <span class="en-text">Back</span>
+                                    <span class="ar-text" style="display: none;">رجوع</span>
+                                    <span class="he-text" style="display: none;">חזור</span>
+                                </button>
+                                <button id="nextStep2" class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    <span class="en-text">Continue to Materials</span>
+                                    <span class="ar-text" style="display: none;">المتابعة إلى المواد</span>
+                                    <span class="he-text" style="display: none;">המשך לחומרים</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Materials -->
+                        <div id="step3" class="step-container step-hidden">
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+                                <span class="en-text">Select Material Quality</span>
+                                <span class="ar-text" style="display: none;">اختر جودة المواد</span>
+                                <span class="he-text" style="display: none;">בחר איכות חומרים</span>
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="material-option p-4 rounded-xl border-2 cursor-pointer" data-quality="basic">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center ltr:mr-4 rtl:ml-4">
+                                            <i class="fas fa-leaf text-green-600 dark:text-green-400 text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-semibold text-gray-800 dark:text-white">
+                                                <span class="en-text">Basic</span>
+                                                <span class="ar-text" style="display: none;">أساسي</span>
+                                                <span class="he-text" style="display: none;">בסיסי</span>
+                                            </h4>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm">
+                                                <span class="en-text">Standard materials, cost-effective</span>
+                                                <span class="ar-text" style="display: none;">مواد قياسية، فعالة من حيث التكلفة</span>
+                                                <span class="he-text" style="display: none;">חומרים סטנדרטיים, חסכוניים</span>
+                                            </p>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-green-600 dark:text-green-400 font-bold">$</span>
+                                            <span class="text-gray-500 dark:text-gray-400 text-sm">
+                                                <span class="en-text">Budget-friendly</span>
+                                                <span class="ar-text" style="display: none;">مناسب للميزانية</span>
+                                                <span class="he-text" style="display: none;">ידידותי לתקציב</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="material-option p-4 rounded-xl border-2 cursor-pointer" data-quality="premium">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center ltr:mr-4 rtl:ml-4">
+                                            <i class="fas fa-star text-blue-600 dark:text-blue-400 text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-semibold text-gray-800 dark:text-white">
+                                                <span class="en-text">Premium</span>
+                                                <span class="ar-text" style="display: none;">متميز</span>
+                                                <span class="he-text" style="display: none;">פרימיום</span>
+                                            </h4>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm">
+                                                <span class="en-text">High-quality, durable materials</span>
+                                                <span class="ar-text" style="display: none;">مواد عالية الجودة ومتينة</span>
+                                                <span class="he-text" style="display: none;">חומרים באיכות גבוהה ועמידים</span>
+                                            </p>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-blue-600 dark:text-blue-400 font-bold">$$</span>
+                                            <span class="text-gray-500 dark:text-gray-400 text-sm">
+                                                <span class="en-text">Best value</span>
+                                                <span class="ar-text" style="display: none;">أفضل قيمة</span>
+                                                <span class="he-text" style="display: none;">ערך טוב ביותר</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="material-option p-4 rounded-xl border-2 cursor-pointer" data-quality="luxury">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center ltr:mr-4 rtl:ml-4">
+                                            <i class="fas fa-gem text-purple-600 dark:text-purple-400 text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-semibold text-gray-800 dark:text-white">
+                                                <span class="en-text">Luxury</span>
+                                                <span class="ar-text" style="display: none;">فاخر</span>
+                                                <span class="he-text" style="display: none;">יוקרה</span>
+                                            </h4>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm">
+                                                <span class="en-text">Premium materials, exclusive finishes</span>
+                                                <span class="ar-text" style="display: none;">مواد متميزة، تشطيبات حصرية</span>
+                                                <span class="he-text" style="display: none;">חומרים פרימיום, גימורים בלעדיים</span>
+                                            </p>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-purple-600 dark:text-purple-400 font-bold">$$$</span>
+                                            <span class="text-gray-500 dark:text-gray-400 text-sm">
+                                                <span class="en-text">High-end</span>
+                                                <span class="ar-text" style="display: none;">راقي</span>
+                                                <span class="he-text" style="display: none;">יוקרתי</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-4 mt-8">
+                                <button id="prevStep3" class="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors duration-300">
+                                    <span class="en-text">Back</span>
+                                    <span class="ar-text" style="display: none;">رجوع</span>
+                                    <span class="he-text" style="display: none;">חזור</span>
+                                </button>
+                                <button id="nextStep3" class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    <span class="en-text">Get Estimate</span>
+                                    <span class="ar-text" style="display: none;">احصل على التقدير</span>
+                                    <span class="he-text" style="display: none;">קבל הערכה</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Results -->
+                        <div id="step4" class="step-container step-hidden">
+                            <div class="result-card">
+                                <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+                                    <span class="en-text">Your Project Estimate</span>
+                                    <span class="ar-text" style="display: none;">تقدير مشروعك</span>
+                                    <span class="he-text" style="display: none;">הערכת הפרויקט שלך</span>
+                                </h3>
+                                <div class="bg-blue-50 dark:bg-blue-900 rounded-xl p-6 mb-6 transition-colors duration-300">
+                                    <div class="grid grid-cols-2 gap-4 text-center">
+                                        <div>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm">
+                                                <span class="en-text">Total Area</span>
+                                                <span class="ar-text" style="display: none;">المساحة الإجمالية</span>
+                                                <span class="he-text" style="display: none;">שטח כולל</span>
+                                            </p>
+                                            <p id="totalArea" class="text-2xl font-bold text-blue-600 dark:text-blue-400">0 sq.ft.</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-600 dark:text-gray-400 text-sm">
+                                                <span class="en-text">Estimated Cost</span>
+                                                <span class="ar-text" style="display: none;">التكلفة المقدرة</span>
+                                                <span class="he-text" style="display: none;">עלות משוערת</span>
+                                            </p>
+                                            <p id="estimatedCost" class="text-2xl font-bold text-green-600 dark:text-green-400">$0 - $0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg transition-colors duration-300">
+                                        <span class="text-gray-700 dark:text-gray-300">
+                                            <span class="en-text">Project Type</span>
+                                            <span class="ar-text" style="display: none;">نوع المشروع</span>
+                                            <span class="he-text" style="display: none;">סוג הפרויקט</span>
+                                        </span>
+                                        <span id="resultProjectType" class="font-semibold">-</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg transition-colors duration-300">
+                                        <span class="text-gray-700 dark:text-gray-300">
+                                            <span class="en-text">Dimensions</span>
+                                            <span class="ar-text" style="display: none;">الأبعاد</span>
+                                            <span class="he-text" style="display: none;">מידות</span>
+                                        </span>
+                                        <span id="resultDimensions" class="font-semibold">-</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg transition-colors duration-300">
+                                        <span class="text-gray-700 dark:text-gray-300">
+                                            <span class="en-text">Material Quality</span>
+                                            <span class="ar-text" style="display: none;">جودة المواد</span>
+                                            <span class="he-text" style="display: none;">איכות חומרים</span>
+                                        </span>
+                                        <span id="resultMaterial" class="font-semibold">-</span>
+                                    </div>
+                                </div>
+                                <div class="mt-8 space-y-4">
+                                    <button id="newEstimate" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300">
+                                        <span class="en-text">Start New Estimate</span>
+                                        <span class="ar-text" style="display: none;">ابدأ تقدير جديد</span>
+                                        <span class="he-text" style="display: none;">התחל הערכה חדשה</span>
+                                    </button>
+                                    <button class="w-full border border-blue-600 text-blue-600 dark:text-blue-400 py-3 rounded-lg font-semibold hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors duration-300">
+                                        <span class="en-text">Download Detailed Report</span>
+                                        <span class="ar-text" style="display: none;">تحميل تقرير مفصل</span>
+                                        <span class="he-text" style="display: none;">הורד דוח מפורט</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visualization Section -->
+                    <div class="bg-gray-900 p-8 flex items-center justify-center">
+                        <div class="text-center">
+                            <h4 class="text-white text-xl mb-4" id="visualizationTitle">
+                                <span class="en-text">Project Visualization</span>
+                                <span class="ar-text" style="display: none;">تصور المشروع</span>
+                                <span class="he-text" style="display: none;">הדמיית פרויקט</span>
+                            </h4>
+                            <div class="relative">
+                                <div id="buildingVisualization" class="w-64 h-64 mx-auto bg-blue-900 bg-opacity-20 rounded-lg grid-pattern relative">
+                                    <!-- 3D Building will be rendered here -->
+                                </div>
+                                <div class="mt-4 text-white">
+                                    <p id="visualizationDimensions" class="text-sm">
+                                        <span class="en-text">Enter dimensions to see visualization</span>
+                                        <span class="ar-text" style="display: none;">أدخل الأبعاد لرؤية التصور</span>
+                                        <span class="he-text" style="display: none;">הזן מידות כדי לראות הדמיה</span>
+                                    </p>
+                                    <p id="visualizationArea" class="text-lg font-semibold mt-2">
+                                        <span class="en-text">Area: 0 sq.ft.</span>
+                                        <span class="ar-text" style="display: none;">المساحة: 0 قدم مربع</span>
+                                        <span class="he-text" style="display: none;">שטח: 0 רגל מרובע</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="py-20 bg-blue-600 text-white transition-colors duration-300">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                <span class="en-text">Let's Build Something Extraordinary</span>
+                <span class="ar-text" style="display: none;">لنبني شيئًا استثنائيًا</span>
+                <span class="he-text" style="display: none;">בואו נבנה משהו יוצא דופן</span>
+            </h2>
+            <p class="text-xl mb-10 max-w-2xl mx-auto">
+                <span class="en-text">Whether you're planning a new home or a landmark building, we're ready to bring your vision to life.</span>
+                <span class="ar-text" style="display: none;">سواء كنت تخطط لمنزل جديد أو مبنى معلم، نحن مستعدون لتحقيق رؤيتك.</span>
+                <span class="he-text" style="display: none;">בין אם אתם מתכננים בית חדש או בניין ציון דרך, אנחנו מוכנים להביא את החזון שלכם לחיים.</span>
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#contact" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 text-center">
+                    <span class="en-text">Contact Us</span>
+                    <span class="ar-text" style="display: none;">اتصل بنا</span>
+                    <span class="he-text" style="display: none;">צור קשר</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 w-full transition-colors duration-300">
+        <!-- Main Footer Content -->
+        <div class="w-full py-12">
+            <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                    <!-- Company Info -->
+                    <div class="lg:col-span-1">
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse mb-6">
+                            <div class="w-39 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg">
+                            <img src="logo.png" alt="Company Logo" class="w-39 h-10 object-contain padding-left-100 margin-left-100">
+                        </div>
+                            
+                        </div>
+                        <p class="mb-6 text-gray-400 text-justify leading-relaxed" id="footer-description">
+                            <span class="en-text">Creating exceptional architectural experiences through innovative design and quality craftsmanship.</span>
+                            <span class="ar-text" style="display: none;">خلق تجارب معمارية استثنائية من خلال التصميم المبتكر والحرفية عالية الجودة.</span>
+                            <span class="he-text" style="display: none;">יצירת חוויות אדריכליות יוצאות דופן באמצעות עיצוב חדשני ואומנות איכותית.</span>
+                        </p>
+                        <div class="flex ltr:space-x-3 rtl:space-x-reverse">
+                            <a href="https://facebook.com" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                                <i class="fab fa-facebook-f text-sm"></i>
+                            </a>
+                            <a href="https://twitter.com" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                                <i class="fab fa-twitter text-sm"></i>
+                            </a>
+                            <a href="https://instagram.com" class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                                <i class="fab fa-instagram text-sm"></i>
+                            </a>
+                            <a href="https://linkedin.com" class="w-10 h-10 bg-gray-800 hover:bg-blue-800 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                                <i class="fab fa-linkedin-in text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-6 ltr:text-left rtl:text-right" id="footer-links-title">
+                            <span class="en-text">Quick Links</span>
+                            <span class="ar-text" style="display: none;">روابط سريعة</span>
+                            <span class="he-text" style="display: none;">קישורים מהירים</span>
+                        </h3>
+                        <ul class="space-y-3">
+                            <li>
+                                <a href="home.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Home</span>
+                                    <span class="ar-text" style="display: none;">الرئيسية</span>
+                                    <span class="he-text" style="display: none;">בית</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="about.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">About</span>
+                                    <span class="ar-text" style="display: none;">من نحن</span>
+                                    <span class="he-text" style="display: none;">אודות</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="Blog.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Projects</span>
+                                    <span class="ar-text" style="display: none;">المشاريع</span>
+                                    <span class="he-text" style="display: none;">פרויקטים</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="services.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Philosophy</span>
+                                    <span class="ar-text" style="display: none;">الفلسفة</span>
+                                    <span class="he-text" style="display: none;">פילוסופיה</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="Contact.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Contact</span>
+                                    <span class="ar-text" style="display: none;">اتصل بنا</span>
+                                    <span class="he-text" style="display: none;">צור קשר</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Services -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-6 ltr:text-left rtl:text-right" id="footer-services-title">
+                            <span class="en-text">Services</span>
+                            <span class="ar-text" style="display: none;">الخدمات</span>
+                            <span class="he-text" style="display: none;">שירותים</span>
+                        </h3>
+                        <ul class="space-y-3">
+                            <li>
+                                <a href="Residential Architecture.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Residential Projects</span>
+                                    <span class="ar-text" style="display: none;">المشاريع السكنية</span>
+                                    <span class="he-text" style="display: none;">פרויקטים למגורים</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="commercial-projects.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Commercial Projects</span>
+                                    <span class="ar-text" style="display: none;">المشاريع التجارية</span>
+                                    <span class="he-text" style="display: none;">פרויקטים מסחריים</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="interior-design.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Interior Design</span>
+                                    <span class="ar-text" style="display: none;">التصميم الداخلي</span>
+                                    <span class="he-text" style="display: none;">עיצוב פנים</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="architectural-planning.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Architectural Planning</span>
+                                    <span class="ar-text" style="display: none;">التخطيط المعماري</span>
+                                    <span class="he-text" style="display: none;">תכנון אדריכלי</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="project-management.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Project Management</span>
+                                    <span class="ar-text" style="display: none;">إدارة المشاريع</span>
+                                    <span class="he-text" style="display: none;">ניהול פרויקטים</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="renovation-remodeling.html" class="hover:text-blue-400 transition-colors duration-300 flex items-center ltr:space-x-2 rtl:space-x-reverse group">
+                                    <span class="en-text">Renovation & Remodeling</span>
+                                    <span class="ar-text" style="display: none;">التجديد وإعادة التصميم</span>
+                                    <span class="he-text" style="display: none;">שיפוץ ועיצוב מחדש</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-6 ltr:text-left rtl:text-right" id="footer-contact-title">
+                            <span class="en-text">Contact Info</span>
+                            <span class="ar-text" style="display: none;">معلومات الاتصال</span>
+                            <span class="he-text" style="display: none;">פרטי יצירת קשר</span>
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start ltr:space-x-3 rtl:space-x-reverse">
+                                <i class="fas fa-map-marker-alt mt-1 text-blue-400 flex-shrink-0"></i>
+                                <div class="ltr:text-left rtl:text-right">
+                                    <p class="text-sm">
+                                        <span class="en-text">123 Design Avenue</span>
+                                        <span class="ar-text" style="display: none;">123 شارع التصميم</span>
+                                        <span class="he-text" style="display: none;">123 שדרת העיצוב</span>
+                                    </p>
+                                    <p class="text-sm text-gray-400">
+                                        <span class="en-text">Creative District, CD 10001</span>
+                                        <span class="ar-text" style="display: none;">الحي الإبداعي، CD 10001</span>
+                                        <span class="he-text" style="display: none;">רובע יצירתי, CD 10001</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                                <i class="fas fa-phone text-blue-400 flex-shrink-0"></i>
+                                <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors duration-300 text-sm">
+                                    +1 (555) 123-4567
+                                </a>
+                            </div>
+                            <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                                <i class="fas fa-envelope text-blue-400 flex-shrink-0"></i>
+                                <a href="mailto:info@archvision.com" class="hover:text-blue-400 transition-colors duration-300 text-sm">
+                                    info@archvision.com
+                                </a>
+                            </div>
+                            <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                                <i class="fas fa-clock text-blue-400 flex-shrink-0"></i>
+                                <span class="text-sm">
+                                    <span class="en-text">Mon-Fri: 9AM-6PM</span>
+                                    <span class="ar-text" style="display: none;">الإثنين-الجمعة: 9 صباحاً-6 مساءً</span>
+                                    <span class="he-text" style="display: none;">ימים א-ה: 9:00-18:00</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="border-t border-gray-800 w-full">
+            <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="py-6 text-center">
+                    <p class="text-sm text-gray-400" id="footer-copyright">
+                        <span class="en-text">&copy; 2025 ArchVision. All Rights Reserved.</span>
+                        <span class="ar-text" style="display: none;">&copy; 2025 أرشفيجن. جميع الحقوق محفوظة.</span>
+                        <span class="he-text" style="display: none;">&copy; 2025 ArchVision. כל הזכויות שמורות.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            baseCostPerSqFt: {
+                residential: { basic: 120, premium: 180, luxury: 280 },
+                commercial: { basic: 150, premium: 220, luxury: 350 },
+                interior: { basic: 80, premium: 120, luxury: 200 },
+                renovation: { basic: 100, premium: 160, luxury: 250 }
+            },
+            visualizationScale: 2 // Pixels per foot
+        };
+
+        // State
+        let currentStep = 1;
+        let projectData = {
+            type: null,
+            length: null,
+            width: null,
+            height: 10,
+            material: null
+        };
+
+        // DOM Elements
+        const steps = {
+            1: document.getElementById('step1'),
+            2: document.getElementById('step2'),
+            3: document.getElementById('step3'),
+            4: document.getElementById('step4')
+        };
+
+        const buttons = {
+            next1: document.getElementById('nextStep1'),
+            next2: document.getElementById('nextStep2'),
+            next3: document.getElementById('nextStep3'),
+            prev2: document.getElementById('prevStep2'),
+            prev3: document.getElementById('prevStep3'),
+            newEstimate: document.getElementById('newEstimate')
+        };
+
+        const inputs = {
+            length: document.getElementById('length'),
+            width: document.getElementById('width'),
+            height: document.getElementById('height')
+        };
+
+        const resultElements = {
+            totalArea: document.getElementById('totalArea'),
+            estimatedCost: document.getElementById('estimatedCost'),
+            projectType: document.getElementById('resultProjectType'),
+            dimensions: document.getElementById('resultDimensions'),
+            material: document.getElementById('resultMaterial')
+        };
+
+        const visualization = {
+            container: document.getElementById('buildingVisualization'),
+            title: document.getElementById('visualizationTitle'),
+            dimensions: document.getElementById('visualizationDimensions'),
+            area: document.getElementById('visualizationArea')
+        };
+
+        // Event Listeners
+        function initializeEventListeners() {
+            // Project type selection
+            document.querySelectorAll('.estimator-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.estimator-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    projectData.type = card.dataset.type;
+                    buttons.next1.disabled = false;
+                    updateVisualization();
+                });
+            });
+
+            // Material selection
+            document.querySelectorAll('.material-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    document.querySelectorAll('.material-option').forEach(o => o.classList.remove('selected'));
+                    option.classList.add('selected');
+                    projectData.material = option.dataset.quality;
+                    buttons.next3.disabled = false;
+                });
+            });
+
+            // Dimension inputs
+            Object.values(inputs).forEach(input => {
+                input.addEventListener('input', () => {
+                    projectData.length = parseFloat(inputs.length.value) || null;
+                    projectData.width = parseFloat(inputs.width.value) || null;
+                    projectData.height = parseFloat(inputs.height.value) || 10;
+                    
+                    buttons.next2.disabled = !(projectData.length && projectData.width);
+                    updateVisualization();
+                });
+            });
+
+            // Navigation buttons
+            buttons.next1.addEventListener('click', () => navigateToStep(2));
+            buttons.next2.addEventListener('click', () => navigateToStep(3));
+            buttons.next3.addEventListener('click', () => {
+                calculateEstimate();
+                navigateToStep(4);
+            });
+            buttons.prev2.addEventListener('click', () => navigateToStep(1));
+            buttons.prev3.addEventListener('click', () => navigateToStep(2));
+            buttons.newEstimate.addEventListener('click', resetEstimator);
+        }
+
+        // Navigation
+        function navigateToStep(step) {
+            steps[currentStep].classList.remove('step-visible');
+            steps[currentStep].classList.add('step-hidden');
+            
+            currentStep = step;
+            steps[currentStep].classList.remove('step-hidden');
+            steps[currentStep].classList.add('step-visible');
+            
+            updateProgressBar();
+            updateVisualization();
+        }
+
+        function updateProgressBar() {
+            const progress = (currentStep / 4) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        // Visualization
+        function updateVisualization() {
+            const container = visualization.container;
+            container.innerHTML = '';
+            
+            if (!projectData.length || !projectData.width) {
+                visualization.dimensions.textContent = document.querySelector('.en-text').style.display !== 'none' ? 
+                    'Enter dimensions to see visualization' : 
+                    (document.querySelector('.ar-text').style.display !== 'none' ? 
+                        'أدخل الأبعاد لرؤية التصور' : 
+                        'הזן מידות כדי לראות הדמיה');
+                visualization.area.textContent = document.querySelector('.en-text').style.display !== 'none' ? 
+                    'Area: 0 sq.ft.' : 
+                    (document.querySelector('.ar-text').style.display !== 'none' ? 
+                        'المساحة: 0 قدم مربع' : 
+                        'שטח: 0 רגל מרובע');
+                return;
+            }
+
+            const scale = CONFIG.visualizationScale;
+            const maxSize = 200; // Maximum visualization size in pixels
+            const actualWidth = projectData.width * scale;
+            const actualLength = projectData.length * scale;
+            
+            // Scale down if too large
+            const displayWidth = Math.min(actualWidth, maxSize);
+            const displayLength = Math.min(actualLength, maxSize);
+            const scaleFactor = Math.min(maxSize / actualWidth, maxSize / actualLength, 1);
+
+            // Create floor
+            const floor = document.createElement('div');
+            floor.className = 'building-floor';
+            floor.style.width = `${displayWidth}px`;
+            floor.style.height = `${displayLength}px`;
+            floor.style.left = '50%';
+            floor.style.top = '50%';
+            floor.style.transform = 'translate(-50%, -50%)';
+            floor.style.boxShadow = '0 0 20px rgba(0,0,0,0.3)';
+            container.appendChild(floor);
+
+            // Update visualization text
+            const area = projectData.length * projectData.width;
+            visualization.dimensions.textContent = `${projectData.length}ft × ${projectData.width}ft`;
+            visualization.area.textContent = document.querySelector('.en-text').style.display !== 'none' ? 
+                `Area: ${area.toLocaleString()} sq.ft.` : 
+                (document.querySelector('.ar-text').style.display !== 'none' ? 
+                    `المساحة: ${area.toLocaleString()} قدم مربع` : 
+                    `שטח: ${area.toLocaleString()} רגל מרובע`);
+            
+            if (projectData.type) {
+                const typeText = projectData.type.charAt(0).toUpperCase() + projectData.type.slice(1);
+                visualization.title.textContent = document.querySelector('.en-text').style.display !== 'none' ? 
+                    `${typeText} Project` : 
+                    (document.querySelector('.ar-text').style.display !== 'none' ? 
+                        `مشروع ${typeText === 'Residential' ? 'سكني' : typeText === 'Commercial' ? 'تجاري' : typeText === 'Interior' ? 'داخلي' : 'تجديد'}` : 
+                        `פרויקט ${typeText === 'Residential' ? 'מגורים' : typeText === 'Commercial' ? 'מסחרי' : typeText === 'Interior' ? 'פנים' : 'שיפוץ'}`);
+            }
+        }
+
+        // Calculation
+        function calculateEstimate() {
+            const area = projectData.length * projectData.width;
+            const baseCost = CONFIG.baseCostPerSqFt[projectData.type][projectData.material];
+            const totalCost = area * baseCost;
+            
+            // Add variance for estimate range
+            const variance = 0.15; // 15% variance
+            const minCost = Math.round(totalCost * (1 - variance));
+            const maxCost = Math.round(totalCost * (1 + variance));
+            
+            // Update results
+            resultElements.totalArea.textContent = `${area.toLocaleString()} sq.ft.`;
+            resultElements.estimatedCost.textContent = `$${minCost.toLocaleString()} - $${maxCost.toLocaleString()}`;
+            resultElements.projectType.textContent = projectData.type.charAt(0).toUpperCase() + projectData.type.slice(1);
+            resultElements.dimensions.textContent = `${projectData.length}ft × ${projectData.width}ft`;
+            resultElements.material.textContent = projectData.material.charAt(0).toUpperCase() + projectData.material.slice(1);
+        }
+
+        // Reset
+        function resetEstimator() {
+            currentStep = 1;
+            projectData = {
+                type: null,
+                length: null,
+                width: null,
+                height: 10,
+                material: null
+            };
+            
+            // Reset UI
+            document.querySelectorAll('.estimator-card').forEach(card => card.classList.remove('selected'));
+            document.querySelectorAll('.material-option').forEach(option => option.classList.remove('selected'));
+            inputs.length.value = '';
+            inputs.width.value = '';
+            inputs.height.value = '10';
+            buttons.next1.disabled = true;
+            buttons.next2.disabled = true;
+            buttons.next3.disabled = true;
+            
+            navigateToStep(1);
+            updateVisualization();
+        }
+
+        // Language switching functionality
+        document.getElementById('languageSelect').addEventListener('change', function() {
+            const selectedLang = this.value;
+            const allEnTexts = document.querySelectorAll('.en-text');
+            const allArTexts = document.querySelectorAll('.ar-text');
+            const allHeTexts = document.querySelectorAll('.he-text');
+            
+            // Hide all language texts first
+            allEnTexts.forEach(el => el.style.display = 'none');
+            allArTexts.forEach(el => el.style.display = 'none');
+            allHeTexts.forEach(el => el.style.display = 'none');
+            
+            // Show selected language
+            if (selectedLang === 'en') {
+                allEnTexts.forEach(el => el.style.display = 'inline');
+                document.body.classList.remove('rtl');
+                document.body.classList.add('ltr');
+            } else if (selectedLang === 'ar') {
+                allArTexts.forEach(el => el.style.display = 'inline');
+                document.body.classList.remove('ltr');
+                document.body.classList.add('rtl');
+            } else if (selectedLang === 'he') {
+                allHeTexts.forEach(el => el.style.display = 'inline');
+                document.body.classList.remove('ltr');
+                document.body.classList.add('rtl');
+            }
+            
+            // Update estimator text
+            updateVisualization();
+        });
+
+        // Dark mode toggle
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                this.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                this.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // Mobile menu functionality
+        document.getElementById('mobileMenuButton').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.remove('ltr:translate-x-full', 'rtl:-translate-x-full');
+        });
+
+        document.getElementById('closeMobileMenu').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.add('ltr:translate-x-full', 'rtl:-translate-x-full');
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.getElementById('mobileMenu').classList.add('ltr:translate-x-full', 'rtl:-translate-x-full');
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeEventListeners();
+            updateProgressBar();
+        });
+    </script>
+</body>
+</html>

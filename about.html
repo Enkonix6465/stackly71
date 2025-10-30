@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Stackly</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#e67e22',
+                        accent: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* RTL Direction Handling */
+        [dir="rtl"] .ltr-text-left {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .ltr-ml-2 {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-mr-2 {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-8 > * + * {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+        
+        [dir="rtl"] .ltr-pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-border-l-2 {
+            border-left: 0;
+            border-right: 2px solid;
+        }
+        
+        [dir="rtl"] .ltr-rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-text-right {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .ltr-left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .ltr-translate-x-full {
+            transform: translateX(-100%);
+        }
+        
+        /* RTL-specific adjustments */
+        [dir="rtl"] .rtl-text-right {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .rtl-text-left {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .rtl-mr-2 {
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-ml-2 {
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-space-x-reverse > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .rtl-flex-row-reverse {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .rtl-items-end {
+            align-items: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-justify-end {
+            justify-content: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-border-r-2 {
+            border-right: 0;
+            border-left: 2px solid;
+        }
+        
+        [dir="rtl"] .rtl-pr-4 {
+            padding-right: 0;
+            padding-left: 1rem;
+        }
+
+        /* Corner positioning for header elements */
+        .header-container {
+            position: relative;
+            min-height: 80px;
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .logo-container {
+            left: 1rem;
+        }
+        
+        [dir="rtl"] .logo-container {
+            right: 1rem;
+        }
+        
+        .nav-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .right-side-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .right-side-container {
+            right: 1rem;
+        }
+        
+        [dir="rtl"] .right-side-container {
+            left: 1rem;
+        }
+
+        /* Keep buttons LTR in RTL mode */
+        [dir="rtl"] .right-side-container * {
+            direction: ltr !important;
+        }
+        
+        [dir="rtl"] .right-side-container a,
+        [dir="rtl"] .right-side-container button,
+        [dir="rtl"] .right-side-container select {
+            text-align: center;
+            unicode-bidi: isolate;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Chevron rotation for RTL */
+        [dir="rtl"] .chevron-rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile responsiveness for corner positioning */
+        @media (max-width: 1024px) {
+            .nav-container {
+                display: none;
+            }
+            
+            .logo-container {
+                position: static;
+                transform: none;
+            }
+            
+            .right-side-container {
+                position: static;
+                transform: none;
+            }
+            
+            .header-container {
+                justify-content: space-between;
+                min-height: auto;
+            }
+        }
+
+        /* Mobile menu transitions */
+        .mobile-menu-enter {
+            transform: translateX(100%);
+        }
+        
+        [dir="rtl"] .mobile-menu-enter {
+            transform: translateX(-100%);
+        }
+        
+        .mobile-menu-enter-active {
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        [dir="rtl"] .mobile-menu-enter-active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-gray-50 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+    <!-- Header -->
+   <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 left-0 z-50 transition-all duration-300">
+  <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+      
+      <!-- Logo -->
+      <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse ">
+          <img src="logo.png" alt="Logo" class="h-8 w-auto">
+      </div>
+      
+      <!-- Navigation -->
+      <nav class="hidden lg:flex items-center ltr:space-x-8 rtl:space-x-reverse nav-container">
+          
+          <!-- Home Dropdown -->
+          <div class="relative group">
+              <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                  <span id="nav-home">Home</span>
+                  <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+              </a>
+              <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                  <a href="home.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Home 1</a>
+                  <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Home 2</a>
+              </div>
+          </div>
+
+          <!-- About -->
+          <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-about">
+              About
+          </a>
+
+          <!-- Services Dropdown -->
+          <div class="relative group">
+              <a href="services.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                  <span id="nav-services">Services</span>
+                  <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+              </a>
+              <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                  <a href="Residential Architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Residential Projects</a>
+                  <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Commercial Projects</a>
+                  <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Interior Design</a>
+                  <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Architectural Planning</a>
+                  <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Management</a>
+                  <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Renovation & Remodeling</a>
+              </div>
+          </div>
+
+          <!-- Blog Dropdown -->
+          <div class="relative group">
+              <a href="Blog.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                  <span id="nav-blog">Blog</span>
+                  <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+              </a>
+              <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                  <a href="Blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Design Trends</a>
+                  <a href="Blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Showcase</a>
+                  <a href="Blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Investment Insights</a>
+              </div>
+          </div>
+
+          <!-- Contact Us -->
+          <a href="Contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-contact">
+              Contact Us
+          </a>
+      </nav>
+
+      <!-- Right Side -->
+      <div class="flex items-center ltr-space-x-4 rtl-space-x-reverse right-side-container">
+          <!-- Language Selector -->
+          <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+              <option value="en">English</option>
+              <option value="ar">العربية</option>
+              <option value="he">עברית</option>
+          </select>
+          
+          <!-- Dark Mode Toggle -->
+          <button id="themeToggle" class="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+              <i class="fas fa-moon"></i>
+          </button>
+          
+          <!-- Login Button -->
+          <div class="hidden md:flex items-center ltr-space-x-3 rtl-space-x-reverse">
+              <a href="login.html" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm">
+                  Log Out
+              </a>
+          </div>
+          
+          <!-- Mobile Menu Button -->
+          <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+              <i class="fas fa-bars"></i>
+          </button>
+      </div>
+  </div>
+  
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="lg:hidden fixed inset-0 bg-white dark:bg-gray-800 z-50 transform ltr-translate-x-full rtl--translate-x-full transition-transform duration-300">
+      <div class="flex justify-between items-center p-4 border-b dark:border-gray-700 rtl-flex-row-reverse">
+          <h2 class="text-xl font-bold text-primary dark:text-white" id="mobile-menu-title">Menu</h2>
+          <button id="closeMobileMenu" class="text-gray-600 dark:text-gray-300 text-2xl">
+              <i class="fas fa-times"></i>
+          </button>
+      </div>
+      <nav class="p-4 space-y-4 rtl-text-right">
+          <div>
+              <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                  <span id="mobile-nav-home">Home</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+              </button>
+              <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                  <a href="home.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 1</a>
+                  <a href="home2.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 2</a>
+              </div>
+          </div>
+          <a href="about.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-about">About</a>
+          <div>
+              <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                  <span id="mobile-nav-services">Services</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+              </button>
+              <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                  <a href="Residential Architecture.html" class="block py-2 text-gray-600 dark:text-gray-400">Residential Projects</a>
+                  <a href="commercial-projects.html" class="block py-2 text-gray-600 dark:text-gray-400">Commercial Projects</a>
+                  <a href="interior-design.html" class="block py-2 text-gray-600 dark:text-gray-400">Interior Design</a>
+                  <a href="architectural-planning.html" class="block py-2 text-gray-600 dark:text-gray-400">Architectural Planning</a>
+                  <a href="project-management.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Management</a>
+                  <a href="renovation-remodeling.html" class="block py-2 text-gray-600 dark:text-gray-400">Renovation & Remodeling</a>
+              </div>
+          </div>
+          <div>
+              <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                  <span id="mobile-nav-blog">Blog</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+              </button>
+              <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                  <a href="Blog1.html" class="block py-2 text-gray-600 dark:text-gray-400">Design Trends</a>
+                  <a href="Blog2.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Showcase</a>
+                  <a href="Blog3.html" class="block py-2 text-gray-600 dark:text-gray-400">Investment Insights</a>
+              </div>
+          </div>
+          <a href="Contact.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-contact">Contact Us</a>
+          <a href="login.html" class="block text-lg font-medium text-primary dark:text-white py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-center">Log Out</a>
+      </nav>
+  </div>
+</header>
+
+
+    <!-- Main Content (RTL when Arabic/Hebrew selected) -->
+    <main id="main-content">
+        <!-- Section 1: Hero / Introduction -->
+        <section id="hero" class="pt-20 min-h-screen flex items-center justify-center relative overflow-hidden">
+            <!-- Background Video -->
+            <video autoplay muted loop playsinline class="absolute w-full h-full object-cover">
+                <source src="About1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Dark Overlay for better text readability -->
+            <div class="absolute inset-0 bg-black/50"></div>
+            
+            <!-- Content -->
+            <div class="container mx-auto px-4 sm:px-6 relative z-10 text-center">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up text-white" id="hero-title">
+                    Building Tomorrow's Landmarks Today
+                </h1>
+                <p class="text-xl sm:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in-up delay-100 text-white" id="hero-description">
+                    With over two decades of architectural excellence, we transform visions into enduring structures that stand the test of time
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 2: Our Story -->
+        <section id="achievements" class="py-20 bg-gradient-to-b from-purple-50 to-white dark:from-gray-800 dark:to-gray-900 w-full">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h2 class="text-4xl font-bold text-center mb-12 text-purple-700 dark:text-purple-400" id="achievements-title">Our Achievements</h2>
+
+                <div class="relative max-w-5xl mx-auto">
+                    <!-- Center vertical line -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 h-full border-l-4 border-purple-300 dark:border-purple-600 timeline-line"></div>
+
+                    <!-- Timeline items -->
+                    <div class="space-y-16">
+                        <!-- Item 1 -->
+                        <div class="relative flex justify-end md:justify-start items-center">
+                            <div class="z-10 w-16 h-16 bg-blue-400 rounded-full flex items-center justify-center text-white text-2xl shadow-lg absolute left-1/2 transform -translate-x-1/2 -translate-y-8 timeline-dot">
+                                <i class="fas fa-project-diagram"></i>
+                            </div>
+                            <div class="md:w-1/2 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg ml-auto md:ml-0 md:mr-16 timeline-content-left">
+                                <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400 mb-2" id="achievement-1-title">100+ Projects</h3>
+                                <p class="text-gray-600 dark:text-gray-300" id="achievement-1-desc">Successfully delivered over 100 projects across industries.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="relative flex justify-start md:justify-end items-center">
+                            <div class="z-10 w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center text-white text-2xl shadow-lg absolute left-1/2 transform -translate-x-1/2 -translate-y-8 timeline-dot">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div class="md:w-1/2 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg mr-auto md:mr-0 md:ml-16 timeline-content-right">
+                                <h3 class="text-xl font-bold text-yellow-600 dark:text-yellow-400 mb-2" id="achievement-2-title">Award Winning</h3>
+                                <p class="text-gray-600 dark:text-gray-300" id="achievement-2-desc">Recognized for innovation and excellence in design and construction.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="relative flex justify-end md:justify-start items-center">
+                            <div class="z-10 w-16 h-16 bg-purple-400 rounded-full flex items-center justify-center text-white text-2xl shadow-lg absolute left-1/2 transform -translate-x-1/2 -translate-y-8 timeline-dot">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="md:w-1/2 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg ml-auto md:ml-0 md:mr-16 timeline-content-left">
+                                <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-2" id="achievement-3-title">Global Clients</h3>
+                                <p class="text-gray-600 dark:text-gray-300" id="achievement-3-desc">Trusted by clients in 15+ countries worldwide.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Mission, Vision & Values -->
+        <section id="mission" class="py-16 bg-gray-100 dark:bg-gray-900 w-full">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-800 dark:text-white" id="mission-title">Our Mission, Vision & Values</h2>
+                <p class="text-xl text-center mb-12 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="mission-subtitle">Guiding principles that shape every project we undertake</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Mission -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transition-all duration-300 hover:shadow-xl">
+                        <div class="w-20 h-20 bg-primary rounded-full mx-auto mb-6 flex items-center justify-center">
+                            <i class="fas fa-bullseye text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white" id="mission-heading">Our Mission</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="mission-text">To create innovative, sustainable architectural solutions that enhance human experiences while respecting our environment and building for future generations.</p>
+                    </div>
+                    
+                    <!-- Vision -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transition-all duration-300 hover:shadow-xl">
+                        <div class="w-20 h-20 bg-secondary rounded-full mx-auto mb-6 flex items-center justify-center">
+                            <i class="fas fa-eye text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white" id="vision-heading">Our Vision</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="vision-text">To be the leading architectural firm recognized globally for transforming spaces into sustainable, functional, and beautiful environments that inspire and endure.</p>
+                    </div>
+                    
+                    <!-- Values -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transition-all duration-300 hover:shadow-xl">
+                        <div class="w-20 h-20 bg-accent rounded-full mx-auto mb-6 flex items-center justify-center">
+                            <i class="fas fa-heart text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white" id="values-heading">Our Values</h3>
+                        <ul class="text-gray-600 dark:text-gray-300 space-y-2 text-left">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> <span id="value-1">Integrity in all dealings</span></li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> <span id="value-2">Innovation through creativity</span></li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> <span id="value-3">Sustainability as a priority</span></li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> <span id="value-4">Excellence in execution</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Design & Construction Process -->
+        <section id="process" class="py-16 bg-white dark:bg-gray-800 w-full relative">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
+            <div class="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
+            
+            <div class="container mx-auto px-4 sm:px-6 relative z-10">
+                <h2 class="text-3xl font-bold text-center mb-4 text-white" id="process-title">Our Design & Construction Process</h2>
+                <p class="text-xl text-center mb-12 text-gray-200 max-w-3xl mx-auto" id="process-subtitle">A meticulous workflow ensuring excellence at every stage</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center border border-white/20">
+                        <div class="w-16 h-16 bg-primary rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">1</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="process-1-title">Discovery & Consultation</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="process-1-desc">We begin by deeply understanding your vision, requirements, and budget through detailed consultations.</p>
+                    </div>
+                    
+                    <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center border border-white/20">
+                        <div class="w-16 h-16 bg-secondary rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">2</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="process-2-title">Concept Development</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="process-2-desc">Our creative team transforms ideas into architectural concepts with detailed sketches and 3D models.</p>
+                    </div>
+                    
+                    <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center border border-white/20">
+                        <div class="w-16 h-16 bg-accent rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">3</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="process-3-title">Design Refinement</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="process-3-desc">We refine the design through multiple iterations, incorporating your feedback and technical requirements.</p>
+                    </div>
+                    
+                    <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center border border-white/20">
+                        <div class="w-16 h-16 bg-primary rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">4</div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white" id="process-4-title">Implementation</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="process-4-desc">Our project managers oversee construction to ensure the design is executed with precision and quality.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Sustainability & Innovation -->
+        <section id="sustainability" class="py-16 bg-gray-100 dark:bg-gray-900 w-full">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-800 dark:text-white" id="sustainability-title">Sustainability & Innovation</h2>
+                <p class="text-xl text-center mb-12 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="sustainability-subtitle">Pioneering eco-friendly solutions and cutting-edge technologies</p>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white" id="green-practices-title">Green Building Practices</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" id="green-practices-desc">We integrate sustainable practices into every project, from material selection to energy-efficient systems that reduce environmental impact.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-solar-panel text-green-600 dark:text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white" id="renewable-title">Renewable Energy Integration</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="renewable-desc">Solar panels, geothermal systems, and wind power solutions tailored to each project.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-recycle text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white" id="materials-title">Sustainable Materials</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="materials-desc">Using recycled, reclaimed, and locally sourced materials to minimize carbon footprint.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-tint text-purple-600 dark:text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white" id="water-title">Water Conservation</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="water-desc">Rainwater harvesting and greywater recycling systems for sustainable water management.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white" id="innovation-title">Technological Innovation</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-center">
+                                <div class="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-cube text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white" id="modeling-title">3D Modeling & BIM</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="modeling-desc">Advanced Building Information Modeling for precise planning and clash detection.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-16 h-16 bg-secondary rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-vr-cardboard text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white" id="vr-title">Virtual Reality Walkthroughs</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="vr-desc">Immersive experiences allowing clients to visualize spaces before construction.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-16 h-16 bg-accent rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-robot text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white" id="ai-title">AI-Powered Design</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="ai-desc">Machine learning algorithms optimizing space utilization and energy efficiency.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Safety & Quality Assurance -->
+        <section id="safety" class="py-16 bg-white dark:bg-gray-800 w-full">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-800 dark:text-white" id="safety-title">Safety & Quality Assurance</h2>
+                <p class="text-xl text-center mb-12 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="safety-subtitle">Uncompromising commitment to safety standards and quality control</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white" id="safety-protocols-title">Safety Protocols</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-hard-hat text-red-600 dark:text-red-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800 dark:text-white" id="site-safety-title">Site Safety Management</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="site-safety-desc">Comprehensive safety protocols, regular inspections, and mandatory training for all personnel.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-exclamation-triangle text-yellow-600 dark:text-yellow-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800 dark:text-white" id="risk-title">Risk Assessment</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="risk-desc">Proactive identification and mitigation of potential hazards throughout the project lifecycle.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-shield-alt text-green-600 dark:text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800 dark:text-white" id="compliance-title">Compliance Standards</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="compliance-desc">Adherence to all local, national, and international building codes and safety regulations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white" id="quality-title">Quality Assurance</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-clipboard-check text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800 dark:text-white" id="material-testing-title">Material Testing</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="material-testing-desc">Rigorous testing of all materials to ensure they meet our high standards for durability and performance.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-search text-purple-600 dark:text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800 dark:text-white" id="inspections-title">Quality Inspections</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="inspections-desc">Multiple inspection checkpoints throughout construction to maintain quality standards.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <i class="fas fa-award text-indigo-600 dark:text-indigo-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800 dark:text-white" id="certifications-title">Certifications</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" id="certifications-desc">ISO 9001 certified quality management system ensuring consistent delivery of excellence.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold mb-2 text-primary counter" data-target="150">0</div>
+                        <div class="text-gray-600 dark:text-gray-300" id="projects-completed">Projects Completed</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold mb-2 text-secondary counter" data-target="0">0</div>
+                        <div class="text-gray-600 dark:text-gray-300" id="safety-incidents">Safety Incidents</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold mb-2 text-accent counter" data-target="98">0</div>
+                        <div class="text-gray-600 dark:text-gray-300" id="client-satisfaction">Client Satisfaction %</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold mb-2 text-primary counter" data-target="25">0</div>
+                        <div class="text-gray-600 dark:text-gray-300" id="years-excellence">Years of Excellence</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (RTL when Arabic/Hebrew selected) -->
+    <footer id="footer-content" class="bg-gray-900 text-gray-300 py-12 footer-rtl">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                   <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse mb-6 sm:mb-0">
+                        <div class="w-33 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-md">
+                            <img src="logo.png" alt="Company Logo" class="w-33 h-10 object-contain">
+                        </div>
+                    </div>
+                    <p class="mb-6 text-gray-400" id="footer-description">
+                        Creating exceptional architectural experiences through innovative design and quality construction.
+                    </p>
+                    <div class="flex space-x-4 rtl:space-x-reverse">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="quick-links-title">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="home.html" class="hover:text-blue-400 transition-colors" id="footer-home">Home</a></li>
+                        <li><a href="about.html" class="hover:text-blue-400 transition-colors" id="footer-about">About</a></li>
+                        <li><a href="services.html" class="hover:text-blue-400 transition-colors" id="footer-services">Services</a></li>
+                        <li><a href="blog.html" class="hover:text-blue-400 transition-colors" id="footer-blog">Blog</a></li>
+                        <li><a href="contact.html" class="hover:text-blue-400 transition-colors" id="footer-contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="services-title">Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="service1.html" class="hover:text-blue-400 transition-colors" id="footer-service1">Residential Projects</a></li>
+                        <li><a href="service2.html" class="hover:text-blue-400 transition-colors" id="footer-service2">Commercial Projects</a></li>
+                        <li><a href="service3.html" class="hover:text-blue-400 transition-colors" id="footer-service3">Interior Design</a></li>
+                        <li><a href="service4.html" class="hover:text-blue-400 transition-colors" id="footer-service4">Architectural Planning</a></li>
+                        <li><a href="service5.html" class="hover:text-blue-400 transition-colors" id="footer-service5">Project Management</a></li>
+                        <li><a href="Renovation.html" class="hover:text-blue-400 transition-colors" id="footer-service6">Renovation & Remodeling</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="contact-info-title">Contact Info</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <div>
+                                <p id="footer-address-line1">123 Design Avenue</p>
+                                <p id="footer-address-line2">Creative District, CD 10001</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors" id="footer-phone">
+                                +1 (555) 123-4567
+                            </a>
+                        </div>
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <a href="mailto:info@stackly.com" class="hover:text-blue-400 transition-colors" id="footer-email">
+                                info@stackly.com
+                            </a>
+                        </div>
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span id="footer-hours">Mon-Fri: 9AM-6PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p id="footer-copyright">&copy; 2025 Stackly. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            initializeMobileMenu();
+            initializeLanguage();
+            initializeAnimations();
+        });
+
+        // Theme functionality
+        function initializeTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or default to system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+            
+            // Theme toggle event
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // Mobile menu functionality
+        function initializeMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('translate-x-full');
+            });
+            
+            closeMobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+            
+            // Mobile dropdown functionality
+            const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+            mobileDropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling;
+                    content.classList.toggle('hidden');
+                    const icon = toggle.querySelector('i');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            });
+            
+            // Close mobile menu when clicking on links
+            const mobileLinks = document.querySelectorAll('#mobileMenu a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                });
+            });
+        }
+
+        // Language functionality
+        function initializeLanguage() {
+            const languageSelect = document.getElementById('languageSelect');
+            const mainContent = document.getElementById('main-content');
+            const footerContent = document.getElementById('footer-content');
+
+            languageSelect.addEventListener('change', function() {
+                const selectedLanguage = this.value;
+                updateLanguage(selectedLanguage);
+            });
+
+            function updateLanguage(language) {
+                // Update text content for all elements with IDs in translations
+                Object.keys(translations[language]).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.textContent = translations[language][key];
+                    }
+                });
+
+                // Update direction for RTL languages
+                if (language === 'ar' || language === 'he') {
+                    document.documentElement.dir = 'rtl';
+                    mainContent.classList.add('rtl-content');
+                    footerContent.classList.add('footer-rtl');
+                } else {
+                    document.documentElement.dir = 'ltr';
+                    mainContent.classList.remove('rtl-content');
+                    footerContent.classList.remove('footer-rtl');
+                }
+            }
+
+            // Initialize with English
+            updateLanguage('en');
+        }
+
+        // Animations
+        function initializeAnimations() {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        // Close mobile menu if open
+                        const mobileMenu = document.getElementById('mobileMenu');
+                        mobileMenu.classList.add('translate-x-full');
+                        
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Animated counter for stats section
+            function animateCounter() {
+                const counters = document.querySelectorAll('.counter');
+                const speed = 200;
+                
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + (target / speed));
+                        setTimeout(animateCounter, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                });
+            }
+
+            // Timeline animation
+            function animateTimeline() {
+                const timelineItems = document.querySelectorAll('.timeline-item');
+                
+                timelineItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                    }, index * 300);
+                });
+            }
+
+            // Initialize animations
+            animateCounter();
+            animateTimeline();
+
+            // Intersection Observer for animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in-up');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Observe all sections for animation
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // Language translations
+        const translations = {
+            en: {
+                // Header translations
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact",
+                "mobile-menu-title": "Menu",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact",
+                
+                // Hero section
+                "hero-title": "Building Tomorrow's Landmarks Today",
+                "hero-description": "With over two decades of architectural excellence, we transform visions into enduring structures that stand the test of time",
+                
+                // Achievements section
+                "achievements-title": "Our Achievements",
+                "achievement-1-title": "100+ Projects",
+                "achievement-1-desc": "Successfully delivered over 100 projects across industries.",
+                "achievement-2-title": "Award Winning",
+                "achievement-2-desc": "Recognized for innovation and excellence in design and construction.",
+                "achievement-3-title": "Global Clients",
+                "achievement-3-desc": "Trusted by clients in 15+ countries worldwide.",
+                
+                // Mission section
+                "mission-title": "Our Mission, Vision & Values",
+                "mission-subtitle": "Guiding principles that shape every project we undertake",
+                "mission-heading": "Our Mission",
+                "mission-text": "To create innovative, sustainable architectural solutions that enhance human experiences while respecting our environment and building for future generations.",
+                "vision-heading": "Our Vision",
+                "vision-text": "To be the leading architectural firm recognized globally for transforming spaces into sustainable, functional, and beautiful environments that inspire and endure.",
+                "values-heading": "Our Values",
+                "value-1": "Integrity in all dealings",
+                "value-2": "Innovation through creativity",
+                "value-3": "Sustainability as a priority",
+                "value-4": "Excellence in execution",
+                
+                // Process section
+                "process-title": "Our Design & Construction Process",
+                "process-subtitle": "A meticulous workflow ensuring excellence at every stage",
+                "process-1-title": "Discovery & Consultation",
+                "process-1-desc": "We begin by deeply understanding your vision, requirements, and budget through detailed consultations.",
+                "process-2-title": "Concept Development",
+                "process-2-desc": "Our creative team transforms ideas into architectural concepts with detailed sketches and 3D models.",
+                "process-3-title": "Design Refinement",
+                "process-3-desc": "We refine the design through multiple iterations, incorporating your feedback and technical requirements.",
+                "process-4-title": "Implementation",
+                "process-4-desc": "Our project managers oversee construction to ensure the design is executed with precision and quality.",
+                
+                // Sustainability section
+                "sustainability-title": "Sustainability & Innovation",
+                "sustainability-subtitle": "Pioneering eco-friendly solutions and cutting-edge technologies",
+                "green-practices-title": "Green Building Practices",
+                "green-practices-desc": "We integrate sustainable practices into every project, from material selection to energy-efficient systems that reduce environmental impact.",
+                "renewable-title": "Renewable Energy Integration",
+                "renewable-desc": "Solar panels, geothermal systems, and wind power solutions tailored to each project.",
+                "materials-title": "Sustainable Materials",
+                "materials-desc": "Using recycled, reclaimed, and locally sourced materials to minimize carbon footprint.",
+                "water-title": "Water Conservation",
+                "water-desc": "Rainwater harvesting and greywater recycling systems for sustainable water management.",
+                "innovation-title": "Technological Innovation",
+                "modeling-title": "3D Modeling & BIM",
+                "modeling-desc": "Advanced Building Information Modeling for precise planning and clash detection.",
+                "vr-title": "Virtual Reality Walkthroughs",
+                "vr-desc": "Immersive experiences allowing clients to visualize spaces before construction.",
+                "ai-title": "AI-Powered Design",
+                "ai-desc": "Machine learning algorithms optimizing space utilization and energy efficiency.",
+                
+                // Safety section
+                "safety-title": "Safety & Quality Assurance",
+                "safety-subtitle": "Uncompromising commitment to safety standards and quality control",
+                "safety-protocols-title": "Safety Protocols",
+                "site-safety-title": "Site Safety Management",
+                "site-safety-desc": "Comprehensive safety protocols, regular inspections, and mandatory training for all personnel.",
+                "risk-title": "Risk Assessment",
+                "risk-desc": "Proactive identification and mitigation of potential hazards throughout the project lifecycle.",
+                "compliance-title": "Compliance Standards",
+                "compliance-desc": "Adherence to all local, national, and international building codes and safety regulations.",
+                "quality-title": "Quality Assurance",
+                "material-testing-title": "Material Testing",
+                "material-testing-desc": "Rigorous testing of all materials to ensure they meet our high standards for durability and performance.",
+                "inspections-title": "Quality Inspections",
+                "inspections-desc": "Multiple inspection checkpoints throughout construction to maintain quality standards.",
+                "certifications-title": "Certifications",
+                "certifications-desc": "ISO 9001 certified quality management system ensuring consistent delivery of excellence.",
+                "projects-completed": "Projects Completed",
+                "safety-incidents": "Safety Incidents",
+                "client-satisfaction": "Client Satisfaction %",
+                "years-excellence": "Years of Excellence",
+                
+                // Footer translations
+                "footer-description": "Creating exceptional architectural experiences through innovative design and quality construction.",
+                "quick-links-title": "Quick Links",
+                "footer-home": "Home",
+                "footer-about": "About",
+                "footer-services": "Services",
+                "footer-blog": "Blog",
+                "footer-contact": "Contact",
+                "services-title": "Services",
+                "footer-service1": "Residential Projects",
+                "footer-service2": "Commercial Projects",
+                "footer-service3": "Interior Design",
+                "footer-service4": "Architectural Planning",
+                "footer-service5": "Project Management",
+                "footer-service6": "Renovation & Remodeling",
+                "contact-info-title": "Contact Info",
+                "footer-address-line1": "123 Design Avenue",
+                "footer-address-line2": "Creative District, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@stackly.com",
+                "footer-hours": "Mon-Fri: 9AM-6PM",
+                "footer-copyright": "© 2025 Stackly. All Rights Reserved."
+            },
+            ar: {
+                // Header translations
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                "mobile-menu-title": "القائمة",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                
+                // Hero section
+                "hero-title": "نبني معالم الغد اليوم",
+                "hero-description": "بخبرة تزيد عن عقدين من التميز المعماري، نحول الرؤى إلى هياكل دائمة تثبت أمام اختبار الزمن",
+                
+                // Achievements section
+                "achievements-title": "إنجازاتنا",
+                "achievement-1-title": "100+ مشروع",
+                "achievement-1-desc": "أنهينا بنجاح أكثر من 100 مشروع عبر مختلف الصناعات.",
+                "achievement-2-title": "حائز على جوائز",
+                "achievement-2-desc": "معترف بنا للابتكار والتميز في التصميم والبناء.",
+                "achievement-3-title": "عملاء عالميون",
+                "achievement-3-desc": "يثق بنا عملاء في أكثر من 15 دولة حول العالم.",
+                
+                // Mission section
+                "mission-title": "مهمتنا، رؤيتنا وقيمنا",
+                "mission-subtitle": "مبادئ توجيهية تشكل كل مشروع نقوم به",
+                "mission-heading": "مهمتنا",
+                "mission-text": "خلق حلول معمارية مبتكرة ومستدامة تعزز التجارب البشرية مع احترام بيئتنا والبناء للأجيال القادمة.",
+                "vision-heading": "رؤيتنا",
+                "vision-text": "أن نكون شركة الهندسة المعمارية الرائدة المعترف بها عالميًا لتحويل المساحات إلى بيئات مستدامة وعملية وجميلة تلهم وتدوم.",
+                "values-heading": "قيمنا",
+                "value-1": "النزاهة في جميع المعاملات",
+                "value-2": "الابتكار من خلال الإبداع",
+                "value-3": "الاستدامة كأولوية",
+                "value-4": "التميز في التنفيذ",
+                
+                // Process section
+                "process-title": "عملية التصميم والبناء لدينا",
+                "process-subtitle": "سير عمل دقيق يضمن التميز في كل مرحلة",
+                "process-1-title": "الاكتشاف والاستشارة",
+                "process-1-desc": "نبدأ بفهم عميق لرؤيتك ومتطلباتك وميزانيتك من خلال استشارات مفصلة.",
+                "process-2-title": "تطوير المفهوم",
+                "process-2-desc": "يحول فريقنا الإبداعي الأفكار إلى مفاهيم معمارية مع رسومات تفصيلية ونماذج ثلاثية الأبعاد.",
+                "process-3-title": "تحسين التصميم",
+                "process-3-desc": "نقوم بتحسين التصميم من خلال تكرارات متعددة، ودمج ملاحظاتك والمتطلبات التقنية.",
+                "process-4-title": "التنفيذ",
+                "process-4-desc": "يشرف مديرو مشاريعنا على البناء لضمان تنفيذ التصميم بدقة وجودة.",
+                
+                // Sustainability section
+                "sustainability-title": "الاستدامة والابتكار",
+                "sustainability-subtitle": "ريادة الحلول الصديقة للبيئة والتقنيات المتطورة",
+                "green-practices-title": "ممارسات البناء الأخضر",
+                "green-practices-desc": "ندمج الممارسات المستدامة في كل مشروع، من اختيار المواد إلى أنظمة كفاءة الطاقة التي تقلل التأثير البيئي.",
+                "renewable-title": "دمج الطاقة المتجددة",
+                "renewable-desc": "الألواح الشمسية، وأنظمة الطاقة الحرارية الأرضية، وحلول طاقة الرياح المصممة خصيصًا لكل مشروع.",
+                "materials-title": "المواد المستدامة",
+                "materials-desc": "استخدام المواد المعاد تدويرها والمستعادة والمصدرة محليًا لتقليل البصمة الكربونية.",
+                "water-title": "الحفاظ على المياه",
+                "water-desc": "أنظمة حصاد مياه الأمطار وإعادة تدوير المياه الرمادية للإدارة المستدامة للمياه.",
+                "innovation-title": "الابتكار التكنولوجي",
+                "modeling-title": "النمذجة ثلاثية الأبعاد ونمذجة معلومات البناء",
+                "modeling-desc": "نمذجة معلومات البناء المتقدمة للتخطيط الدقيق واكتشاف التعارضات.",
+                "vr-title": "جولات الواقع الافتراضي",
+                "vr-desc": "تجارب غامسة تسمح للعملاء بتصور المساحات قبل البناء.",
+                "ai-title": "التصميم المدعوم بالذكاء الاصطناعي",
+                "ai-desc": "خوارزميات التعلم الآلي التي تحسن استخدام المساحة وكفاءة الطاقة.",
+                
+                // Safety section
+                "safety-title": "السلامة وضمان الجودة",
+                "safety-subtitle": "التزام لا هوادة فيه بمعايير السلامة ومراقبة الجودة",
+                "safety-protocols-title": "بروتوكولات السلامة",
+                "site-safety-title": "إدارة السلامة في الموقع",
+                "site-safety-desc": "بروتوكولات سلامة شاملة، وتفتيش منتظم، وتدريب إلزامي لجميع الموظفين.",
+                "risk-title": "تقييم المخاطر",
+                "risk-desc": "التحديد الاستباقي والتخفيف من المخاطر المحتملة طوال دورة حياة المشروع.",
+                "compliance-title": "معايير الامتثال",
+                "compliance-desc": "الالتزام بجميع قوانين البناء واللوائح السلامة المحلية والوطنية والدولية.",
+                "quality-title": "ضمان الجودة",
+                "material-testing-title": "اختبار المواد",
+                "material-testing-desc": "اختبارات صارمة لجميع المواد لضمان تلبية معاييرنا العالية للمتانة والأداء.",
+                "inspections-title": "فحوصات الجودة",
+                "inspections-desc": "نقاط تفتيش متعددة طوال فترة البناء للحفاظ على معايير الجودة.",
+                "certifications-title": "الشهادات",
+                "certifications-desc": "نظام إدارة الجودة المعتمد بشهادة ISO 9001 يضمن تقديمًا متسقًا للتميز.",
+                "projects-completed": "المشاريع المكتملة",
+                "safety-incidents": "حوادث السلامة",
+                "client-satisfaction": "رضا العملاء %",
+                "years-excellence": "سنوات من التميز",
+                
+                // Footer translations
+                "footer-description": "نخلق تجارب معمارية استثنائية من خلال التصميم المبتكر والبناء عالي الجودة.",
+                "quick-links-title": "روابط سريعة",
+                "footer-home": "الرئيسية",
+                "footer-about": "من نحن",
+                "footer-services": "الخدمات",
+                "footer-blog": "المدونة",
+                "footer-contact": "اتصل بنا",
+                "services-title": "الخدمات",
+                "footer-service1": "المشاريع السكنية",
+                "footer-service2": "المشاريع التجارية",
+                "footer-service3": "التصميم الداخلي",
+                "footer-service4": "التخطيط المعماري",
+                "footer-service5": "إدارة المشاريع",
+                "footer-service6": "التجديد وإعادة التصميم",
+                "contact-info-title": "معلومات الاتصال",
+                "footer-address-line1": "123 شارع التصميم",
+                "footer-address-line2": "الحي الإبداعي، CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@stackly.com",
+                "footer-hours": "الإثنين-الجمعة: 9ص-6م",
+                "footer-copyright": "© 2025 ستاكلي. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Header translations
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                "mobile-menu-title": "תפריט",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                
+                // Hero section
+                "hero-title": "בונים את ציוני הדרך של מחר היום",
+                "hero-description": "עם למעלה משני עשורים של מצוינות אדריכלית, אנו הופכים חזונות למבנים עמידים שעומדים במבחן הזמן",
+                
+                // Achievements section
+                "achievements-title": "ההישגים שלנו",
+                "achievement-1-title": "100+ פרויקטים",
+                "achievement-1-desc": "השלמנו בהצלחה למעלה מ-100 פרויקטים across industries.",
+                "achievement-2-title": "זוכה פרסים",
+                "achievement-2-desc": "מוכרים לחדשנות ומצוינות בעיצוב ובנייה.",
+                "achievement-3-title": "לקוחות גלובליים",
+                "achievement-3-desc": "מהימנים על ידי לקוחות ב-15+ מדינות ברחבי העולם.",
+                
+                // Mission section
+                "mission-title": "המשימה, החזון והערכים שלנו",
+                "mission-subtitle": "עקרונות מנחים שמעצבים כל פרויקט שאנו מבצעים",
+                "mission-heading": "המשימה שלנו",
+                "mission-text": "ליצור פתרונות אדריכליים חדשניים וברי קיימא שמשפרים חוויות אנושיות תוך כיבוד הסביבה שלנו ובנייה לדורות הבאים.",
+                "vision-heading": "החזון שלנו",
+                "vision-text": "להיות חברת האדריכלות המובילה המוכרת globally להפיכת חללים לסביבות ברות קיימא, פונקציונליות ויפות שמעוררות השראה ומחזיקות מעמד.",
+                "values-heading": "הערכים שלנו",
+                "value-1": "יושר בכל העסקאות",
+                "value-2": "חדשנות through creativity",
+                "value-3": "קיימות as a priority",
+                "value-4": "מצוינות בביצוע",
+                
+                // Process section
+                "process-title": "תהליך העיצוב והבנייה שלנו",
+                "process-subtitle": "workflow קפדני המבטיח מצוינות בכל שלב",
+                "process-1-title": "גילוי וייעוץ",
+                "process-1-desc": "אנו מתחילים בהבנה עמוקה של החזון, הדרישות והתקציב שלך through ייעוץ מפורט.",
+                "process-2-title": "פיתוח קונספט",
+                "process-2-desc": "הצוות היצירתי שלנו הופך רעיונות לקונספטים אדריכליים עם סקיצות מפורטות ודגמים תלת-ממדיים.",
+                "process-3-title": "שיפור העיצוב",
+                "process-3-desc": "אנו משפרים את העיצוב through איטרציות מרובות, משלבים את המשוב שלך ואת הדרישות הטכניות.",
+                "process-4-title": "יישום",
+                "process-4-desc": "מנהלי הפרויקטים שלנו מפקחים על הבנייה כדי להבטיח שהעיצוב מבוצע בדיוק ואיכות.",
+                
+                // Sustainability section
+                "sustainability-title": "קיימות וחדשנות",
+                "sustainability-subtitle": "חלוצים בפתרונות ידידותיים לסביבה וטכנולוגיות מתקדמות",
+                "green-practices-title": "שיטות בנייה ירוקה",
+                "green-practices-desc": "אנו משלבים שיטות בנייה בת-קיימא בכל פרויקט, מבחירת חומרים ועד למערכות חסכוניות באנרגיה המפחיתות את ההשפעה הסביבתית.",
+                "renewable-title": "שילוב אנרגיה מתחדשת",
+                "renewable-desc": "לוחות סולאריים, מערכות גיאותרמיות ופתרונות אנרגיית רוח המותאמים לכל פרויקט.",
+                "materials-title": "חומרים בני-קיימא",
+                "materials-desc": "שימוש בחומרים ממוחזרים, משוחזרים ומקומיים כדי למזער את טביעת הרגל הפחמנית.",
+                "water-title": "שימור מים",
+                "water-desc": "מערכות איסוף מי גשמים ומיחזור מי שפכים לניהול מים בר-קיימא.",
+                "innovation-title": "חדשנות טכנולוגית",
+                "modeling-title": "מודלינג תלת-ממדי ו-BIM",
+                "modeling-desc": "מודלינג מידע בניין מתקדם לתכנון מדויק וגילוי התנגשויות.",
+                "vr-title": "סיורים במציאות מדומה",
+                "vr-desc": "חוויות טבולות המאפשרות ללקוחות לדמיין חללים לפני הבנייה.",
+                "ai-title": "עיצוב מונחה בינה מלאכותית",
+                "ai-desc": "אלגוריתמי למידת מכונה הממטבים את ניצול החלל ויעילות האנרגיה.",
+                
+                // Safety section
+                "safety-title": "בטיחות ואבטחת איכות",
+                "safety-subtitle": "מחויבות בלתי מתפשרת לתקני בטיחות ובקרת איכות",
+                "safety-protocols-title": "פרוטוקולי בטיחות",
+                "site-safety-title": "ניהול בטיחות באתר",
+                "site-safety-desc": "פרוטוקולי בטיחות מקיפים, בדיקות סדירות והדרכה חובה לכל הצוות.",
+                "risk-title": "הערכת סיכונים",
+                "risk-desc": "זיהוי פרואקטיבי והפחתה של סכנות פוטנציאליות לאורך מחזור החיים של הפרויקט.",
+                "compliance-title": "תקני תאימות",
+                "compliance-desc": "עמידה בכל קודי הבנייה והתקנות הבטיחות המקומיות, הלאומיות והבינלאומיות.",
+                "quality-title": "אבטחת איכות",
+                "material-testing-title": "בדיקת חומרים",
+                "material-testing-desc": "בדיקות קפדניות של כל החומרים כדי להבטיח שהם עומדים בסטנדרטים הגבוהים שלנו לעמידות וביצועים.",
+                "inspections-title": "בדיקות איכות",
+                "inspections-desc": "נקודות בדיקה מרובות לאורך הבנייה כדי לשמור על סטנדרטים איכותיים.",
+                "certifications-title": "תעודות",
+                "certifications-desc": "מערכת ניהול איכות מוסמכת ISO 9001 המבטיחה אספקה עקבית של מצוינות.",
+                "projects-completed": "פרויקטים שהושלמו",
+                "safety-incidents": "תקריות בטיחות",
+                "client-satisfaction": "שביעות רצון לקוחות %",
+                "years-excellence": "שנות מצוינות",
+                
+                // Footer translations
+                "footer-description": "יוצרים חוויות אדריכליות יוצאות דופן באמצעות עיצוב חדשני ובנייה איכותית.",
+                "quick-links-title": "קישורים מהירים",
+                "footer-home": "בית",
+                "footer-about": "אודות",
+                "footer-services": "שירותים",
+                "footer-blog": "בלוג",
+                "footer-contact": "צור קשר",
+                "services-title": "שירותים",
+                "footer-service1": "פרויקטים למגורים",
+                "footer-service2": "פרויקטים מסחריים",
+                "footer-service3": "עיצוב פנים",
+                "footer-service4": "תכנון אדריכלי",
+                "footer-service5": "ניהול פרויקטים",
+                "footer-service6": "שיפוץ ועיצוב מחדש",
+                "contact-info-title": "פרטי יצירת קשר",
+                "footer-address-line1": "שדרת העיצוב 123",
+                "footer-address-line2": "הרובע היצירתי, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@stackly.com",
+                "footer-hours": "א'-ה': 9:00-18:00",
+                "footer-copyright": "© 2025 Stackly. כל הזכויות שמורות."
+            }
+        };
+    </script>
+</body>
+</html>

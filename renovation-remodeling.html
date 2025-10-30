@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renovation & Remodeling | Stackly</title>
+    <meta name="description" content="Transform your existing spaces with our expert renovation and remodeling services. Create beautiful, functional homes that reflect your evolving lifestyle and needs.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add Google Fonts for Arabic and Hebrew -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+   <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#e67e22',
+                        accent: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* RTL Direction Handling */
+        [dir="rtl"] .ltr-text-left {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .ltr-ml-2 {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-mr-2 {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-8 > * + * {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+        
+        [dir="rtl"] .ltr-pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-border-l-2 {
+            border-left: 0;
+            border-right: 2px solid;
+        }
+        
+        [dir="rtl"] .ltr-rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-text-right {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .ltr-left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .ltr-translate-x-full {
+            transform: translateX(-100%);
+        }
+        
+        /* RTL-specific adjustments */
+        [dir="rtl"] .rtl-text-right {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .rtl-text-left {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .rtl-mr-2 {
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-ml-2 {
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-space-x-reverse > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .rtl-flex-row-reverse {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .rtl-items-end {
+            align-items: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-justify-end {
+            justify-content: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-border-r-2 {
+            border-right: 0;
+            border-left: 2px solid;
+        }
+        
+        [dir="rtl"] .rtl-pr-4 {
+            padding-right: 0;
+            padding-left: 1rem;
+        }
+
+        /* Corner positioning for header elements */
+        .header-container {
+            position: relative;
+            min-height: 80px;
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .logo-container {
+            left: 1rem;
+        }
+        
+        [dir="rtl"] .logo-container {
+            right: 1rem;
+        }
+        
+        .nav-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .right-side-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .right-side-container {
+            right: 1rem;
+        }
+        
+        [dir="rtl"] .right-side-container {
+            left: 1rem;
+        }
+
+        /* Keep buttons LTR in RTL mode */
+        [dir="rtl"] .right-side-container * {
+            direction: ltr !important;
+        }
+        
+        [dir="rtl"] .right-side-container a,
+        [dir="rtl"] .right-side-container button,
+        [dir="rtl"] .right-side-container select {
+            text-align: center;
+            unicode-bidi: isolate;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Chevron rotation for RTL */
+        [dir="rtl"] .chevron-rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile responsiveness for corner positioning */
+        @media (max-width: 1024px) {
+            .nav-container {
+                display: none;
+            }
+            
+            .logo-container {
+                position: static;
+                transform: none;
+            }
+            
+            .right-side-container {
+                position: static;
+                transform: none;
+            }
+            
+            .header-container {
+                justify-content: space-between;
+                min-height: auto;
+            }
+        }
+
+        /* Mobile menu transitions */
+        .mobile-menu-enter {
+            transform: translateX(100%);
+        }
+        
+        [dir="rtl"] .mobile-menu-enter {
+            transform: translateX(-100%);
+        }
+        
+        .mobile-menu-enter-active {
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        [dir="rtl"] .mobile-menu-enter-active {
+            transform: translateX(0);
+        }
+
+        /* Additional styles for better appearance */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-gray-50 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 left-0 z-50 transition-all duration-300">
+        <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+            <!-- Logo - Positioned in LEFT corner (LTR) or RIGHT corner (RTL) -->
+            <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse logo-container">
+                <img src="logo.png" alt="Logo" class="h-8 w-auto">
+            </div>
+            
+            <!-- Navigation - Stays in CENTER -->
+            <nav class="hidden lg:flex items-center ltr:space-x-8 rtl:space-x-reverse nav-container">
+                <!-- Home Dropdown -->
+                <div class="relative group">
+                    <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-home">Home</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="home.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Home 1</a>
+                        <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Home 2</a>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-about">
+                    About
+                </a>
+
+                <!-- Services Dropdown -->
+                <div class="relative group">
+                    <a href="services.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-services">Services</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="Residential Architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Commercial Projects</a>
+                        <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Interior Design</a>
+                        <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Architectural Planning</a>
+                        <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Renovation & Remodeling</a>
+                    </div>
+                </div>
+
+                <!-- Blog Dropdown -->
+                <div class="relative group">
+                    <a href="Blog.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-blog">Blog</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="Blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Design Trends</a>
+                        <a href="Blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Showcase</a>
+                        <a href="Blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Investment Insights</a>
+                    </div>
+                </div>
+
+                <!-- Contact Us -->
+                <a href="Contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-contact">
+                    Contact Us
+                </a>
+            </nav>
+
+            <!-- Right Side - Positioned in RIGHT corner (LTR) or LEFT corner (RTL) -->
+            <div class="flex items-center ltr-space-x-4 rtl-space-x-reverse right-side-container">
+                <!-- Language Selector -->
+                <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="he">עברית</option>
+                </select>
+                
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- Login Button -->
+                <div class="hidden md:flex items-center ltr-space-x-3 rtl-space-x-reverse">
+                    <a href="login.html" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm">
+                        Log Out
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden fixed inset-0 bg-white dark:bg-gray-800 z-50 transform ltr-translate-x-full rtl--translate-x-full transition-transform duration-300">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700 rtl-flex-row-reverse">
+                <h2 class="text-xl font-bold text-primary dark:text-white" id="mobile-menu-title">Menu</h2>
+                <button id="closeMobileMenu" class="text-gray-600 dark:text-gray-300 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="p-4 space-y-4 rtl-text-right">
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-home">Home</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="home.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 1</a>
+                        <a href="home2.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-about">About</a>
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-services">Services</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Residential Architecture.html" class="block py-2 text-gray-600 dark:text-gray-400">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block py-2 text-gray-600 dark:text-gray-400">Commercial Projects</a>
+                        <a href="interior-design.html" class="block py-2 text-gray-600 dark:text-gray-400">Interior Design</a>
+                        <a href="architectural-planning.html" class="block py-2 text-gray-600 dark:text-gray-400">Architectural Planning</a>
+                        <a href="project-management.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block py-2 text-gray-600 dark:text-gray-400">Renovation & Remodeling</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-blog">Blog</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Blog1.html" class="block py-2 text-gray-600 dark:text-gray-400">Design Trends</a>
+                        <a href="Blog2.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Showcase</a>
+                        <a href="Blog3.html" class="block py-2 text-gray-600 dark:text-gray-400">Investment Insights</a>
+                    </div>
+                </div>
+                <a href="Contact.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-contact">Contact Us</a>
+                <a href="login.html" class="block text-lg font-medium text-primary dark:text-white py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-center">Log Out</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content (RTL when Arabic/Hebrew selected) -->
+    <main id="main-content" class="rtl-content">
+        <!-- Section 1: Hero with Gallery Showcase -->
+        <section id="hero" class="pt-32 min-h-screen flex items-center justify-center relative overflow-hidden bg-primary">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70 z-10"></div>
+            
+            <!-- Background Gallery Showcase -->
+            <div class="absolute inset-0 flex overflow-hidden">
+                <div id="hero-gallery" class="flex w-full h-full transition-transform duration-1000 ease-in-out">
+                    <!-- Hero gallery images will be dynamically loaded -->
+                </div>
+            </div>
+            
+            <div class="container mx-auto px-4 sm:px-6 relative z-20 text-center text-white">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up" id="hero-title">Transform Your Space</h1>
+                <p class="text-xl sm:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in-up delay-100" id="hero-description">
+                    Revitalize your home with our expert renovation and remodeling services. Create beautiful, functional spaces that reflect your evolving lifestyle and needs.
+                </p>
+                
+            </div>
+            
+            <!-- Scroll indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+                <a href="#process" class="text-white">
+                    <i class="fas fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 2: Renovation Process -->
+        <section id="process" class="py-20 bg-white dark:bg-gray-800 section-fade-in">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-blue-400 mb-4" id="process-title">Our Renovation Process</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="process-subtitle">
+                        A systematic approach to transforming your space from vision to reality with minimal disruption
+                    </p>
+                </div>
+                
+                <div id="process-steps" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Process steps will be dynamically loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Renovation Types -->
+        <section id="styles" class="py-20 bg-gray-100 dark:bg-gray-900 section-fade-in">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-blue-400 mb-4" id="styles-title">Renovation Services</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="styles-subtitle">
+                        Comprehensive renovation solutions tailored to transform every part of your home
+                    </p>
+                </div>
+                
+                <div id="styles-features" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Renovation types will be dynamically loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Space Transformation -->
+        <section id="space-planning" class="py-20 bg-white dark:bg-gray-800 section-fade-in">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <div class="lg:w-1/2">
+                        <div class="rounded-2xl overflow-hidden shadow-lg h-96">
+                            <img src="https://i.pinimg.com/1200x/1a/eb/b8/1aebb80ac83d1ad5ccda2bfdda9b1854.jpg" 
+                                 alt="Space Transformation" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-blue-400 mb-6" id="space-planning-title">Space Transformation</h2>
+                        <p class="text-lg text-gray-600 dark:text-gray-300 mb-6" id="space-planning-description">
+                            Maximize your existing space with innovative remodeling solutions that enhance functionality, flow, and comfort throughout your home.
+                        </p>
+                        <div id="space-features" class="space-y-4">
+                            <!-- Space features will be dynamically loaded -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Materials & Finishes -->
+        <section id="color-materials" class="py-20 bg-gray-100 dark:bg-gray-900 section-fade-in">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-blue-400 mb-4" id="color-materials-title">Materials & Finishes</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="color-materials-subtitle">
+                        Premium materials and finishes that elevate your space while ensuring durability and timeless appeal
+                    </p>
+                </div>
+                
+                <div id="color-materials-gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Materials gallery will be dynamically loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Sustainable Renovation -->
+        <section id="lighting" class="py-20 bg-white dark:bg-gray-800 section-fade-in">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-blue-400 mb-4" id="lighting-title">Sustainable Renovation</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="lighting-subtitle">
+                        Eco-friendly renovation solutions that improve energy efficiency while reducing environmental impact
+                    </p>
+                </div>
+                
+                <div id="lighting-features" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Sustainable renovation features will be dynamically loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Full-Screen Project Gallery with Filtering -->
+        <section id="gallery" class="py-20 bg-gray-100 dark:bg-gray-900 section-fade-in">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-blue-400 mb-4" id="gallery-title">Our Renovation Portfolio</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8" id="gallery-subtitle">
+                        Explore our stunning before-and-after transformations and get inspired for your own project
+                    </p>
+                </div>
+                
+                <!-- Gallery Grid -->
+                <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Gallery items will be dynamically loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Contact Us -->
+        <section id="contact" class="w-full bg-cover bg-center bg-no-repeat py-20" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://i.pinimg.com/1200x/33/b4/24/33b424a94e3c23a459153b4f91e87cbe.jpg')">
+            <div class="container mx-auto px-4 text-center text-white">
+                <h2 class="text-4xl font-bold mb-4" id="contact-title">Transform Your Home Today</h2>
+                <p class="text-xl max-w-2xl mx-auto mb-8" id="contact-description">Ready to revitalize your space? Get in touch with our renovation experts and let's discuss how we can transform your home to better suit your lifestyle.</p>
+                <a href="contact.html" class="inline-block bg-accent hover:bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105 btn-icon" id="contact-btn">
+                    <span>Start Your Transformation</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer-content" class="footer-rtl bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse mb-6 sm:mb-0">
+                        <div class="w-33 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-md">
+                            <img src="logo.png" alt="Company Logo" class="w-33 h-10 object-contain">
+                        </div>
+                    </div>
+                    <p class="mb-6 text-gray-400 text-justify" id="footer-description">
+                        <span class="en-text">Creating exceptional interior experiences through innovative design and quality craftsmanship.</span>
+                        <span class="ar-text" style="display: none;">خلق تجارب داخلية استثنائية من خلال التصميم المبتكر والحرفية عالية الجودة.</span>
+                        <span class="he-text" style="display: none;">יצירת חוויות פנים יוצאות דופן באמצעות עיצוב חדשני ואומנות איכותית.</span>
+                    </p>
+                    <div class="flex ltr:space-x-4 rtl:space-x-reverse">
+                        <a href="www.facebook.com" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="www.twitter.com" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="www.instagram.com" class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="www.linkedin.com" class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 text-left rtl:text-right" id="footer-links-title">
+                        <span class="en-text">Quick Links</span>
+                        <span class="ar-text" style="display: none;">روابط سريعة</span>
+                        <span class="he-text" style="display: none;">קישורים מהירים</span>
+                    </h3>
+                    <ul class="space-y-3 rtl:text-right">
+                        <li>
+                            <a href="home.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Home</span>
+                                <span class="ar-text" style="display: none;">الرئيسية</span>
+                                <span class="he-text" style="display: none;">בית</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="about.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">About</span>
+                                <span class="ar-text" style="display: none;">من نحن</span>
+                                <span class="he-text" style="display: none;">אודות</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Servers.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Services</span>
+                                <span class="ar-text" style="display: none;">الخدمات</span>
+                                <span class="he-text" style="display: none;">שירותים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="blog.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Blog</span>
+                                <span class="ar-text" style="display: none;">المدونة</span>
+                                <span class="he-text" style="display: none;">בלוג</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="contact.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Contact</span>
+                                <span class="ar-text" style="display: none;">اتصل بنا</span>
+                                <span class="he-text" style="display: none;">צור קשר</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 text-left rtl:text-right" id="footer-services-title">
+                        <span class="en-text">Services</span>
+                        <span class="ar-text" style="display: none;">الخدمات</span>
+                        <span class="he-text" style="display: none;">שירותים</span>
+                    </h3>
+                    <ul class="space-y-3 rtl:text-right">
+                        <li>
+                            <a href="Residential Architecture.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Residential Projects</span>
+                                <span class="ar-text" style="display: none;">المشاريع السكنية</span>
+                                <span class="he-text" style="display: none;">פרויקטים למגורים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Commercial Architecture.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Commercial Projects</span>
+                                <span class="ar-text" style="display: none;">المشاريع التجارية</span>
+                                <span class="he-text" style="display: none;">פרויקטים מסחריים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Interior Design.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Interior Design</span>
+                                <span class="ar-text" style="display: none;">التصميم الداخلي</span>
+                                <span class="he-text" style="display: none;">עיצוב פנים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Architectural Planning.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Architectural Planning</span>
+                                <span class="ar-text" style="display: none;">التخطيط المعماري</span>
+                                <span class="he-text" style="display: none;">תכנון אדריכלי</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Project Management.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Project Management</span>
+                                <span class="ar-text" style="display: none;">إدارة المشاريع</span>
+                                <span class="he-text" style="display: none;">ניהול פרויקטים</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="renovation-remodeling.html" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">Renovation & Remodeling</span>
+                                <span class="ar-text" style="display: none;">التجديد وإعادة التصميم</span>
+                                <span class="he-text" style="display: none;">שיפוץ ועיצוב מחדש</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 text-left rtl:text-right" id="footer-contact-title">
+                        <span class="en-text">Contact Info</span>
+                        <span class="ar-text" style="display: none;">معلومات الاتصال</span>
+                        <span class="he-text" style="display: none;">פרטי יצירת קשר</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <div class="text-left rtl:text-right">
+                                <p>
+                                    <span class="en-text">123 Design Avenue</span>
+                                    <span class="ar-text" style="display: none;">123 شارع التصميم</span>
+                                    <span class="he-text" style="display: none;">123 שדרת העיצוב</span>
+                                </p>
+                                <p>
+                                    <span class="en-text">Creative District, CD 10001</span>
+                                    <span class="ar-text" style="display: none;">الحي الإبداعي، CD 10001</span>
+                                    <span class="he-text" style="display: none;">רובע יצירתי, CD 10001</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">+1 (555) 123-4567</span>
+                                <span class="ar-text" style="display: none;">+1 (555) 123-4567</span>
+                                <span class="he-text" style="display: none;">+1 (555) 123-4567</span>
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <a href="mailto:info@stackly.com" class="hover:text-blue-400 transition-colors">
+                                <span class="en-text">info@stackly.com</span>
+                                <span class="ar-text" style="display: none;">info@stackly.com</span>
+                                <span class="he-text" style="display: none;">info@stackly.com</span>
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span>
+                                <span class="en-text">Mon-Fri: 9AM-6PM</span>
+                                <span class="ar-text" style="display: none;">الإثنين-الجمعة: 9 صباحاً-6 مساءً</span>
+                                <span class="he-text" style="display: none;">ימים א-ה: 9:00-18:00</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p id="footer-copyright">
+                    <span class="en-text">&copy; 2025 Stackly. All Rights Reserved.</span>
+                    <span class="ar-text" style="display: none;">&copy; 2025 ستاكلي. جميع الحقوق محفوظة.</span>
+                    <span class="he-text" style="display: none;">&copy; 2025 Stackly. כל הזכויות שמורות.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            initializeLanguage();
+            initializeMobileMenu();
+            initializeDynamicContent();
+            initializeAnimations();
+        });
+
+        // Theme functionality
+        function initializeTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or default to system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+            
+            // Theme toggle event
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // Language functionality
+        function initializeLanguage() {
+            const languageSelect = document.getElementById('languageSelect');
+            const mainContent = document.getElementById('main-content');
+            const footerContent = document.getElementById('footer-content');
+
+            languageSelect.addEventListener('change', function() {
+                const selectedLanguage = this.value;
+                updateLanguage(selectedLanguage);
+            });
+
+            function updateLanguage(language) {
+                // Update text content for all elements with IDs in translations
+                Object.keys(translations[language]).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.textContent = translations[language][key];
+                    }
+                });
+
+                // Update dynamic content
+                updateStylesFeatures(language);
+                updateProcessSteps(language);
+                updateSpaceFeatures(language);
+                updateLightingFeatures(language);
+                updateColorMaterialsGallery(language);
+                updateGalleryGrid(language);
+                updateFooterLanguage(language);
+
+                // Update direction for RTL languages (content only, not header)
+                if (language === 'ar' || language === 'he') {
+                    document.documentElement.dir = 'rtl';
+                    document.documentElement.lang = language;
+                    mainContent.classList.add('rtl-content');
+                    footerContent.classList.add('footer-rtl');
+                    
+                    // Apply specific font for language
+                    if (language === 'ar') {
+                        mainContent.style.fontFamily = "'Amiri', serif";
+                        footerContent.style.fontFamily = "'Amiri', serif";
+                    } else if (language === 'he') {
+                        mainContent.style.fontFamily = "'Heebo', sans-serif";
+                        footerContent.style.fontFamily = "'Heebo', sans-serif";
+                    }
+                } else {
+                    document.documentElement.dir = 'ltr';
+                    document.documentElement.lang = 'en';
+                    mainContent.classList.remove('rtl-content');
+                    footerContent.classList.remove('footer-rtl');
+                    mainContent.style.fontFamily = '';
+                    footerContent.style.fontFamily = '';
+                }
+            }
+
+            // Initialize with English
+            updateLanguage('en');
+        }
+
+        // Mobile menu functionality
+        function initializeMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('ltr-translate-x-full', 'rtl--translate-x-full');
+            });
+            
+            closeMobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.add('ltr-translate-x-full', 'rtl--translate-x-full');
+            });
+            
+            // Mobile dropdown functionality
+            document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('i');
+                    
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            });
+            
+            // Close mobile menu when clicking on links
+            const mobileLinks = document.querySelectorAll('#mobileMenu a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('ltr-translate-x-full', 'rtl--translate-x-full');
+                });
+            });
+        }
+
+        // Dynamic content loading with RTL support
+        function initializeDynamicContent() {
+            // Load hero gallery
+            const heroGallery = document.getElementById('hero-gallery');
+            const heroImages = [
+                'https://i.pinimg.com/1200x/4e/28/06/4e2806448e25f8bff77a3126c1bb2e5c.jpg',
+                'https://i.pinimg.com/1200x/1a/eb/b8/1aebb80ac83d1ad5ccda2bfdda9b1854.jpg',
+                'https://i.pinimg.com/1200x/33/b4/24/33b424a94e3c23a459153b4f91e87cbe.jpg'
+            ];
+            
+            heroImages.forEach(img => {
+                const div = document.createElement('div');
+                div.className = 'min-w-full h-full';
+                div.style.backgroundImage = `url(${img})`;
+                div.style.backgroundSize = 'cover';
+                div.style.backgroundPosition = 'center';
+                heroGallery.appendChild(div);
+            });
+            
+            // Auto-slide hero gallery
+            let currentSlide = 0;
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % heroImages.length;
+                heroGallery.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }, 5000);
+            
+            // Initialize all dynamic content with English
+            updateStylesFeatures('en');
+            updateProcessSteps('en');
+            updateSpaceFeatures('en');
+            updateLightingFeatures('en');
+            updateColorMaterialsGallery('en');
+            updateGalleryGrid('en');
+        }
+
+        // Renovation Types with RTL support
+        const stylesFeatures = document.getElementById('styles-features');
+        const styles = [
+            { 
+                icon: 'fa-home', 
+                title: { en: 'Kitchen Remodeling', ar: 'تجديد المطابخ', he: 'שיפוץ מטבחים' }, 
+                desc: { en: 'Transform your kitchen with custom cabinetry, modern appliances, and efficient layouts.', ar: 'حول مطبخك مع خزائن مخصصة، أجهزة حديثة وتخطيطات فعالة.', he: 'הפוך את המטבח שלך עם ארונות מותאמים אישית, מכשירים מודרניים ותוכניות יעילות.' } 
+            },
+            { 
+                icon: 'fa-bath', 
+                title: { en: 'Bathroom Renovation', ar: 'تجديد الحمامات', he: 'שיפוץ חדרי אמבטיה' }, 
+                desc: { en: 'Create spa-like retreats with luxurious fixtures, efficient layouts, and beautiful finishes.', ar: 'أنشئ ملاذات تشبه المنتجع الصحي مع تركيبات فاخرة، وتخطيطات فعالة وتشطيبات جميلة.', he: 'צור מקלטים דמויי ספא עם אביזרים מפוארים, תוכניות יעילות וגימורים יפים.' } 
+            },
+            { 
+                icon: 'fa-expand', 
+                title: { en: 'Room Additions', ar: 'إضافة الغرف', he: 'הוספת חדרים' }, 
+                desc: { en: 'Expand your living space with seamless room additions that complement your existing home.', ar: 'وسع مساحة معيشتك مع إضافات غرف سلسة تكمل منزلك الحالي.', he: 'הרחב את חלל המגורים שלך עם תוספות חדרים חלקות המשלימות את הבית הקיים שלך.' } 
+            },
+            { 
+                icon: 'fa-door-open', 
+                title: { en: 'Whole-House Remodel', ar: 'تجديد المنزل بالكامل', he: 'שיפוץ בית מלא' }, 
+                desc: { en: 'Comprehensive transformation of your entire home to better suit your lifestyle and needs.', ar: 'تحول شامل لمنزلك بالكامل ليتناسب بشكل أفضل مع نمط حياتك واحتياجاتك.', he: 'טרנספורמציה מקיפה של כל הבית שלך כדי להתאים טוב יותר לאורח החיים והצרכים שלך.' } 
+            },
+            { 
+                icon: 'fa-external-link-alt', 
+                title: { en: 'Exterior Renovation', ar: 'التجديد الخارجي', he: 'שיפוץ חיצוני' }, 
+                desc: { en: 'Enhance curb appeal with siding replacement, window updates, and exterior improvements.', ar: 'عزز جاذبية المظهر الخارجي مع استبدال التلبيس، تحديثات النوافذ وتحسينات خارجية.', he: 'שפר את המשיכה החיצונית עם החלפת ציפוי, עדכוני חלונות ושיפורים חיצוניים.' } 
+            },
+            { 
+                icon: 'fa-tools', 
+                title: { en: 'Basement Finishing', ar: 'تشطيب الطابق السفلي', he: 'גימור מרתף' }, 
+                desc: { en: 'Transform unused basement space into functional living areas with proper insulation and finishes.', ar: 'حول مساحة الطابق السفلي غير المستخدمة إلى مناطق معيشة وظيفية مع عزل وتشطيبات مناسبة.', he: 'הפוך חלל מרתף לא מנוצח לאזורי מגורים פונקציונליים עם בידוד וגימורים נאותים.' } 
+            }
+        ];
+
+        function updateStylesFeatures(language) {
+            if (!stylesFeatures) return;
+            
+            stylesFeatures.innerHTML = '';
+            
+            styles.forEach(style => {
+                const div = document.createElement('div');
+                div.className = 'card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg';
+                div.innerHTML = `
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full mb-4 flex items-center justify-center">
+                        <i class="fas ${style.icon} text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">${style.title[language]}</h3>
+                    <p class="text-gray-600 dark:text-gray-300">${style.desc[language]}</p>
+                `;
+                stylesFeatures.appendChild(div);
+            });
+        }
+
+        // Process Steps with RTL support
+        const processSteps = document.getElementById('process-steps');
+        const steps = [
+            { 
+                icon: 'fa-comments', 
+                title: { en: 'Consultation & Planning', ar: 'استشارة وتخطيط', he: 'ייעוץ ותכנון' }, 
+                desc: { en: 'Initial assessment of your space, needs, and vision with detailed project planning.', ar: 'تقييم أولي لمساحتك واحتياجاتك ورؤيتك مع تخطيط مشروع مفصل.', he: 'הערכה ראשונית של החלל, הצרכים והחזון שלך עם תכנון פרויקט מפורט.' } 
+            },
+            { 
+                icon: 'fa-pencil-ruler', 
+                title: { en: 'Design Development', ar: 'تطوير التصميم', he: 'פיתוח עיצוב' }, 
+                desc: { en: 'Creation of detailed designs, material selections, and construction documentation.', ar: 'إنشاء تصاميم مفصلة، اختيارات المواد وتوثيق البناء.', he: 'יצירת עיצובים מפורטים, בחירת חומרים ותיעוד בנייה.' } 
+            },
+            { 
+                icon: 'fa-hammer', 
+                title: { en: 'Demolition & Prep', ar: 'الهدم والتحضير', he: 'הריסה והכנה' }, 
+                desc: { en: 'Careful demolition and preparation of your space for the transformation ahead.', ar: 'هدم وتحضير دقيق لمساحتك للتحول القادم.', he: 'הריסה והכנה זהירה של החלל שלך לשינוי הקרוב.' } 
+            },
+            { 
+                icon: 'fa-hard-hat', 
+                title: { en: 'Construction & Installation', ar: 'البناء والتركيب', he: 'בנייה והתקנה' }, 
+                desc: { en: 'Expert construction, installation of new elements, and quality craftsmanship throughout.', ar: 'بناء خبير، تركيب العناصر الجديدة والحرفية عالية الجودة في جميع أنحاء.', he: 'בנייה מקצועית, התקנת אלמנטים חדשים ואומנות איכותית בכל.' } 
+            }
+        ];
+
+        function updateProcessSteps(language) {
+            if (!processSteps) return;
+            
+            processSteps.innerHTML = '';
+            
+            steps.forEach(step => {
+                const div = document.createElement('div');
+                div.className = 'card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center';
+                div.innerHTML = `
+                    <div class="w-16 h-16 bg-primary rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas ${step.icon} text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">${step.title[language]}</h3>
+                    <p class="text-gray-600 dark:text-gray-300">${step.desc[language]}</p>
+                `;
+                processSteps.appendChild(div);
+            });
+        }
+
+        // Space Features with RTL support
+        const spaceFeatures = document.getElementById('space-features');
+        const spaceItems = [
+            { 
+                icon: 'fa-ruler-combined', 
+                title: { en: 'Layout Optimization', ar: 'تحسين التخطيط', he: 'אופטימיזציה של תוכנית' }, 
+                desc: { en: 'Redesigning room layouts to improve flow, functionality, and spatial relationships.', ar: 'إعادة تصميم تخطيطات الغرف لتحسين التدفق والوظائف والعلاقات المكانية.', he: 'עיצוב מחדש של תוכניות חדר כדי לשפר זרימה, פונקציונליות ויחסים מרחביים.' } 
+            },
+            { 
+                icon: 'fa-expand-arrows-alt', 
+                title: { en: 'Space Maximization', ar: 'تعظيم المساحة', he: 'מיקסום חלל' }, 
+                desc: { en: 'Creative solutions to make the most of your existing square footage and storage.', ar: 'حلول إبداعية للاستفادة القصوى من مساحتك الحالية والتخزين.', he: 'פתרונות יצירתיים כדי למקסם את המ"ר והאחסון הקיימים שלך.' } 
+            },
+            { 
+                icon: 'fa-door-open', 
+                title: { en: 'Open Concept Creation', ar: 'إنشاء مفهوم مفتوح', he: 'יצירת קונספט פתוח' }, 
+                desc: { en: 'Removing walls to create open, flowing spaces that enhance connectivity and light.', ar: 'إزالة الجدران لخلق مساحات مفتوحة ومتدفقة تعزز الاتصال والضوء.', he: 'הסרת קירות ליצירת חללים פתוחים ושוטפים המשפרים קישוריות ואור.' } 
+            },
+            { 
+                icon: 'fa-object-group', 
+                title: { en: 'Multi-Functional Spaces', ar: 'مساحات متعددة الوظائف', he: 'חללים רב-תכליתיים' }, 
+                desc: { en: 'Designing adaptable spaces that serve multiple purposes for modern living.', ar: 'تصميم مساحات قابلة للتكيف تخدم أغراض متعددة للمعيشة الحديثة.', he: 'עיצוב חללים מתאימים שמשרתים מטרות מרובות למגורים מודרניים.' } 
+            }
+        ];
+
+        function updateSpaceFeatures(language) {
+            if (!spaceFeatures) return;
+            
+            spaceFeatures.innerHTML = '';
+            
+            spaceItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'flex items-start ltr:space-x-4 rtl:space-x-reverse';
+                div.innerHTML = `
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                        <i class="fas ${item.icon} text-white"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 dark:text-white">${item.title[language]}</h4>
+                        <p class="text-gray-600 dark:text-gray-300">${item.desc[language]}</p>
+                    </div>
+                `;
+                spaceFeatures.appendChild(div);
+            });
+        }
+
+        // Sustainable Renovation Features with RTL support
+        const lightingFeatures = document.getElementById('lighting-features');
+        const lightingItems = [
+            { 
+                icon: 'fa-solar-panel', 
+                title: { en: 'Energy-Efficient Upgrades', ar: 'ترقيات موفرة للطاقة', he: 'שדרוגים חסכוניים באנרגיה' }, 
+                desc: { en: 'Installation of energy-efficient windows, insulation, and HVAC systems', ar: 'تركيب نوافذ موفرة للطاقة، عزل وأنظمة تدفئة وتهوية وتكييف', he: 'התקנת חלונות חסכוניים באנרגיה, בידוד ומערכות HVAC' } 
+            },
+            { 
+                icon: 'fa-recycle', 
+                title: { en: 'Eco-Friendly Materials', ar: 'المواد الصديقة للبيئة', he: 'חומרים ידידותיים לסביבה' }, 
+                desc: { en: 'Use of sustainable, low-VOC, and recycled materials in your renovation', ar: 'استخدام مواد مستدامة ومنخفضة المركبات العضوية المتطايرة والمعاد تدويرها في تجديدك', he: 'שימוש בחומרים בני קיימא, נדיפים נמוכים ומוחזרים בשיפוץ שלך' } 
+            },
+            { 
+                icon: 'fa-tint', 
+                title: { en: 'Water Conservation', ar: 'الحفاظ على المياه', he: 'שימור מים' }, 
+                desc: { en: 'Installation of low-flow fixtures and water-efficient appliances', ar: 'تركيب تركيبات منخفضة التدفق وأجهزة موفرة للمياه', he: 'התקנת אביזרים בזרימה נמוכה ומכשירים חוסכי מים' } 
+            },
+            { 
+                icon: 'fa-leaf', 
+                title: { en: 'Healthy Indoor Environment', ar: 'بيئة داخلية صحية', he: 'סביבה פנימית בריאה' }, 
+                desc: { en: 'Improving air quality with proper ventilation and non-toxic materials', ar: 'تحسين جودة الهواء مع تهوية مناسبة ومواد غير سامة', he: 'שיפור איכות האוויר עם אוורור נאות וחומרים לא רעילים' } 
+            }
+        ];
+
+        function updateLightingFeatures(language) {
+            if (!lightingFeatures) return;
+            
+            lightingFeatures.innerHTML = '';
+            
+            lightingItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'card-hover bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center';
+                div.innerHTML = `
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas ${item.icon} text-green-600 dark:text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">${item.title[language]}</h3>
+                    <p class="text-gray-600 dark:text-gray-300">${item.desc[language]}</p>
+                `;
+                lightingFeatures.appendChild(div);
+            });
+        }
+
+        // Materials & Finishes Gallery with RTL support
+        const colorMaterialsGallery = document.getElementById('color-materials-gallery');
+        const colorMaterialsImages = [
+            { 
+                img: 'https://i.pinimg.com/1200x/20/c4/aa/20c4aad2c74cde4f3019724ebb9c07d3.jpg', 
+                title: { en: 'Countertop Options', ar: 'خيارات أسطح العمل', he: 'אפשרויות משטחי עבודה' }, 
+                desc: { en: 'Selection of durable and beautiful countertop materials for kitchens and bathrooms', ar: 'اختيار مواد أسطح العمل المتينة والجميلة للمطابخ والحمامات', he: 'בחירת חומרי משטחי עבודה עמידים ויפים למטבחים ולחדרי אמבטיה' } 
+            },
+            { 
+                img: 'https://i.pinimg.com/1200x/ff/64/6e/ff646e6295b3c8e6964ffca39e7e9d1a.jpg', 
+                title: { en: 'Flooring Solutions', ar: 'حلول الأرضيات', he: 'פתרונות ריצוף' }, 
+                desc: { en: 'Various flooring options including hardwood, tile, laminate, and luxury vinyl', ar: 'خيارات أرضيات متنوعة تشمل الخشب الصلب، البلاط، الصفائح والفينيل الفاخر', he: 'אפשרויות ריצוף שונות כולל פרקט, אריחים, למינט וויניל יוקרתי' } 
+            },
+            { 
+                img: 'https://i.pinimg.com/736x/e1/55/74/e15574b5c316cd538e9fd3623e13aa51.jpg', 
+                title: { en: 'Cabinet & Millwork', ar: 'الخزائن والأعمال النجارة', he: 'ארונות ועבודות נגרות' }, 
+                desc: { en: 'Custom cabinetry and millwork tailored to your storage needs and style preferences', ar: 'خزائن مخصصة وأعمال نجارة مصممة خصيصًا لاحتياجات التخزين وتفضيلات الأسلوب', he: 'ארונות מותאמים אישית ועבודות נגרות המותאמות לצרכי האחסון והעדפות הסגנון שלך' } 
+            },
+            { 
+                img: 'https://i.pinimg.com/1200x/85/92/40/8592402f100ee5b608f8de497df61cd9.jpg', 
+                title: { en: 'Fixture Selection', ar: 'اختيار التركيبات', he: 'בחירת אביזרים' }, 
+                desc: { en: 'Premium plumbing, lighting, and hardware fixtures for functionality and style', ar: 'تركيبات سباكة وإضاءة وأجهزة عالية الجودة للوظائف والأسلوب', he: 'אביזרי אינסטלציה, תאורה וחומרה פרמיים לתפקוד וסגנון' } 
+            },
+            { 
+                img: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', 
+                title: { en: 'Paint & Finishes', ar: 'الطلاء والتشطيبات', he: 'צבע וגימורים' }, 
+                desc: { en: 'Wide selection of paint colors and finishes to complement your renovated space', ar: 'مجموعة واسعة من ألوان الطلاء والتشطيبات لتكملة مساحتك المجددة', he: 'מבחר רחב של צבעי צבע וגימורים להשלמת החלל המשופץ שלך' } 
+            },
+            { 
+                img: 'https://i.pinimg.com/1200x/95/50/45/955045a5744d1c8a6694a842477a30aa.jpg', 
+                title: { en: 'Backsplash & Tile', ar: 'البلاط والجداريات', he: 'אריחי קיר ורצפה' }, 
+                desc: { en: 'Beautiful tile and backsplash options to add character and protection to your spaces', ar: 'خيارات البلاط والجداريات الجميلة لإضافة الشخصية والحماية إلى مساحاتك', he: 'אפשרויות אריחים ורצפות יפות להוספת אופי והגנה לחללים שלך' } 
+            }
+        ];
+
+        function updateColorMaterialsGallery(language) {
+            if (!colorMaterialsGallery) return;
+            
+            colorMaterialsGallery.innerHTML = '';
+            
+            colorMaterialsImages.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg';
+                div.innerHTML = `
+                    <img src="${item.img}" alt="${item.title[language]}" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">${item.title[language]}</h3>
+                        <p class="text-gray-600 dark:text-gray-300">${item.desc[language]}</p>
+                    </div>
+                `;
+                colorMaterialsGallery.appendChild(div);
+            });
+        }
+
+        // Gallery Grid with RTL support
+        const galleryGrid = document.getElementById('gallery-grid');
+        const galleryItems = [
+            { 
+                img: 'https://i.pinimg.com/736x/04/54/ad/0454ade2c7373d36a6e7109c2ca4849e.jpg', 
+                title: { en: 'Kitchen Transformation', ar: 'تحول المطبخ', he: 'טרנספורמציית מטבח' }, 
+                desc: { en: 'Complete kitchen remodel with custom cabinetry, island addition, and premium appliances', ar: 'تجديد مطبخ كامل مع خزائن مخصصة، إضافة جزيرة وأجهزة متميزة', he: 'שיפוץ מטבח מלא עם ארונות מותאמים אישית, תוספת אי ומכשירים פרמיים' } 
+            },
+            { 
+                img: 'https://i.pinimg.com/1200x/41/b2/af/41b2afad366ffa95a33065d16c3e05c7.jpg', 
+                title: { en: 'Master Suite Renovation', ar: 'تجديد جناح الرئيسي', he: 'שיפוץ סוויטת מאסטר' }, 
+                desc: { en: 'Luxurious master suite expansion with spa bathroom and walk-in closet', ar: 'توسعة جناح رئيسي فاخر مع حمام سبا وخزانة ملابس مدمجة', he: 'הרחבת סוויטת מאסטר מפוארת עם חדר אמבטיה ספא וארון בנוי' } 
+            },
+            { 
+                img: 'https://i.pinimg.com/1200x/e5/a1/63/e5a163dec5df21fa08f78fa081424a40.jpg', 
+                title: { en: 'Open Concept Living', ar: 'مساحة معيشة مفتوحة', he: 'חלל מגורים פתוח' }, 
+                desc: { en: 'Removal of walls to create flowing open space connecting kitchen, dining and living areas', ar: 'إزالة الجدران لخلق مساحة مفتوحة متدفقة تربط المطبخ ومناطق الطعام والمعيشة', he: 'הסרת קירות ליצירת חלל פתוח שוטף המחבר בין מטבח, אזורי אוכל ומגורים' } 
+            },
+            { 
+                img: 'https://i.pinimg.com/736x/14/25/07/142507e433532f57bb86385db4a8ee9b.jpg', 
+                title: { en: 'Basement Conversion', ar: 'تحويل الطابق السفلي', he: 'המרת מרתף' }, 
+                desc: { en: 'Unfinished basement transformed into a functional family room and home office', ar: 'طابق سفلي غير مكتمل تحول إلى غرفة عائلية وظيفية ومكتب منزلي', he: 'מרתף לא גמור שהפך לחדר משפחה פונקציונלי ומשרד ביתי' } 
+            },
+            { 
+                img: 'https://i.pinimg.com/736x/97/ef/06/97ef061cf46a586d58e941bb9a3d0c55.jpg', 
+                title: { en: 'Bathroom Upgrade', ar: 'ترقية الحمام', he: 'שדרוג חדר אמבטיה' }, 
+                desc: { en: 'Outdated bathroom transformed into a modern retreat with luxury fixtures and finishes', ar: 'حمام قديم تحول إلى ملاذ حديث مع تركيبات وتشطيبات فاخرة', he: 'חדר אמבטיה מיושן שהפך למקלט מודרני עם אביזרים וגימורים מפוארים' } 
+            },
+            { 
+                img: 'https://i.pinimg.com/736x/fa/a7/44/faa7440eb78d8a83eb55e2c143a93718.jpg', 
+                title: { en: 'Exterior Makeover', ar: 'تغيير المظهر الخارجي', he: 'חידוש חזית' }, 
+                desc: { en: 'Complete exterior renovation with new siding, windows, and landscaping for enhanced curb appeal', ar: 'تجديد خارجي كامل مع تلبيسة جديدة، نوافذ وتنسيق حدائق لتحسين جاذبية المظهر الخارجي', he: 'שיפוץ חיצוני מלא עם ציפוי חדש, חלונות ועיצוב נוף לשיפור המשיכה החיצונית' } 
+            }
+        ];
+
+        function updateGalleryGrid(language) {
+            if (!galleryGrid) return;
+            
+            galleryGrid.innerHTML = '';
+            
+            galleryItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg';
+                div.innerHTML = `
+                    <img src="${item.img}" alt="${item.title[language]}" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">${item.title[language]}</h3>
+                        <p class="text-gray-600 dark:text-gray-300">${item.desc[language]}</p>
+                    </div>
+                `;
+                galleryGrid.appendChild(div);
+            });
+        }
+
+        // Footer language update function
+        function updateFooterLanguage(language) {
+            // Hide all language spans first
+            document.querySelectorAll('.footer-rtl .en-text, .footer-rtl .ar-text, .footer-rtl .he-text').forEach(span => {
+                span.style.display = 'none';
+            });
+            
+            // Show the appropriate language text
+            if (language === 'ar') {
+                document.querySelectorAll('.footer-rtl .ar-text').forEach(span => {
+                    span.style.display = 'inline';
+                });
+            } else if (language === 'he') {
+                document.querySelectorAll('.footer-rtl .he-text').forEach(span => {
+                    span.style.display = 'inline';
+                });
+            } else {
+                document.querySelectorAll('.footer-rtl .en-text').forEach(span => {
+                    span.style.display = 'inline';
+                });
+            }
+        }
+
+        // Animations
+        function initializeAnimations() {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        // Close mobile menu if open
+                        const mobileMenu = document.getElementById('mobileMenu');
+                        mobileMenu.classList.add('ltr-translate-x-full', 'rtl--translate-x-full');
+                        
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Sticky navigation on scroll
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.classList.add('shadow-lg');
+                } else {
+                    header.classList.remove('shadow-lg');
+                }
+            });
+            
+            // Intersection Observer for animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('section-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Observe all sections for animation
+            document.querySelectorAll('.section-fade-in').forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // Language translations - UPDATED FOR RENOVATION & REMODELING
+        const translations = {
+            en: {
+                // Navigation
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact Us",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact Us",
+                "mobile-menu-title": "Menu",
+                
+                // Hero Section
+                "hero-title": "Transform Your Space",
+                "hero-description": "Revitalize your home with our expert renovation and remodeling services. Create beautiful, functional spaces that reflect your evolving lifestyle and needs.",
+                "hero-gallery-btn": "View Our Transformations",
+                "hero-contact-btn": "Start Your Renovation",
+                
+                // Process Section
+                "process-title": "Our Renovation Process",
+                "process-subtitle": "A systematic approach to transforming your space from vision to reality with minimal disruption",
+                
+                // Styles Section
+                "styles-title": "Renovation Services",
+                "styles-subtitle": "Comprehensive renovation solutions tailored to transform every part of your home",
+                
+                // Space Planning Section
+                "space-planning-title": "Space Transformation",
+                "space-planning-description": "Maximize your existing space with innovative remodeling solutions that enhance functionality, flow, and comfort throughout your home.",
+                
+                // Color & Materials Section
+                "color-materials-title": "Materials & Finishes",
+                "color-materials-subtitle": "Premium materials and finishes that elevate your space while ensuring durability and timeless appeal",
+                
+                // Lighting Section
+                "lighting-title": "Sustainable Renovation",
+                "lighting-subtitle": "Eco-friendly renovation solutions that improve energy efficiency while reducing environmental impact",
+                
+                // Gallery Section
+                "gallery-title": "Our Renovation Portfolio",
+                "gallery-subtitle": "Explore our stunning before-and-after transformations and get inspired for your own project",
+                
+                // Contact Section
+                "contact-title": "Transform Your Home Today",
+                "contact-description": "Ready to revitalize your space? Get in touch with our renovation experts and let's discuss how we can transform your home to better suit your lifestyle.",
+                "contact-btn": "Start Your Transformation",
+                
+                // Footer
+                "footer-description": "Transforming spaces through expert renovation and remodeling services with quality craftsmanship and attention to detail.",
+                "footer-links-title": "Quick Links",
+                "footer-services-title": "Services",
+                "footer-contact-title": "Contact Info",
+                "footer-copyright": "© 2025 Stackly. All Rights Reserved."
+            },
+            ar: {
+                // Navigation
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                "mobile-menu-title": "القائمة",
+                
+                // Hero Section
+                "hero-title": "حول مساحتك",
+                "hero-description": "أحيِ منزلك مع خدمات التجديد وإعادة التصميم الخبيرة لدينا. أنشئ مساحات جميلة وعملية تعكس نمط حياتك واحتياجاتك المتطورة.",
+                "hero-gallery-btn": "عرض تحولاتنا",
+                "hero-contact-btn": "ابدأ تجديدك",
+                
+                // Process Section
+                "process-title": "عملية التجديد لدينا",
+                "process-subtitle": "نهج منهجي لتحويل مساحتك من الرؤية إلى الواقع بأقل قدر من الاضطراب",
+                
+                // Styles Section
+                "styles-title": "خدمات التجديد",
+                "styles-subtitle": "حلول تجديد شاملة مصممة خصيصًا لتحويل كل جزء من منزلك",
+                
+                // Space Planning Section
+                "space-planning-title": "تحول المساحة",
+                "space-planning-description": "استفد إلى أقصى حد من مساحتك الحالية مع حلول إعادة تصميم مبتكرة تعزز الوظائف والتدفق والراحة في جميع أنحاء منزلك.",
+                
+                // Color & Materials Section
+                "color-materials-title": "المواد والتشطيبات",
+                "color-materials-subtitle": "مواد وتشطيبات متميزة ترفع من مستوى مساحتك مع ضمان المتانة والجاذبية الخالدة",
+                
+                // Lighting Section
+                "lighting-title": "التجديد المستدام",
+                "lighting-subtitle": "حلول تجديد صديقة للبيئة تعمل على تحسين كفاءة الطاقة مع تقليل التأثير البيئي",
+                
+                // Gallery Section
+                "gallery-title": "محفظة التجديد الخاصة بنا",
+                "gallery-subtitle": "استكشف تحولاتنا المذهلة قبل وبعد وكن مصدر إلهام لمشروعك الخاص",
+                
+                // Contact Section
+                "contact-title": "حول منزلك اليوم",
+                "contact-description": "مستعد لإحياء مساحتك؟ تواصل مع خبراء التجديد لدينا ودعنا نناقش كيف يمكننا تحويل منزلك ليناسب نمط حياتك بشكل أفضل.",
+                "contact-btn": "ابدأ تحولك",
+                
+                // Footer
+                "footer-description": "تحويل المساحات من خلال خدمات التجديد وإعادة التصميم الخبيرة مع الحرفية عالية الجودة والاهتمام بالتفاصيل.",
+                "footer-links-title": "روابط سريعة",
+                "footer-services-title": "الخدمات",
+                "footer-contact-title": "معلومات الاتصال",
+                "footer-copyright": "© 2025 ستاكلي. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Navigation
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                "mobile-menu-title": "תפריט",
+                
+                // Hero Section
+                "hero-title": "שנה את החלל שלך",
+                "hero-description": "החיה את ביתך עם שירותי השיפוץ והעיצוב המחדש המומחים שלנו. צור חללים יפים ופונקציונליים המשקפים את אורח החיים והצרכים המתפתחים שלך.",
+                "hero-gallery-btn": "צפה בטרנספורמציות שלנו",
+                "hero-contact-btn": "התחל את השיפוץ שלך",
+                
+                // Process Section
+                "process-title": "תהליך השיפוץ שלנו",
+                "process-subtitle": "גישה שיטתית להפיכת החלל שלך מחזון למציאות עם מינימום הפרעה",
+                
+                // Styles Section
+                "styles-title": "שירותי שיפוץ",
+                "styles-subtitle": "פתרונות שיפוץ מקיפים המותאמים להפוך כל חלק מהבית שלך",
+                
+                // Space Planning Section
+                "space-planning-title": "טרנספורמציית חלל",
+                "space-planning-description": "מקסם את החלל הקיים שלך עם פתרונות עיצוב מחדש חדשניים המשפרים פונקציונליות, זרימה ונוחות ברחבי ביתך.",
+                
+                // Color & Materials Section
+                "color-materials-title": "חומרים וגימורים",
+                "color-materials-subtitle": "חומרים וגימורים פרמיים המעלים את רמת החלל שלך תוך הבטחת עמידות ומשיכה נצחית",
+                
+                // Lighting Section
+                "lighting-title": "שיפוץ בר-קיימא",
+                "lighting-subtitle": "פתרונות שיפוץ ידידותיים לסביבה המשפרים את היעילות האנרגטית תוך הפחתת ההשפעה הסביבתית",
+                
+                // Gallery Section
+                "gallery-title": "תיק השיפוץ שלנו",
+                "gallery-subtitle": "חקור את הטרנספורמציות המדהימות שלנו לפני ואחרי וקבל השראה לפרויקט שלך",
+                
+                // Contact Section
+                "contact-title": "שנה את ביתך היום",
+                "contact-description": "מוכן להחיות את החלל שלך? צור קשר עם מומחי השיפוץ שלנו ובוא נדון כיצד נוכל להפוך את ביתך להתאים טוב יותר לאורח החיים שלך.",
+                "contact-btn": "התחל את הטרנספורמציה שלך",
+                
+                // Footer
+                "footer-description": "הפיכת חללים באמצעות שירותי שיפוץ ועיצוב מחדש מקצועיים עם אומנות איכותית ותשומת לב לפרטים.",
+                "footer-links-title": "קישורים מהירים",
+                "footer-services-title": "שירותים",
+                "footer-contact-title": "פרטי יצירת קשר",
+                "footer-copyright": "© 2025 Stackly. כל הזכויות שמורות."
+            }
+        };
+    </script>
+</body>
+</html>

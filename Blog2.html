@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Showcase | Stackly Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#e67e22',
+                        accent: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* RTL Direction Handling */
+        [dir="rtl"] .ltr-text-left {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .ltr-ml-2 {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-mr-2 {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-8 > * + * {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+        
+        [dir="rtl"] .ltr-pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-border-l-2 {
+            border-left: 0;
+            border-right: 2px solid;
+        }
+        
+        [dir="rtl"] .ltr-rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-text-right {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .ltr-left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .ltr-translate-x-full {
+            transform: translateX(-100%);
+        }
+        
+        /* RTL-specific adjustments */
+        [dir="rtl"] .rtl-text-right {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .rtl-text-left {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .rtl-mr-2 {
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-ml-2 {
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-space-x-reverse > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .rtl-flex-row-reverse {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .rtl-items-end {
+            align-items: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-justify-end {
+            justify-content: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-border-r-2 {
+            border-right: 0;
+            border-left: 2px solid;
+        }
+        
+        [dir="rtl"] .rtl-pr-4 {
+            padding-right: 0;
+            padding-left: 1rem;
+        }
+
+        /* Corner positioning for header elements */
+        .header-container {
+            position: relative;
+            min-height: 80px;
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .logo-container {
+            left: 1rem;
+        }
+        
+        [dir="rtl"] .logo-container {
+            right: 1rem;
+        }
+        
+        .nav-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .right-side-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .right-side-container {
+            right: 1rem;
+        }
+        
+        [dir="rtl"] .right-side-container {
+            left: 1rem;
+        }
+
+        /* Keep buttons LTR in RTL mode */
+        [dir="rtl"] .right-side-container * {
+            direction: ltr !important;
+        }
+        
+        [dir="rtl"] .right-side-container a,
+        [dir="rtl"] .right-side-container button,
+        [dir="rtl"] .right-side-container select {
+            text-align: center;
+            unicode-bidi: isolate;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Chevron rotation for RTL */
+        [dir="rtl"] .chevron-rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile responsiveness for corner positioning */
+        @media (max-width: 1024px) {
+            .nav-container {
+                display: none;
+            }
+            
+            .logo-container {
+                position: static;
+                transform: none;
+            }
+            
+            .right-side-container {
+                position: static;
+                transform: none;
+            }
+            
+            .header-container {
+                justify-content: space-between;
+                min-height: auto;
+            }
+        }
+
+        /* Mobile menu transitions */
+        .mobile-menu-enter {
+            transform: translateX(100%);
+        }
+        
+        [dir="rtl"] .mobile-menu-enter {
+            transform: translateX(-100%);
+        }
+        
+        .mobile-menu-enter-active {
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        [dir="rtl"] .mobile-menu-enter-active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-gray-50 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 left-0 z-50 transition-all duration-300">
+        <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+            <!-- Logo - Positioned in LEFT corner (LTR) or RIGHT corner (RTL) -->
+            <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                <img src="logo.png" alt="Logo" class="h-8 w-auto">
+            </div>
+            
+            <!-- Navigation - Stays in CENTER -->
+            <nav class="hidden lg:flex items-center ltr:space-x-8 rtl:space-x-reverse nav-container">
+                <!-- Home Dropdown -->
+                <div class="relative group">
+                    <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-home">Home</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="home.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Home 1</a>
+                        <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Home 2</a>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-about">
+                    About
+                </a>
+
+                <!-- Services Dropdown -->
+                <div class="relative group">
+                    <a href="services.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-services">Services</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="Residential Architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Commercial Projects</a>
+                        <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Interior Design</a>
+                        <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Architectural Planning</a>
+                        <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Renovation & Remodeling</a>
+                    </div>
+                </div>
+
+                <!-- Blog Dropdown -->
+                <div class="relative group">
+                    <a href="Blog.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-blog">Blog</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="Blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Design Trends</a>
+                        <a href="Blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Showcase</a>
+                        <a href="Blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Investment Insights</a>
+                    </div>
+                </div>
+
+                <!-- Contact Us -->
+                <a href="Contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-contact">
+                    Contact Us
+                </a>
+            </nav>
+
+            <!-- Right Side - Positioned in RIGHT corner (LTR) or LEFT corner (RTL) -->
+            <div class="flex items-center ltr-space-x-4 rtl-space-x-reverse right-side-container">
+                <!-- Language Selector -->
+                <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="he">עברית</option>
+                </select>
+                
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- Login Button -->
+                <div class="hidden md:flex items-center ltr-space-x-3 rtl-space-x-reverse">
+                    <a href="login.html" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm">
+                        Log Out
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden fixed inset-0 bg-white dark:bg-gray-800 z-50 transform ltr-translate-x-full rtl--translate-x-full transition-transform duration-300">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700 rtl-flex-row-reverse">
+                <h2 class="text-xl font-bold text-primary dark:text-white" id="mobile-menu-title">Menu</h2>
+                <button id="closeMobileMenu" class="text-gray-600 dark:text-gray-300 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="p-4 space-y-4 rtl-text-right">
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-home">Home</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="home.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 1</a>
+                        <a href="home2.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-about">About</a>
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-services">Services</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Residential Architecture.html" class="block py-2 text-gray-600 dark:text-gray-400">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block py-2 text-gray-600 dark:text-gray-400">Commercial Projects</a>
+                        <a href="interior-design.html" class="block py-2 text-gray-600 dark:text-gray-400">Interior Design</a>
+                        <a href="architectural-planning.html" class="block py-2 text-gray-600 dark:text-gray-400">Architectural Planning</a>
+                        <a href="project-management.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block py-2 text-gray-600 dark:text-gray-400">Renovation & Remodeling</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-blog">Blog</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Blog1.html" class="block py-2 text-gray-600 dark:text-gray-400">Design Trends</a>
+                        <a href="Blog2.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Showcase</a>
+                        <a href="Blog3.html" class="block py-2 text-gray-600 dark:text-gray-400">Investment Insights</a>
+                    </div>
+                </div>
+                <a href="Contact.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-contact">Contact Us</a>
+                <a href="login.html" class="block text-lg font-medium text-primary dark:text-white py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-center">Log Out</a>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="pt-16 rtl-content">
+        <!-- Hero Section - Full Width -->
+       <section class="relative full-width-section text-white hero-section min-h-screen flex items-center justify-center py-20 bg-cover bg-center bg-no-repeat"
+    style="background-image: url('https://i.pinimg.com/736x/24/22/be/2422bea743ba1144181892dd6ef13af6.jpg');">
+    
+    <!-- Overlay for better readability -->
+    <div class="absolute inset-0 bg-black/50 z-0"></div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 sm:px-6 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block bg-blue-700/80 text-blue-200 px-4 py-1 rounded-full text-sm font-medium mb-4" id="hero-category">
+                Project Showcase
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" id="hero-title">
+                Modern Urban Residence
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100" id="hero-subtitle">
+                A stunning transformation of a traditional home into a contemporary urban sanctuary
+            </p>
+            <div class="flex flex-wrap justify-center items-center gap-4 text-blue-200">
+                <div class="flex items-center">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    <span id="author-name">By Michael Anderson</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    <span id="publish-date">June 15, 2024</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-clock mr-2"></i>
+                    <span id="read-time">12 min read</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <!-- Blog Content -->
+        <article class="py-16 bg-white dark:bg-gray-900">
+            <div class="blog-content">
+                
+               <!-- Section 1: Introduction - Full Width -->
+<section class="w-full mb-16 bg-blue-50 dark:bg-blue-900/20 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-2xl font-bold mb-4 text-blue-800 dark:text-blue-200" id="section1-title">Project Overview</h2>
+            <p class="text-lg text-gray-700 dark:text-gray-300" id="section1-content">
+                This project involved the complete transformation of a 1980s suburban home into a modern urban residence that seamlessly blends contemporary design with functional living. Located in a rapidly developing neighborhood, the home now stands as a testament to innovative architectural solutions that maximize space, light, and connection to the outdoors.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="project-stat text-center p-4 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
+                    <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">12</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Months Completion</div>
+                </div>
+                <div class="project-stat text-center p-4 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
+                    <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">3,200</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Square Feet</div>
+                </div>
+                <div class="project-stat text-center p-4 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
+                    <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">$850K</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Project Value</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 2: Design Approach - Full Width -->
+<section class="w-full mb-16 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section2-title">1. Design Philosophy & Approach</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4 text-blue-700 dark:text-blue-300" id="section2-subtitle1">Client Vision & Requirements</h3>
+                    <p class="mb-4" id="section2-content1">
+                        The homeowners sought to transform their outdated property into a modern, energy-efficient home that would serve as both a family sanctuary and an entertainment space. Key requirements included open-plan living, abundant natural light, sustainable materials, and seamless indoor-outdoor connectivity.
+                    </p>
+                    <ul class="list-disc pl-5 space-y-2" id="section2-list1">
+                        <li>Maximize natural light throughout the home</li>
+                        <li>Create flexible living spaces for family and entertainment</li>
+                        <li>Incorporate sustainable and low-maintenance materials</li>
+                        <li>Establish strong connection to the garden and outdoor areas</li>
+                        <li>Implement smart home technology seamlessly</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-100 dark:bg-gray-800 rounded-xl p-6">
+                    <h4 class="font-bold mb-3 text-lg text-blue-700 dark:text-blue-300" id="section2-subtitle2">Design Solutions</h4>
+                    <ul class="space-y-2" id="section2-list2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Expansive floor-to-ceiling windows and skylights</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Open-plan kitchen, dining and living area</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Bamboo flooring and recycled glass countertops</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Bi-fold doors opening to extended patio</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Integrated smart lighting and climate control</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 3: Key Features - Full Width -->
+<section class="w-full mb-16 bg-gray-50 dark:bg-gray-800 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section3-title">2. Key Architectural Features</h2>
+            
+            <div class="bg-white dark:bg-gray-700 rounded-xl p-6 mb-8">
+                <h3 class="text-xl font-semibold mb-4 text-blue-700 dark:text-blue-300" id="section3-subtitle1">Transformative Elements</h3>
+                <div class="space-y-6">
+                    <div class="project-feature bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-6">
+                        <h4 class="font-semibold mb-2 text-blue-800 dark:text-blue-200" id="section3-feature1-title">Double-Height Living Space</h4>
+                        <p class="text-gray-600 dark:text-gray-300" id="section3-feature1-desc">
+                            The removal of a section of the first floor created a dramatic double-height living area that floods the space with natural light and creates a sense of grandeur.
+                        </p>
+                    </div>
+                    
+                    <div class="project-feature bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-lg p-6">
+                        <h4 class="font-semibold mb-2 text-green-800 dark:text-green-200" id="section3-feature2-title">Green Roof System</h4>
+                        <p class="text-gray-600 dark:text-gray-300" id="section3-feature2-desc">
+                            A section of the roof was transformed into a green space with native plants, providing insulation, managing stormwater, and creating a private outdoor retreat.
+                        </p>
+                    </div>
+                    
+                    <div class="project-feature bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg p-6">
+                        <h4 class="font-semibold mb-2 text-purple-800 dark:text-purple-200" id="section3-feature3-title">Cantilevered First Floor Extension</h4>
+                        <p class="text-gray-600 dark:text-gray-300" id="section3-feature3-desc">
+                            A bold architectural statement that added valuable square footage without compromising the garden space below, creating a covered outdoor entertaining area.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 4: Material Selection - Full Width -->
+<section class="w-full mb-16 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section4-title">3. Material Selection & Sustainability</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-green-600 dark:text-green-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" id="section4-card1-title">Sustainable Materials</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card1-desc">We prioritized environmentally responsible materials that offer durability, low maintenance, and aesthetic appeal while minimizing ecological impact.</p>
+                    <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1" id="section4-card1-list">
+                        <li>• Bamboo flooring from sustainable sources</li>
+                        <li>• Recycled glass countertops</li>
+                        <li>• Low-VOC paints and finishes</li>
+                        <li>• Reclaimed timber features</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-sun text-blue-600 dark:text-blue-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" id="section4-card2-title">Energy Efficiency</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card2-desc">The home incorporates multiple energy-saving features that reduce environmental impact while providing comfort and cutting utility costs.</p>
+                    <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1" id="section4-card2-list">
+                        <li>• Solar panel array on south-facing roof</li>
+                        <li>• High-performance triple-glazed windows</li>
+                        <li>• Advanced insulation throughout</li>
+                        <li>• Energy recovery ventilation system</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-tint text-purple-600 dark:text-purple-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" id="section4-card3-title">Water Management</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card3-desc">Innovative water systems were implemented to reduce consumption and manage stormwater effectively on the urban site.</p>
+                    <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1" id="section4-card3-list">
+                        <li>• Greywater recycling system</li>
+                        <li>• Rainwater harvesting for irrigation</li>
+                        <li>• Permeable paving in driveway</li>
+                        <li>• Drought-resistant native planting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 5: Interior Spaces - Full Width -->
+<section class="w-full mb-16 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section5-title">4. Interior Spaces & Layout</h2>
+            
+            <div class="bg-white dark:bg-gray-700 rounded-xl p-8 mb-8">
+                <h3 class="text-2xl font-bold mb-6 text-center text-indigo-800 dark:text-indigo-200" id="section5-subtitle">Thoughtfully Designed Living Areas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4 text-indigo-700 dark:text-indigo-300" id="section5-subtitle1">Ground Floor Layout</h4>
+                        <ul class="space-y-3" id="section5-list1">
+                            <li class="flex items-start">
+                                <i class="fas fa-door-open text-indigo-500 mt-1 mr-3"></i>
+                                <span>Open-plan kitchen, dining and living area (850 sq ft)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-home text-indigo-500 mt-1 mr-3"></i>
+                                <span>Guest bedroom with ensuite bathroom</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-utensils text-indigo-500 mt-1 mr-3"></i>
+                                <span>Butler's pantry and utility room</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-car text-indigo-500 mt-1 mr-3"></i>
+                                <span>Integrated garage with EV charging</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4 text-indigo-700 dark:text-indigo-300" id="section5-subtitle2">First Floor Layout</h4>
+                        <div class="space-y-4" id="section5-spaces">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium" id="section5-space1">Master Suite</span>
+                                    <span class="text-indigo-600 dark:text-indigo-400">400 sq ft</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                    <div class="bg-indigo-600 h-2 rounded-full" style="width: 100%"></div>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-1">Walk-in wardrobe, luxury bathroom, private balcony</p>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium" id="section5-space2">Children's Bedrooms</span>
+                                    <span class="text-indigo-600 dark:text-indigo-400">300 sq ft each</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                    <div class="bg-indigo-600 h-2 rounded-full" style="width: 75%"></div>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-1">Two bedrooms sharing a Jack-and-Jill bathroom</p>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium" id="section5-space3">Home Office</span>
+                                    <span class="text-indigo-600 dark:text-indigo-400">200 sq ft</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                    <div class="bg-indigo-600 h-2 rounded-full" style="width: 50%"></div>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-1">Sound-insulated with built-in shelving</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 6: Construction Process - Full Width -->
+<section class="w-full mb-16 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section6-title">5. Construction Process & Challenges</h2>
+            
+            <div class="relative">
+                <!-- Process Timeline -->
+                <div class="border-l-2 border-blue-200 dark:border-blue-800 ml-4 pl-8 space-y-12">
+                    <!-- Step 1 -->
+                    <div class="relative">
+                        <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">1</div>
+                        <h3 class="text-xl font-semibold mb-2" id="section6-step1-title">Site Preparation & Demolition</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step1-desc">
+                            The existing structure required careful deconstruction with 85% of materials salvaged for reuse or recycling. Unexpected foundation issues were discovered and addressed with helical piers to stabilize the structure.
+                        </p>
+                        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                            <h4 class="font-semibold text-blue-700 dark:text-blue-300 mb-2" id="section6-step1-note-title">Challenge Overcome:</h4>
+                            <p class="text-sm" id="section6-step1-note">Original foundation required additional reinforcement, adding 3 weeks to the timeline but ensuring long-term structural integrity.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="relative">
+                        <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">2</div>
+                        <h3 class="text-xl font-semibold mb-2" id="section6-step2-title">Structural Framework</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step2-desc">
+                            The cantilevered extension required precise engineering and specialized steelwork. Collaboration between architects and structural engineers resulted in an innovative solution that minimized support columns.
+                        </p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="relative">
+                        <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">3</div>
+                        <h3 class="text-xl font-semibold mb-2" id="section6-step3-title">Envelope & Systems Installation</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step3-desc">
+                            High-performance building envelope with advanced insulation and air sealing. Integration of mechanical systems including HVAC, plumbing, and electrical with smart home infrastructure.
+                        </p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="relative">
+                        <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">4</div>
+                        <h3 class="text-xl font-semibold mb-2" id="section6-step4-title">Interior Finishes & Landscaping</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step4-desc">
+                            Installation of sustainable material finishes and custom cabinetry. Simultaneous exterior landscaping with native plants and permeable surfaces to manage stormwater runoff.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+                
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer - Full Width -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center mb-6">
+                        <div class="w-33 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-md">
+                            <img src="logo.png" alt="Company Logo" class="w-33 h-10 object-contain">
+                        </div>
+                    </div>
+                    <p class="mb-6 text-gray-400" id="footer-desc">
+                        Creating exceptional architectural experiences through innovative design and quality construction.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/" class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-links-title">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="home.html" class="hover:text-blue-400 transition-colors" id="footer-link-home">Home</a></li>
+                        <li><a href="about.html" class="hover:text-blue-400 transition-colors" id="footer-link-about">About</a></li>
+                        <li><a href="services.html" class="hover:text-blue-400 transition-colors" id="footer-link-services">Services</a></li>
+                        <li><a href="blog.html" class="hover:text-blue-400 transition-colors" id="footer-link-projects">Projects</a></li>
+                        <li><a href="contact.html" class="hover:text-blue-400 transition-colors" id="footer-link-contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-services-title">Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="residential-projects.html" class="hover:text-blue-400 transition-colors" id="footer-service-1">Residential Projects</a></li>
+                        <li><a href="commercial-projects.html" class="hover:text-blue-400 transition-colors" id="footer-service-2">Commercial Projects</a></li>
+                        <li><a href="interior-design.html" class="hover:text-blue-400 transition-colors" id="footer-service-3">Interior Design</a></li>
+                        <li><a href="architectural-planning.html" class="hover:text-blue-400 transition-colors" id="footer-service-4">Architectural Planning</a></li>
+                        <li><a href="project-management.html" class="hover:text-blue-400 transition-colors" id="footer-service-5">Project Management</a></li>
+                        <li><a href="Renovation.html" class="hover:text-blue-400 transition-colors" id="footer-service-6">Renovation & Remodeling</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-contact-title">Contact Info</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <div>
+                                <p id="footer-address-1">123 Design Avenue</p>
+                                <p id="footer-address-2">Creative District, CD 10001</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors" id="footer-phone">
+                                +1 (555) 123-4567
+                            </a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <a href="mailto:info@Stackly.com" class="hover:text-blue-400 transition-colors" id="footer-email">
+                                info@Stackly.com
+                            </a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span id="footer-hours">Mon-Fri: 9AM-6PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p id="footer-copyright">&copy; 2025 Stackly. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Language translations with all sections
+        const translations = {
+            en: {
+                // Header
+                "header-logo": "Stackly",
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact",
+                "logout-btn": "Log Out",
+                "mobile-menu-title": "Menu",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact",
+                "mobile-logout-btn": "Log Out",
+                
+                // Hero
+                "hero-category": "Project Showcase",
+                "hero-title": "Modern Urban Residence",
+                "hero-subtitle": "A stunning transformation of a traditional home into a contemporary urban sanctuary",
+                "author-name": "By Michael Anderson",
+                "publish-date": "June 15, 2024",
+                "read-time": "12 min read",
+                
+                // Sections
+                "section1-title": "Project Overview",
+                "section1-content": "This project involved the complete transformation of a 1980s suburban home into a modern urban residence that seamlessly blends contemporary design with functional living. Located in a rapidly developing neighborhood, the home now stands as a testament to innovative architectural solutions that maximize space, light, and connection to the outdoors.",
+                
+                "section2-title": "1. Design Philosophy & Approach",
+                "section2-subtitle1": "Client Vision & Requirements",
+                "section2-content1": "The homeowners sought to transform their outdated property into a modern, energy-efficient home that would serve as both a family sanctuary and an entertainment space. Key requirements included open-plan living, abundant natural light, sustainable materials, and seamless indoor-outdoor connectivity.",
+                "section2-list1": ["Maximize natural light throughout the home", "Create flexible living spaces for family and entertainment", "Incorporate sustainable and low-maintenance materials", "Establish strong connection to the garden and outdoor areas", "Implement smart home technology seamlessly"],
+                "section2-subtitle2": "Design Solutions",
+                "section2-list2": ["Expansive floor-to-ceiling windows and skylights", "Open-plan kitchen, dining and living area", "Bamboo flooring and recycled glass countertops", "Bi-fold doors opening to extended patio", "Integrated smart lighting and climate control"],
+                
+                "section3-title": "2. Key Architectural Features",
+                "section3-subtitle1": "Transformative Elements",
+                "section3-feature1-title": "Double-Height Living Space",
+                "section3-feature1-desc": "The removal of a section of the first floor created a dramatic double-height living area that floods the space with natural light and creates a sense of grandeur.",
+                "section3-feature2-title": "Green Roof System",
+                "section3-feature2-desc": "A section of the roof was transformed into a green space with native plants, providing insulation, managing stormwater, and creating a private outdoor retreat.",
+                "section3-feature3-title": "Cantilevered First Floor Extension",
+                "section3-feature3-desc": "A bold architectural statement that added valuable square footage without compromising the garden space below, creating a covered outdoor entertaining area.",
+                
+                "section4-title": "3. Material Selection & Sustainability",
+                "section4-card1-title": "Sustainable Materials",
+                "section4-card1-desc": "We prioritized environmentally responsible materials that offer durability, low maintenance, and aesthetic appeal while minimizing ecological impact.",
+                "section4-card1-list": ["Bamboo flooring from sustainable sources", "Recycled glass countertops", "Low-VOC paints and finishes", "Reclaimed timber features"],
+                "section4-card2-title": "Energy Efficiency",
+                "section4-card2-desc": "The home incorporates multiple energy-saving features that reduce environmental impact while providing comfort and cutting utility costs.",
+                "section4-card2-list": ["Solar panel array on south-facing roof", "High-performance triple-glazed windows", "Advanced insulation throughout", "Energy recovery ventilation system"],
+                "section4-card3-title": "Water Management",
+                "section4-card3-desc": "Innovative water systems were implemented to reduce consumption and manage stormwater effectively on the urban site.",
+                "section4-card3-list": ["Greywater recycling system", "Rainwater harvesting for irrigation", "Permeable paving in driveway", "Drought-resistant native planting"],
+                
+                "section5-title": "4. Interior Spaces & Layout",
+                "section5-subtitle": "Thoughtfully Designed Living Areas",
+                "section5-subtitle1": "Ground Floor Layout",
+                "section5-list1": ["Open-plan kitchen, dining and living area (850 sq ft)", "Guest bedroom with ensuite bathroom", "Butler's pantry and utility room", "Integrated garage with EV charging"],
+                "section5-subtitle2": "First Floor Layout",
+                "section5-space1": "Master Suite",
+                "section5-space2": "Children's Bedrooms",
+                "section5-space3": "Home Office",
+                
+                "section6-title": "5. Construction Process & Challenges",
+                "section6-step1-title": "Site Preparation & Demolition",
+                "section6-step1-desc": "The existing structure required careful deconstruction with 85% of materials salvaged for reuse or recycling. Unexpected foundation issues were discovered and addressed with helical piers to stabilize the structure.",
+                "section6-step1-note-title": "Challenge Overcome:",
+                "section6-step1-note": "Original foundation required additional reinforcement, adding 3 weeks to the timeline but ensuring long-term structural integrity.",
+                "section6-step2-title": "Structural Framework",
+                "section6-step2-desc": "The cantilevered extension required precise engineering and specialized steelwork. Collaboration between architects and structural engineers resulted in an innovative solution that minimized support columns.",
+                "section6-step3-title": "Envelope & Systems Installation",
+                "section6-step3-desc": "High-performance building envelope with advanced insulation and air sealing. Integration of mechanical systems including HVAC, plumbing, and electrical with smart home infrastructure.",
+                "section6-step4-title": "Interior Finishes & Landscaping",
+                "section6-step4-desc": "Installation of sustainable material finishes and custom cabinetry. Simultaneous exterior landscaping with native plants and permeable surfaces to manage stormwater runoff.",
+                
+                "section7-title": "6. Client Experience & Results",
+                "section7-subtitle1": "Project Outcomes",
+                "section7-stat1": "Reduction in Energy Bills",
+                "section7-stat2": "Water Usage Reduction",
+                "section7-stat3": "Property Value Increase",
+                "section7-stat4": "Client Satisfaction Score",
+                "section7-subtitle2": "Client Testimonial",
+                "section7-content": "\"Working with Stackly Architects transformed not just our house, but our quality of life. The team listened carefully to our needs and delivered beyond our expectations. The attention to detail, innovative solutions, and commitment to sustainability have given us a home that is both beautiful and incredibly functional. We particularly love how the spaces flow together and the abundance of natural light throughout the day.\"",
+                "section7-client-name": "James & Sarah Thompson",
+                "section7-client-location": "Homeowners, Modern Urban Residence Project",
+
+                // Footer
+                "footer-desc": "Creating exceptional architectural experiences through innovative design and quality construction.",
+                "footer-links-title": "Quick Links",
+                "footer-link-home": "Home",
+                "footer-link-about": "About",
+                "footer-link-services": "Services",
+                "footer-link-projects": "Projects",
+                "footer-link-contact": "Contact Us",
+                "footer-services-title": "Services",
+                "footer-service-1": "Residential Projects",
+                "footer-service-2": "Commercial Projects",
+                "footer-service-3": "Interior Design",
+                "footer-service-4": "Architectural Planning",
+                "footer-service-5": "Project Management",
+                "footer-service-6": "Renovation & Remodeling",
+                "footer-contact-title": "Contact Info",
+                "footer-address-1": "123 Design Avenue",
+                "footer-address-2": "Creative District, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "Mon-Fri: 9AM-6PM",
+                "footer-copyright": "© 2025 Stackly. All Rights Reserved."
+            },
+            ar: {
+                // Header
+                "header-logo": "ستاكلي",
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                "logout-btn": "تسجيل خروج",
+                "mobile-menu-title": "القائمة",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                "mobile-logout-btn": "تسجيل خروج",
+                
+                // Hero
+                "hero-category": "عرض المشاريع",
+                "hero-title": "السكن الحضري الحديث",
+                "hero-subtitle": "تحول مذهل لمنزل تقليدي إلى ملاذ حضري معاصر",
+                "author-name": "بواسطة مايكل أندرسون",
+                "publish-date": "15 يونيو 2024",
+                "read-time": "12 دقيقة قراءة",
+                
+                // Sections
+                "section1-title": "نظرة عامة على المشروع",
+                "section1-content": "تضمن هذا المشروع التحول الكامل لمنزل ضواحي يعود إلى الثمانينيات إلى سكن حضري حديث يدمج بسلاسة بين التصميم المعاصر والمعيشة الوظيفية. يقع المنزل في حي يتطور بسرعة، ويقف الآن كشهادة على الحلول المعمارية المبتكرة التي تعظم المساحة والضوء والاتصال بالخارج.",
+                
+                "section2-title": "1. الفلسفة والنهج التصميمي",
+                "section2-subtitle1": "رؤية العميل والمتطلبات",
+                "section2-content1": "سعى أصحاب المنزل إلى تحويل ممتلكاتهم القديمة إلى منزل حديث وفعال في استهلاك الطاقة يخدم كملاذ عائلي ومساحة ترفيهية. شملت المتطلبات الرئيسية المعيشة المفتوحة، والضوء الطبيعي الوفير، والمواد المستدامة، والاتصال السلس بين الداخل والخارج.",
+                "section2-list1": ["تعظيم الضوء الطبيعي في جميع أنحاء المنزل", "إنشاء مساحات معيشة مرنة للعائلة والترفيه", "دمج المواد المستدامة وقليلة الصيانة", "إنشاء اتصال قوي بالحديقة والمناطق الخارجية", "تنفيذ تكنولوجيا المنزل الذكي بسلاسة"],
+                "section2-subtitle2": "حلول التصميم",
+                "section2-list2": ["نوافذ من الأرض إلى السقف وفتحات سقفية واسعة", "منطقة مطبخ وغرفة طعام ومعيشة مفتوحة", "أرضيات من الخيزران وأسطح عمل من الزجاج المعاد تدويره", "أبواب قابلة للطي تفتح إلى فناء ممتد", "إضاءة ذكية مدمجة وتحكم في المناخ"],
+                
+                "section3-title": "2. الميزات المعمارية الرئيسية",
+                "section3-subtitle1": "عناصر تحويلية",
+                "section3-feature1-title": "مساحة معيشة مزدوجة الارتفاع",
+                "section3-feature1-desc": "أدى إزالة جزء من الطابق الأول إلى إنشاء منطقة معيشة مزدوجة الارتفاع تفيض المساحة بالضوء الطبيعي وتخلق إحساسًا بالعظمة.",
+                "section3-feature2-title": "نظام السقف الأخضر",
+                "section3-feature2-desc": "تم تحويل جزء من السقف إلى مساحة خضراء مع النباتات المحلية، مما يوفر العزل، وإدارة مياه الأمطار، وخلق ملاذ خارجي خاص.",
+                "section3-feature3-title": "امتداد الطابق الأول المتدلي",
+                "section3-feature3-desc": "بيان معماري جريء أضاف مساحة مربعة قيمة دون المساس بمساحة الحديقة أدناه، مما خلق منطقة ترفيهية خارجية مغطاة.",
+                
+                "section4-title": "3. اختيار المواد والاستدامة",
+                "section4-card1-title": "المواد المستدامة",
+                "section4-card1-desc": "أعطينا الأولوية للمواد المسؤولة بيئيًا التي تقدم متانة وصيانة منخفضة وجاذبية جمالية مع تقليل التأثير البيئي.",
+                "section4-card1-list": ["أرضيات من الخيزران من مصادر مستدامة", "أسطح عمل من الزجاج المعاد تدويره", "دهانات ومنهيات منخفضة المركبات العضوية المتطايرة", "ميزات من الخشب المعاد تدويره"],
+                "section4-card2-title": "كفاءة الطاقة",
+                "section4-card2-desc": "يضم المنزل ميزات متعددة لتوفير الطاقة تقلل من التأثير البيئي مع توفير الراحة وخفض تكاليف المرافق.",
+                "section4-card2-list": ["مجموعة الألواح الشمسية على السطح المواجه للجنوب", "نوافذ ثلاثية الزجاج عالية الأداء", "عزل متقدم في جميع أنحاء المنزل", "نظام تهوية لاستعادة الطاقة"],
+                "section4-card3-title": "إدارة المياه",
+                "section4-card3-desc": "تم تنفيذ أنظمة مياه مبتكرة لتقليل الاستهلاك وإدارة مياه الأمطار بشكل فعال في الموقع الحضري.",
+                "section4-card3-list": ["نظام إعادة تدوير المياه الرمادية", "حصاد مياه الأمطار للري", "رصف نافذ في الممر", "زراعة محلية مقاومة للجفاف"],
+                
+                "section5-title": "4. المساحات الداخلية والتخطيط",
+                "section5-subtitle": "مناطق معيشة مصممة بعناية",
+                "section5-subtitle1": "تخطيط الطابق الأرضي",
+                "section5-list1": ["منطقة مطبخ وغرفة طعام ومعيشة مفتوحة (850 قدم مربع)", "غرفة نوم للضيوف مع حمام داخلي", "مخزن المؤونة وغرفة المرافق", "مرآب مدمج مع شحن للسيارات الكهربائية"],
+                "section5-subtitle2": "تخطيط الطابق الأول",
+                "section5-space1": "الجناح الرئيسي",
+                "section5-space2": "غرف نوم الأطفال",
+                "section5-space3": "المكتب المنزلي",
+                
+                "section6-title": "5. عملية البناء والتحديات",
+                "section6-step1-title": "إعداد الموقع والهدم",
+                "section6-step1-desc": "تطلبت الهيكل الحالي تفكيكًا دقيقًا مع إنقاذ 85٪ من المواد لإعادة الاستخدام أو إعادة التدوير. تم اكتشاف مشاكل غير متوقعة في الأساس ومعالجتها بأعمدة لولبية لتحقيق الاستقرار في الهيكل.",
+                "section6-step1-note-title": "التحدي الذي تم التغلب عليه:",
+                "section6-step1-note": "تطلب الأساس الأصلي تعزيزًا إضافيًا، مما أضاف 3 أسابيع إلى الجدول الزمني لكنه ضمن السلامة الهيكلية على المدى الطويل.",
+                "section6-step2-title": "الإطار الهيكلي",
+                "section6-step2-desc": "تطلبت الامتداد المتدلي هندسة دقيقة وأعمال فولذية متخصصة. أدى التعاون بين المهندسين المعماريين والمهندسين الإنشائيين إلى حل مبتكر يقلل من أعمدة الدعم.",
+                "section6-step3-title": "تركيب الغلاف والأنظمة",
+                "section6-step3-desc": "غلاف مبنى عالي الأداء مع عزل متقدم وإغلاق هوائي. تكامل الأنظمة الميكانيكية بما في ذلك التدفئة والتهوية وتكييف الهواء والسباكة والكهرباء مع البنية التحتية للمنزل الذكي.",
+                "section6-step4-title": "تشطيبات الداخلية والمناظر الطبيعية",
+                "section6-step4-desc": "تركيب التشطيبات المستدامة والخزائن المخصصة. تنسيق المواقع الخارجية في وقت واحد مع النباتات المحلية والأسطح النفاذة لإدارة جريان مياه الأمطار.",
+                
+                "section7-title": "6. تجربة العميل والنتائج",
+                "section7-subtitle1": "نتائج المشروع",
+                "section7-stat1": "انخفاض في فواتير الطاقة",
+                "section7-stat2": "انخفاض استخدام المياه",
+                "section7-stat3": "زيادة قيمة العقار",
+                "section7-stat4": "نتيجة رضا العملاء",
+                "section7-subtitle2": "شهادة العميل",
+                "section7-content": "\"العمل مع Stackly Architects غير ليس فقط منزلنا، ولكن جودة حياتنا. استمع الفريق بعناية لاحتياجاتنا وقدموا ما يتجاوز توقعاتنا. الاهتمام بالتفاصيل، والحلول المبتكرة، والالتزام بالاستدامة قد منحنا منزلاً جميلاً ووظيفيًا بشكل لا يصدق. نحن نحب بشكل خاص كيف تتدفق المساحات معًا ووفرة الضوء الطبيعي طوال اليوم.\"",
+                "section7-client-name": "جيمس وسارة طومسون",
+                "section7-client-location": "أصحاب المنزل، مشروع السكن الحضري الحديث",
+
+                // Footer
+                "footer-desc": "إنشاء تجارب معمارية استثنائية من خلال التصميم المبتكر والبناء عالي الجودة.",
+                "footer-links-title": "روابط سريعة",
+                "footer-link-home": "الرئيسية",
+                "footer-link-about": "من نحن",
+                "footer-link-services": "الخدمات",
+                "footer-link-projects": "المشاريع",
+                "footer-link-contact": "اتصل بنا",
+                "footer-services-title": "الخدمات",
+                "footer-service-1": "المشاريع السكنية",
+                "footer-service-2": "المشاريع التجارية",
+                "footer-service-3": "التصميم الداخلي",
+                "footer-service-4": "التخطيط المعماري",
+                "footer-service-5": "إدارة المشاريع",
+                "footer-service-6": "التجديد وإعادة التصميم",
+                "footer-contact-title": "معلومات الاتصال",
+                "footer-address-1": "123 شارع التصميم",
+                "footer-address-2": "الحي الإبداعي، CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "الإثنين-الجمعة: 9 صباحًا-6 مساءً",
+                "footer-copyright": "© 2025 ستاكلي. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Header
+                "header-logo": "Stackly",
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                "logout-btn": "התנתק",
+                "mobile-menu-title": "תפריט",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                "mobile-logout-btn": "התנתק",
+                
+                // Hero
+                "hero-category": "תצוגת פרויקטים",
+                "hero-title": "מגורים אורבניים מודרניים",
+                "hero-subtitle": "שינוי מרהיב של בית מסורתי למקלט אורבני עכשווי",
+                "author-name": "מאת מייקל אנדרסון",
+                "publish-date": "15 ביוני 2024",
+                "read-time": "12 דקות קריאה",
+                
+                // Sections
+                "section1-title": "סקירת הפרויקט",
+                "section1-content": "פרויקט זה כלל את השינוי המלא של בית פרוורי משנות ה-80 למגורים אורבניים מודרניים הממזגים בצורה חלקה בין עיצוב עכשווי לחיים פונקציונליים. ממוקם בשכונה המתפתחת במהירות, הבית עומד כעת כהוכחה לפתרונות אדריכליים חדשניים הממקסמים מרחב, אור וחיבור לחוץ.",
+                
+                "section2-title": "1. פילוסופיה וגישת עיצוב",
+                "section2-subtitle1": "חזון ודרישות הלקוח",
+                "section2-content1": "בעלי הבית ביקשו להפוך את הנכס המיושן שלהם לבית מודרני ויעיל אנרגטית שישמש הן כמקלט משפחתי והן כמרחב בידור. הדרישות העיקריות כללו חיים בתכנון פתוח, אור טבעי בשפע, חומרים בני קיימא וחיבור חלק בין פנים לחוץ.",
+                "section2-list1": ["מקסם אור טבעי ברחבי הבית", "צור מרחבי מגורים גמישים למשפחה ובידור", "שלב חומרים בני קיימא ותחזוקה נמוכה", "צור חיבור חזק לגינה ולאזורים חיצוניים", "יישם טכנולוגיית בית חכם בצורה חלקה"],
+                "section2-subtitle2": "פתרונות עיצוב",
+                "section2-list2": ["חלונות מרצפה לתקרה ופתחי גג נרחבים", "אזור מטבח, אוכל וסלון בתכנון פתוח", "ריצוף במבוק ומשטחי עבודה מזכוכית ממוחזרת", "דלתות מתקפלות הנפתחות למרפסת מורחבת", "תאורה חכמה משולבת ובקרת אקלים"],
+                
+                "section3-title": "2. מאפיינים אדריכליים מרכזיים",
+                "section3-subtitle1": "אלמנטים מטמורפוזיים",
+                "section3-feature1-title": "חלל מגורים בגובה כפול",
+                "section3-feature1-desc": "הסרת חלק מהקומה הראשונה יצרה אזור מגורים דרמטי בגובה כפול שמציף את החלל באור טבעי ויוצר תחושת פאר.",
+                "section3-feature2-title": "מערכת גג ירוק",
+                "section3-feature2-desc": "חלק מהגג הוסב למרחב ירוק עם צמחים מקומיים, המספק בידוד, מנהל מי גשמים ויוצר מקלט חיצוני פרטי.",
+                "section3-feature3-title": "הרחבה תלויה של הקומה הראשונה",
+                "section3-feature3-desc": "הצהרה אדריכלית נועזת שהוסיפה שטח רבוע יקר ערך ללא פשרה על מרחב הגן מתחת, ויצרה אזור בידור חיצוני מקורה.",
+                
+                "section4-title": "3. בחירת חומרים וקיימות",
+                "section4-card1-title": "חומרים בני קיימא",
+                "section4-card1-desc": "העדפנו חומרים אחראיים לסביבה המציעים עמידות, תחזוקה נמוכה ומשיכה אסתטית תוך מזעור ההשפעה האקולוגית.",
+                "section4-card1-list": ["ריצוף במבוק ממקורות בני קיימא", "משטחי עבודה מזכוכית ממוחזרת", "צבעים וגימורים נדיפים נמוכים", "תכונות עץ משוחזר"],
+                "section4-card2-title": "יעילות אנרגטית",
+                "section4-card2-desc": "הבית משלב מספר תכונות חיסכון באנרגיה המפחיתות את ההשפעה הסביבתית תוך מתן נוחות וקיצוץ עלויות שירות.",
+                "section4-card2-list": ["מערך פאנלים סולאריים על גג פונה דרומה", "חלונות משולשים ביצועים גבוהים", "בידוד מתקדם ברחבי הבית", "מערכת אוורור להתאוששות אנרגיה"],
+                "section4-card3-title": "ניהול מים",
+                "section4-card3-desc": "הוטמעו מערכות מים חדשניות להפחתת הצריכה וניהול מי גשמים ביעילות באתר העירוני.",
+                "section4-card3-list": ["מערכת מיחזור מים אפורים", "איסוף מי גשמים להשקיה", "ריצוף חדיר בחנייה", "צמחייה מקומית עמידה לבצורת"],
+                
+                "section5-title": "4. חללים פנימיים ותכנון",
+                "section5-subtitle": "אזורי מגורים מתוכננים בקפידה",
+                "section5-subtitle1": "תכנון הקומה הראשונה",
+                "section5-list1": ["אזור מטבח, אוכל וסלון בתכנון פתוח (850 רגל רבוע)", "חדר אורחים עם חדר רחצה צמוד", "מזווה ומחסן כלים", "מוסך משולב עם טעינה לרכב חשמלי"],
+                "section5-subtitle2": "תכנון הקומה השנייה",
+                "section5-space1": "סוויטת מאסטר",
+                "section5-space2": "חדרי ילדים",
+                "section5-space3": "משרד ביתי",
+                
+                "section6-title": "5. תהליך בנייה ואתגרים",
+                "section6-step1-title": "הכנת אתר והריסה",
+                "section6-step1-desc": "המבנה הקיים דרש פירוק זהיר עם 85% מהחומרים שחולצו לשימוש חוזר או מיחזור. התגלו בעיות יסוד בלתי צפויות וטופלו עם כלים ספירליים לייצוב המבנה.",
+                "section6-step1-note-title": "אתגר שנפתר:",
+                "section6-step1-note": "היסוד המקורי דרש חיזוק נוסף, והוסיף 3 שבועות ללו\"ז אך הבטיח שלמות מבנית ארוכת טווח.",
+                "section6-step2-title": "מסגרת מבנית",
+                "section6-step2-desc": "ההרחבה התלויה דרשה הנדסה מדויקת ועבודות פלדה מיוחדות. שיתוף פעולה בין אדריכלים ומהנדסים מבניים הביא לפתרון חדשני שהפחית עמודי תמיכה.",
+                "section6-step3-title": "התקנת מעטפת ומערכות",
+                "section6-step3-desc": "מעטפת בניין ביצועים גבוהים עם בידוד מתקדם ואיטום אוויר. אינטגרציה של מערכות מכניות כולל מיזוג אוויר, אינסטלציה וחשמל עם תשתית בית חכם.",
+                "section6-step4-title": "גימורים פנימיים ונוף",
+                "section6-step4-desc": "התקנת גימורים מחומרים בני קיימא וארונות מותאמים אישית. עיצוב נוף חיצוני בו-זמנית עם צמחים מקומיים ומשטחים חדירים לניהול נגר מי גשמים.",
+                
+                "section7-title": "6. חוויית לקוח ותוצאות",
+                "section7-subtitle1": "תוצאות הפרויקט",
+                "section7-stat1": "הפחתה בחשבונות אנרגיה",
+                "section7-stat2": "הפחתת שימוש במים",
+                "section7-stat3": "עלייה בערך הנכס",
+                "section7-stat4": "ציון שביעות רצון לקוחות",
+                "section7-subtitle2": "עדות לקוח",
+                "section7-content": "\"עבודה עם Stackly Architects שינתה לא רק את הבית שלנו, אלא את איכות החיים שלנו. הצוות הקשיב בקפידה לצרכים שלנו וסיפק מעבר לציפיות שלנו. תשומת הלב לפרטים, הפתרונות החדשניים והמחויבות לקיימות העניקו לנו בית שהוא גם יפה וגם פונקציונלי להפליא. אנחנו במיוחד אוהבים איך החללים זורמים יחד ושפע האור הטבעי לאורך היום.\"",
+                "section7-client-name": "ג'יימס ושרה תומפסון",
+                "section7-client-location": "בעלי בית, פרויקט מגורים אורבניים מודרניים",
+
+                // Footer
+                "footer-desc": "יצירת חוויות אדריכליות יוצאות דופן באמצעות עיצוב חדשני ובנייה איכותית.",
+                "footer-links-title": "קישורים מהירים",
+                "footer-link-home": "בית",
+                "footer-link-about": "אודות",
+                "footer-link-services": "שירותים",
+                "footer-link-projects": "פרויקטים",
+                "footer-link-contact": "צור קשר",
+                "footer-services-title": "שירותים",
+                "footer-service-1": "פרויקטים למגורים",
+                "footer-service-2": "פרויקטים מסחריים",
+                "footer-service-3": "עיצוב פנים",
+                "footer-service-4": "תכנון אדריכלי",
+                "footer-service-5": "ניהול פרויקטים",
+                "footer-service-6": "שיפוץ ועיצוב מחדש",
+                "footer-contact-title": "פרטי יצירת קשר",
+                "footer-address-1": "שדרת העיצוב 123",
+                "footer-address-2": "רובע יצירתי, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "א'-ה': 9:00-18:00",
+                "footer-copyright": "© 2025 Stackly. כל הזכויות שמורות."
+            }
+        };
+
+        // Language Selector
+        const languageSelect = document.getElementById('languageSelect');
+        
+        languageSelect.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            changeLanguage(selectedLanguage);
+        });
+
+        // Enhanced function to change language
+        function changeLanguage(language) {
+            // Update HTML direction and lang attribute
+            if (language === 'ar' || language === 'he') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = language;
+                document.body.classList.remove('ltr');
+                document.body.classList.add('rtl');
+                
+                // Add appropriate font class
+                if (language === 'ar') {
+                    document.body.classList.add('arabic-font');
+                    document.body.classList.remove('hebrew-font');
+                } else {
+                    document.body.classList.add('hebrew-font');
+                    document.body.classList.remove('arabic-font');
+                }
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = language;
+                document.body.classList.remove('rtl', 'arabic-font', 'hebrew-font');
+                document.body.classList.add('ltr');
+            }
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[language] && translations[language][id]) {
+                    if (id.includes('list')) {
+                        // Handle list elements
+                        const listItems = translations[language][id];
+                        element.innerHTML = '';
+                        listItems.forEach(item => {
+                            const li = document.createElement('li');
+                            li.textContent = item;
+                            element.appendChild(li);
+                        });
+                    } else {
+                        element.textContent = translations[language][id];
+                    }
+                }
+            });
+            
+            // Force reflow to fix layout issues
+            document.body.style.display = 'none';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.display = '';
+        }
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.theme = 'light';
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+        
+        function handleLogout() {
+            // In a real application, you would clear authentication tokens here
+            // For now, just redirect to login page
+            window.location.href = 'login.html';
+        }
+        
+        logoutBtn.addEventListener('click', handleLogout);
+        mobileLogoutBtn.addEventListener('click', handleLogout);
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+        
+        closeMobileMenu.addEventListener('click', function() {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        // Initialize with English language
+        changeLanguage('en');
+    </script>
+</body>
+</html>

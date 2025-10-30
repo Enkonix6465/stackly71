@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architectural Insights | Construction & Architecture Firms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        /* Navigation */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            position: relative;
+            margin: 0 15px;
+        }
+        
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #3498db;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.3s;
+        }
+        
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Header Right Section */
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-selector {
+            margin-right: 15px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            margin-right: 15px;
+            color: #555;
+        }
+        
+        .login-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #2980b9;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s;
+            z-index: 1001;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-menu-content {
+            padding: 20px;
+        }
+        
+        .mobile-nav-item {
+            margin-bottom: 15px;
+        }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: 12px 0;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .mobile-dropdown-btn {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            background: none;
+            border: none;
+            color: #333;
+            font-weight: 500;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+        
+        .mobile-dropdown-content {
+            padding-left: 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+        }
+        
+        .mobile-dropdown-content.active {
+            max-height: 500px;
+        }
+        
+        .mobile-dropdown-item {
+            display: block;
+            padding: 10px 0;
+            color: #666;
+            text-decoration: none;
+            border-bottom: 1px solid #f9f9f9;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* RTL Support */
+        [dir="rtl"] .logo img {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+        
+        [dir="rtl"] .dropdown-menu {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .language-selector {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+        
+        [dir="rtl"] .theme-toggle {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+        
+        [dir="rtl"] .mobile-menu {
+            right: auto;
+            left: -100%;
+        }
+        
+        [dir="rtl"] .mobile-menu.active {
+            right: auto;
+            left: 0;
+        }
+        
+        [dir="rtl"] .mobile-dropdown-content {
+            padding-left: 0;
+            padding-right: 15px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 12px 0;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .logo img {
+                height: 32px;
+            }
+            
+            .language-selector {
+                padding: 6px 10px;
+                font-size: 14px;
+                margin-right: 10px;
+            }
+            
+            .theme-toggle {
+                font-size: 16px;
+                margin-right: 10px;
+            }
+            
+            .login-btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-right .login-btn {
+                display: none;
+            }
+            
+            .mobile-menu {
+                width: 85%;
+            }
+        }
+
+        /* Hero Section Styles */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        .bg-white {
+            background: white;
+        }
+        
+        .bg-gray {
+            background: #f8f9fa;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .mt-4 {
+            margin-top: 1.5rem;
+        }
+        
+        .pt-16 {
+            padding-top: 80px;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        .stats {
+            background: #3498db;
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+        
+        .contact-cta {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 70px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #3498db;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: #3498db;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                <img src="logo.png" alt="Logo" class="h-8 w-auto">
+            </div>
+        
+                
+                <!-- Desktop Navigation -->
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="home.html" class="nav-link">
+                            <span id="nav-home">Home</span>
+                            <i class="fas fa-chevron-down" style="margin-left: 5px;"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="home.html" class="dropdown-item">Home 1</a>
+                            <a href="home2.html" class="dropdown-item">Home 2</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link" id="nav-about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="services.html" class="nav-link">
+                            <span id="nav-services">Services</span>
+                            <i class="fas fa-chevron-down" style="margin-left: 5px;"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="Residential Architecture.html" class="dropdown-item">Residential Projects</a>
+                            <a href="commercial-projects.html" class="dropdown-item">Commercial Projects</a>
+                            <a href="interior_design1.html" class="dropdown-item">Interior Design</a>
+                            <a href="architectural-planning.html" class="dropdown-item">Architectural Planning</a>
+                            <a href="project-management.html" class="dropdown-item">Project Management</a>
+                            <a href="renovation-remodeling.html" class="dropdown-item">Renovation & Remodeling</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Blog.html" class="nav-link">
+                            <span id="nav-blog">Blog</span>
+                            <i class="fas fa-chevron-down" style="margin-left: 5px;"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="Blog1.html" class="dropdown-item">Design Trends</a>
+                            <a href="Blog2.html" class="dropdown-item">Project Showcase</a>
+                            <a href="Blog3.html" class="dropdown-item">Investment Insights</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Contact.html" class="nav-link" id="nav-contact">Contact Us</a>
+                    </li>
+                </ul>
+                
+                <!-- Header Right Section -->
+                <div class="header-right">
+                    <!-- Language Selector -->
+                    <select id="languageSelect" class="language-selector">
+                        <option value="en">English</option>
+                        <option value="ar">العربية</option>
+                        <option value="he">עברית</option>
+                    </select>
+                    
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <!-- Login Button -->
+                    <button class="login-btn" id="loginBtn">Log Out</button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <h3 id="mobile-menu-title">Menu</h3>
+                <button class="mobile-menu-btn" id="closeMobileMenu">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="mobile-menu-content">
+                <div class="mobile-nav-item">
+                    <button class="mobile-dropdown-btn">
+                        <span id="mobile-nav-home">Home</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="mobile-dropdown-content">
+                        <a href="home.html" class="mobile-dropdown-item">Home 1</a>
+                        <a href="home2.html" class="mobile-dropdown-item">Home 2</a>
+                    </div>
+                </div>
+                <div class="mobile-nav-item">
+                    <a href="about.html" class="mobile-nav-link" id="mobile-nav-about">About</a>
+                </div>
+                <div class="mobile-nav-item">
+                    <button class="mobile-dropdown-btn">
+                        <span id="mobile-nav-services">Services</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="mobile-dropdown-content">
+                        <a href="Residential Architecture.html" class="mobile-dropdown-item">Residential Projects</a>
+                        <a href="commercial-projects.html" class="mobile-dropdown-item">Commercial Projects</a>
+                        <a href="interior-design.html" class="mobile-dropdown-item">Interior Design</a>
+                        <a href="architectural-planning.html" class="mobile-dropdown-item">Architectural Planning</a>
+                        <a href="project-management.html" class="mobile-dropdown-item">Project Management</a>
+                        <a href="renovation-remodeling.html" class="mobile-dropdown-item">Renovation & Remodeling</a>
+                    </div>
+                </div>
+                <div class="mobile-nav-item">
+                    <button class="mobile-dropdown-btn">
+                        <span id="mobile-nav-blog">Blog</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="mobile-dropdown-content">
+                        <a href="Blog1.html" class="mobile-dropdown-item">Design Trends</a>
+                        <a href="Blog2.html" class="mobile-dropdown-item">Project Showcase</a>
+                        <a href="Blog3.html" class="mobile-dropdown-item">Investment Insights</a>
+                    </div>
+                </div>
+                <div class="mobile-nav-item">
+                    <a href="Contact.html" class="mobile-nav-link" id="mobile-nav-contact">Contact Us</a>
+                </div>
+                <div class="mobile-nav-item">
+                    <button class="login-btn" style="width: 100%; margin-top: 10px;">Log Out</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+    </header>
+
+    <!-- Hero Section with Video -->
+    <section class="hero">
+        <video autoplay muted loop class="hero-video">
+            <source src="Blog.mp4" type="video/mp4">
+            <!-- Fallback image in case video doesn't load -->
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Construction Background">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title" id="hero-title">Construction & Architecture Firm Insights</h1>
+            <p class="hero-subtitle" id="hero-subtitle">Expert analysis, trends, and strategies for successful construction and architectural practices</p>
+            <a href="Contact.html" class="hero-btn" id="hero-cta">Explore Industry Insights</a>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section bg-white">
+        <div class="container">
+            <h2 class="section-title" id="intro-title">Navigating the Construction & Architecture Industry</h2>
+            <div class="card-grid">
+                <!-- Card 1 -->
+                <div class="card">
+                    <div class="card-img" style="background-color: #3498db; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-hard-hat text-white" style="font-size: 4rem;"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="card1-title">Firm Management</h3>
+                        <p id="card1-desc">Strategies for running successful architecture and construction firms, from project acquisition to team leadership and financial management.</p>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="card">
+                    <div class="card-img" style="background-color: #2ecc71; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-tools text-white" style="font-size: 4rem;"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="card2-title">Construction Technology</h3>
+                        <p id="card2-desc">Latest construction technologies, BIM implementation, project management software, and digital transformation for construction firms.</p>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="card">
+                    <div class="card-img" style="background-color: #9b59b6; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-chart-line text-white" style="font-size: 4rem;"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="card3-title">Business Development</h3>
+                        <p id="card3-desc">Marketing strategies, client acquisition, proposal writing, and business growth tactics specifically for architecture and construction companies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Highlights Section -->
+    <section id="blog-highlights" class="section bg-gray">
+        <div class="container">
+            <h2 class="section-title" id="blog-title">Featured Industry Articles</h2>
+            <div class="card-grid">
+                <!-- Blog 1 Card -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-content">
+                        <span style="color: #3498db; font-size: 0.9rem; font-weight: 500;" id="blog1-category">Firm Management</span>
+                        <h3 id="blog1-title">Scaling Your Architecture Practice</h3>
+                        <p id="blog1-desc">Proven strategies for growing your architecture firm from boutique studio to industry leader while maintaining design quality.</p>
+                        <a href="#" class="hero-btn" style="padding: 8px 20px; font-size: 0.9rem; margin-top: 15px;">Read More</a>
+                    </div>
+                </div>
+                
+                <!-- Blog 2 Card -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-content">
+                        <span style="color: #2ecc71; font-size: 0.9rem; font-weight: 500;" id="blog2-category">Construction Tech</span>
+                        <h3 id="blog2-title">BIM Implementation Guide</h3>
+                        <p id="blog2-desc">Step-by-step guide to implementing Building Information Modeling in your construction firm for improved collaboration and efficiency.</p>
+                        <a href="#" class="hero-btn" style="padding: 8px 20px; font-size: 0.9rem; margin-top: 15px;">Read More</a>
+                    </div>
+                </div>
+                
+                <!-- Blog 3 Card -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-content">
+                        <span style="color: #9b59b6; font-size: 0.9rem; font-weight: 500;" id="blog3-category">Business Strategy</span>
+                        <h3 id="blog3-title">Winning Construction Bids</h3>
+                        <p id="blog3-desc">Master the art of proposal writing and bidding strategies to increase your construction firm's win rate on competitive projects.</p>
+                        <a href="#" class="hero-btn" style="padding: 8px 20px; font-size: 0.9rem; margin-top: 15px;">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Insights Section -->
+    <section class="section bg-white">
+        <div class="container">
+            <h2 class="section-title" id="category-title">Industry Specializations</h2>
+            <div class="card-grid">
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="width: 80px; height: 80px; background: #3498db; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-city text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h3 id="category1-title">Commercial Construction</h3>
+                        <p id="category1-desc">Office buildings, retail spaces, and commercial development projects management</p>
+                    </div>
+                </div>
+                
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="width: 80px; height: 80px; background: #2ecc71; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-home text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h3 id="category2-title">Residential Architecture</h3>
+                        <p id="category2-desc">Single-family homes, multi-unit residential projects and custom home design</p>
+                    </div>
+                </div>
+                
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="width: 80px; height: 80px; background: #9b59b6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-hospital text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h3 id="category3-title">Institutional Projects</h3>
+                        <p id="category3-desc">Schools, hospitals, government buildings and public infrastructure</p>
+                    </div>
+                </div>
+                
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="width: 80px; height: 80px; background: #f39c12; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-industry text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h3 id="category4-title">Industrial Construction</h3>
+                        <p id="category4-desc">Manufacturing facilities, warehouses and industrial plant design</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industry Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title" style="color: white;" id="stats-title">Construction Industry Outlook</h2>
+                <p style="font-size: 1.2rem;" id="stats-subtitle">Key statistics and trends shaping architecture and construction firms</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 id="stat1-value">$1.6T</h3>
+                    <div id="stat1-label">US Construction Market</div>
+                </div>
+                <div class="stat-item">
+                    <h3 id="stat2-value">4.2%</h3>
+                    <div id="stat2-label">Annual Growth Rate</div>
+                </div>
+                <div class="stat-item">
+                    <h3 id="stat3-value">680K+</h3>
+                    <div id="stat3-label">Construction Firms</div>
+                </div>
+                <div class="stat-item">
+                    <h3 id="stat4-value">25%</h3>
+                    <div id="stat4-label">Digital Adoption Increase</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA Section -->
+    <section id="contact" class="contact-cta">
+        <div class="container">
+            <h2 class="section-title" style="color: white;" id="contact-title">Ready to Start Your Project?</h2>
+            <p class="mb-4" style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px;" id="contact-subtitle">Let's collaborate to bring your architectural vision to life with our expert team and innovative design solutions.</p>
+            <a href="contact.html" class="hero-btn" id="contact-cta">
+                <i class="fas fa-paper-plane" style="margin-right: 8px;"></i>Contact Us Now
+            </a>
+        </div>
+    </section>
+
+ <!-- Footer -->
+<footer class="bg-black text-gray-300 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+
+      <!-- Company Info -->
+      <div>
+        <div class="flex items-center mb-6">
+          <div class="w-40 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-lg">
+            <img src="logo.png" alt="Company Logo" class="w-36 h-10 object-contain">
+          </div>
+        </div>
+        <p class="text-gray-400 mb-6 leading-relaxed">
+          Creating exceptional architectural experiences through innovative design and quality construction.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="home.html" class="hover:text-white transition">Home</a></li>
+          <li><a href="about.html" class="hover:text-white transition">About</a></li>
+          <li><a href="services.html" class="hover:text-white transition">Services</a></li>
+          <li><a href="Blog.html" class="hover:text-white transition">Projects</a></li>
+          <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Services</h3>
+        <ul class="space-y-2">
+          <li><a href="Residential Architecture.html" class="hover:text-white transition">Residential Projects</a></li>
+          <li><a href="commercial-projects.html" class="hover:text-white transition">Commercial Projects</a></li>
+          <li><a href="interior-design.html" class="hover:text-white transition">Interior Design</a></li>
+          <li><a href="architectural-planning.html" class="hover:text-white transition">Architectural Planning</a></li>
+          <li><a href="project-management.html" class="hover:text-white transition">Project Management</a></li>
+          <li><a href="renovation-remodeling.html" class="hover:text-white transition">Renovation & Remodeling</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Contact Info</h3>
+        <ul class="space-y-4 text-gray-400">
+          <li class="flex items-start space-x-3">
+            <i class="fas fa-map-marker-alt text-white mt-1"></i>
+            <div>
+              <p>123 Design Avenue</p>
+              <p>Creative District, CD 10001</p>
+            </div>
+          </li>
+          <li class="flex items-center space-x-3">
+            <i class="fas fa-phone text-white"></i>
+            <a href="tel:+15551234567" class="hover:text-white transition">+1 (555) 123-4567</a>
+          </li>
+          <li class="flex items-center space-x-3">
+            <i class="fas fa-envelope text-white"></i>
+            <a href="mailto:info@Stackly.com" class="hover:text-white transition">info@Stackly.com</a>
+          </li>
+          <li class="flex items-center space-x-3">
+            <i class="fas fa-clock text-white"></i>
+            <span>Mon-Fri: 9AM-6PM</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-gray-800 pt-6 text-center">
+      <p class="text-gray-500 text-sm">&copy; 2025 Stackly. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                // Navigation
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact Us",
+                "mobile-menu-title": "Menu",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact Us",
+                
+                // Hero Section
+                "hero-title": "Construction & Architecture Firm Insights",
+                "hero-subtitle": "Expert analysis, trends, and strategies for successful construction and architectural practices",
+                "hero-cta": "Explore Industry Insights",
+                
+                // Introduction Section
+                "intro-title": "Navigating the Construction & Architecture Industry",
+                "card1-title": "Firm Management",
+                "card1-desc": "Strategies for running successful architecture and construction firms, from project acquisition to team leadership and financial management.",
+                "card2-title": "Construction Technology",
+                "card2-desc": "Latest construction technologies, BIM implementation, project management software, and digital transformation for construction firms.",
+                "card3-title": "Business Development",
+                "card3-desc": "Marketing strategies, client acquisition, proposal writing, and business growth tactics specifically for architecture and construction companies.",
+                
+                // Blog Section
+                "blog-title": "Featured Industry Articles",
+                "blog1-category": "Firm Management",
+                "blog1-title": "Scaling Your Architecture Practice",
+                "blog1-desc": "Proven strategies for growing your architecture firm from boutique studio to industry leader while maintaining design quality.",
+                "blog2-category": "Construction Tech",
+                "blog2-title": "BIM Implementation Guide",
+                "blog2-desc": "Step-by-step guide to implementing Building Information Modeling in your construction firm for improved collaboration and efficiency.",
+                "blog3-category": "Business Strategy",
+                "blog3-title": "Winning Construction Bids",
+                "blog3-desc": "Master the art of proposal writing and bidding strategies to increase your construction firm's win rate on competitive projects.",
+                
+                // Category Section
+                "category-title": "Industry Specializations",
+                "category1-title": "Commercial Construction",
+                "category1-desc": "Office buildings, retail spaces, and commercial development projects management",
+                "category2-title": "Residential Architecture",
+                "category2-desc": "Single-family homes, multi-unit residential projects and custom home design",
+                "category3-title": "Institutional Projects",
+                "category3-desc": "Schools, hospitals, government buildings and public infrastructure",
+                "category4-title": "Industrial Construction",
+                "category4-desc": "Manufacturing facilities, warehouses and industrial plant design",
+                
+                // Stats Section
+                "stats-title": "Construction Industry Outlook",
+                "stats-subtitle": "Key statistics and trends shaping architecture and construction firms",
+                "stat1-label": "US Construction Market",
+                "stat2-label": "Annual Growth Rate",
+                "stat3-label": "Construction Firms",
+                "stat4-label": "Digital Adoption Increase",
+                
+                // Contact Section
+                "contact-title": "Ready to Start Your Project?",
+                "contact-subtitle": "Let's collaborate to bring your architectural vision to life with our expert team and innovative design solutions.",
+                "contact-cta": "Contact Us Now",
+                
+                // Footer
+                "footer-desc": "Creating exceptional architectural experiences through innovative design and quality construction.",
+                "footer-links-title": "Quick Links",
+                "footer-link-home": "Home",
+                "footer-link-about": "About",
+                "footer-link-services": "Services",
+                "footer-link-projects": "Projects",
+                "footer-link-contact": "Contact Us",
+                "footer-services-title": "Services",
+                "footer-service-1": "Residential Projects",
+                "footer-service-2": "Commercial Projects",
+                "footer-service-3": "Interior Design",
+                "footer-service-4": "Architectural Planning",
+                "footer-service-5": "Project Management",
+                "footer-service-6": "Renovation & Remodeling",
+                "footer-contact-title": "Contact Info",
+                "footer-address-1": "123 Design Avenue",
+                "footer-address-2": "Creative District, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "Mon-Fri: 9AM-6PM",
+                "footer-copyright": "© 2025 Stackly. All Rights Reserved."
+            },
+            ar: {
+                // Navigation
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                "mobile-menu-title": "القائمة",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                
+                // Hero Section
+                "hero-title": "رؤى شركات البناء والهندسة المعمارية",
+                "hero-subtitle": "تحليل الخبراء والاتجاهات والاستراتيجيات لممارسات البناء والهندسة المعمارية الناجحة",
+                "hero-cta": "استكشف رؤى الصناعة",
+                
+                // Introduction Section
+                "intro-title": "التنقل في صناعة البناء والهندسة المعمارية",
+                "card1-title": "إدارة الشركات",
+                "card1-desc": "استراتيجيات لإدارة شركات الهندسة المعمارية والبناء الناجحة، من الحصول على المشاريع إلى قيادة الفريق والإدارة المالية.",
+                "card2-title": "تكنولوجيا البناء",
+                "card2-desc": "أحدث تقنيات البناء، وتنفيذ BIM، وبرامج إدارة المشاريع، والتحول الرقمي لشركات البناء.",
+                "card3-title": "تطوير الأعمال",
+                "card3-desc": "استراتيجيات التسويق، واكتساب العملاء، وكتابة المقترحات، وتكتيكات نمو الأعمال خصيصًا لشركات الهندسة المعمارية والبناء.",
+                
+                // Blog Section
+                "blog-title": "مقالات الصناعة المميزة",
+                "blog1-category": "إدارة الشركات",
+                "blog1-title": "توسيع ممارسة الهندسة المعمارية الخاصة بك",
+                "blog1-desc": "استراتيجيات مثبتة لنمو شركة الهندسة المعمارية الخاصة بك من استوديو بوتيك إلى قائد في الصناعة مع الحفاظ على جودة التصميم.",
+                "blog2-category": "تكنولوجيا البناء",
+                "blog2-title": "دليل تنفيذ BIM",
+                "blog2-desc": "دليل خطوة بخطوة لتنفيذ نمذجة معلومات البناء في شركة البناء الخاصة بك لتحسين التعاون والكفاءة.",
+                "blog3-category": "استراتيجية الأعمال",
+                "blog3-title": "الفوز بعروض البناء",
+                "blog3-desc": "أتقن فن كتابة المقترحات واستراتيجيات المزايدة لزيادة معدل الفوز لشركة البناء الخاصة بك في المشاريع التنافسية.",
+                
+                // Category Section
+                "category-title": "تخصصات الصناعة",
+                "category1-title": "البناء التجاري",
+                "category1-desc": "مباني المكاتب، المساحات التجارية، وإدارة مشاريع التطوير التجاري",
+                "category2-title": "الهندسة المعمارية السكنية",
+                "category2-desc": "المنازل العائلية الفردية، المشاريع السكنية متعددة الوحدات وتصميم المنازل المخصصة",
+                "category3-title": "المشاريع المؤسسية",
+                "category3-desc": "المدارس، المستشفيات، المباني الحكومية والبنية التحتية العامة",
+                "category4-title": "البناء الصناعي",
+                "category4-desc": "مرافق التصنيع، المستودعات وتصميم المصانع الصناعية",
+                
+                // Stats Section
+                "stats-title": "توقعات صناعة البناء",
+                "stats-subtitle": "الإحصائيات والاتجاهات الرئيسية التي تشكل شركات الهندسة المعمارية والبناء",
+                "stat1-label": "سوق البناء الأمريكي",
+                "stat2-label": "معدل النمو السنوي",
+                "stat3-label": "شركات البناء",
+                "stat4-label": "زيادة اعتماد الرقمية",
+                
+                // Contact Section
+                "contact-title": "هل أنت مستعد لبدء مشروعك؟",
+                "contact-subtitle": "دعونا نتعاون لإحياء رؤيتك المعمارية مع فريقنا الخبير وحلول التصميم المبتكرة.",
+                "contact-cta": "اتصل بنا الآن",
+                
+                // Footer
+                "footer-desc": "خلق تجارب معمارية استثنائية من خلال التصميم المبتكر والبناء عالي الجودة.",
+                "footer-links-title": "روابط سريعة",
+                "footer-link-home": "الرئيسية",
+                "footer-link-about": "من نحن",
+                "footer-link-services": "الخدمات",
+                "footer-link-projects": "المشاريع",
+                "footer-link-contact": "اتصل بنا",
+                "footer-services-title": "الخدمات",
+                "footer-service-1": "المشاريع السكنية",
+                "footer-service-2": "المشاريع التجارية",
+                "footer-service-3": "التصميم الداخلي",
+                "footer-service-4": "التخطيط المعماري",
+                "footer-service-5": "إدارة المشاريع",
+                "footer-service-6": "التجديد وإعادة التصميم",
+                "footer-contact-title": "معلومات الاتصال",
+                "footer-address-1": "123 شارع التصميم",
+                "footer-address-2": "الحي الإبداعي، CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "الإثنين-الجمعة: 9 صباحًا-6 مساءً",
+                "footer-copyright": "© 2025 Stackly. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Navigation
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                "mobile-menu-title": "תפריט",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                
+                // Hero Section
+                "hero-title": "תובנות לחברות בנייה וארכיטקטורה",
+                "hero-subtitle": "ניתוח מומחה, מגמות ואסטרטגיות לפרקטיקות בנייה וארכיטקטורה מוצלחות",
+                "hero-cta": "חקור תובנות תעשייה",
+                
+                // Introduction Section
+                "intro-title": "ניווט בתעשיית הבנייה והארכיטקטורה",
+                "card1-title": "ניהול חברות",
+                "card1-desc": "אסטרטגיות להפעלת חברות ארכיטקטורה ובנייה מוצלחות, מרכישת פרויקטים ועד להנהגת צוות וניהול פיננסי.",
+                "card2-title": "טכנולוגיית בנייה",
+                "card2-desc": "טכנולוגיות בנייה עדכניות, יישום BIM, תוכנת ניהול פרויקטים והמרה דיגיטלית לחברות בנייה.",
+                "card3-title": "פיתוח עסקי",
+                "card3-desc": "אסטרטגיות שיווק, רכישת לקוחות, כתיבת הצעות וטקטיקות צמיחה עסקית ספציפית לחברות ארכיטקטורה ובנייה.",
+                
+                // Blog Section
+                "blog-title": "מאמרי תעשייה מומלצים",
+                "blog1-category": "ניהול חברות",
+                "blog1-title": "הרחבת פרקטיקת הארכיטקטורה שלך",
+                "blog1-desc": "אסטרטגיות מוכחות לצמיחת חברת הארכיטקטורה שלך מסטודיו בוטיק למנהיג בתעשייה תוך שמירה על איכות העיצוב.",
+                "blog2-category": "טכנולוגיית בנייה",
+                "blog2-title": "מדריך ליישום BIM",
+                "blog2-desc": "מדריך שלב אחר שלב ליישום מודל מידע בנייה בחברת הבנייה שלך לשיפור שיתוף הפעולה והיעילות.",
+                "blog3-category": "אסטרטגיה עסקית",
+                "blog3-title": "זכייה במכרזי בנייה",
+                "blog3-desc": "שלט באמנות כתיבת ההצעות ואסטרטגיות המכרזים כדי להגדיל את שיעור הזכיות של חברת הבנייה שלך בפרויקטים תחרותיים.",
+                
+                // Category Section
+                "category-title": "התמחויות תעשייה",
+                "category1-title": "בנייה מסחרית",
+                "category1-desc": "ניהול פרויקטים של בנייני משרדים, שטחי קמעונאות ופיתוח מסחרי",
+                "category2-title": "ארכיטקטורה למגורים",
+                "category2-desc": "בתים משפחתיים בודדים, פרויקטים למגורים מרובי יחידות ועיצוב בתים מותאמים אישית",
+                "category3-title": "פרויקטים מוסדיים",
+                "category3-desc": "בתי ספר, בתי חולים, מבני ממשל ותשתיות ציבוריות",
+                "category4-title": "בנייה תעשייתית",
+                "category4-desc": "מתקני ייצור, מחסנים ועיצוב מפעלים תעשייתיים",
+                
+                // Stats Section
+                "stats-title": "תחזית תעשיית הבנייה",
+                "stats-subtitle": "סטטיסטיקות ומגמות מפתח המעצבות חברות ארכיטקטורה ובנייה",
+                "stat1-label": "שוק הבנייה האמריקאי",
+                "stat2-label": "שיעור צמיחה שנתי",
+                "stat3-label": "חברות בנייה",
+                "stat4-label": "עלייה באימוץ דיגיטלי",
+                
+                // Contact Section
+                "contact-title": "מוכן להתחיל את הפרויקט שלך?",
+                "contact-subtitle": "בואו נשתף פעולה כדי להחיות את החזון הארכיטקטוני שלך עם הצוות המומחה שלנו ופתרונות עיצוב חדשניים.",
+                "contact-cta": "צור קשר עכשיו",
+                
+                // Footer
+                "footer-desc": "יצירת חוויות ארכיטקטוניות יוצאות דופן באמצעות עיצוב חדשני ובנייה איכותית.",
+                "footer-links-title": "קישורים מהירים",
+                "footer-link-home": "בית",
+                "footer-link-about": "אודות",
+                "footer-link-services": "שירותים",
+                "footer-link-projects": "פרויקטים",
+                "footer-link-contact": "צור קשר",
+                "footer-services-title": "שירותים",
+                "footer-service-1": "פרויקטים למגורים",
+                "footer-service-2": "פרויקטים מסחריים",
+                "footer-service-3": "עיצוב פנים",
+                "footer-service-4": "תכנון ארכיטקטוני",
+                "footer-service-5": "ניהול פרויקטים",
+                "footer-service-6": "שיפוץ ועיצוב מחדש",
+                "footer-contact-title": "פרטי יצירת קשר",
+                "footer-address-1": "שדרת העיצוב 123",
+                "footer-address-2": "רובע יצירתי, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "א'-ה': 9:00-18:00",
+                "footer-copyright": "© 2025 Stackly. כל הזכויות שמורות."
+            }
+        };
+
+        // Set initial language
+        let currentLanguage = 'en';
+
+        // Function to update text content based on language
+        function updateLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update all elements with translation keys
+            Object.keys(translations[lang]).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update HTML direction attribute for RTL languages
+            if (lang === 'ar' || lang === 'he') {
+                document.documentElement.dir = 'rtl';
+            } else {
+                document.documentElement.dir = 'ltr';
+            }
+            
+            // Update language selector
+            document.getElementById('languageSelect').value = lang;
+        }
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileMenuFunc() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+        overlay.addEventListener('click', closeMobileMenuFunc);
+        
+        // Mobile dropdown functionality
+        const mobileDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
+        
+        mobileDropdownBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                content.classList.toggle('active');
+                
+                const icon = this.querySelector('i');
+                if (content.classList.contains('active')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+        
+        // Language selector change
+        document.getElementById('languageSelect').addEventListener('change', function(e) {
+            updateLanguage(e.target.value);
+        });
+        
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        
+        themeToggle.addEventListener('click', function() {
+            if (document.body.classList.contains('dark-theme')) {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+                this.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+                this.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        // Initialize with English
+        updateLanguage('en');
+    </script>
+</body>
+</html>

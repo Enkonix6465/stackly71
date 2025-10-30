@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Trends | Stackly Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+   <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#e67e22',
+                        accent: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* RTL Direction Handling */
+        [dir="rtl"] .ltr-text-left {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .ltr-ml-2 {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-mr-2 {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-8 > * + * {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+        
+        [dir="rtl"] .ltr-pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-border-l-2 {
+            border-left: 0;
+            border-right: 2px solid;
+        }
+        
+        [dir="rtl"] .ltr-rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-text-right {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .ltr-left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .ltr-translate-x-full {
+            transform: translateX(-100%);
+        }
+        
+        /* RTL-specific adjustments */
+        [dir="rtl"] .rtl-text-right {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .rtl-text-left {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .rtl-mr-2 {
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-ml-2 {
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-space-x-reverse > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .rtl-flex-row-reverse {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .rtl-items-end {
+            align-items: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-justify-end {
+            justify-content: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-border-r-2 {
+            border-right: 0;
+            border-left: 2px solid;
+        }
+        
+        [dir="rtl"] .rtl-pr-4 {
+            padding-right: 0;
+            padding-left: 1rem;
+        }
+
+        /* Corner positioning for header elements */
+        .header-container {
+            position: relative;
+            min-height: 80px;
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .logo-container {
+            left: 1rem;
+        }
+        
+        [dir="rtl"] .logo-container {
+            right: 1rem;
+        }
+        
+        .nav-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .right-side-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .right-side-container {
+            right: 1rem;
+        }
+        
+        [dir="rtl"] .right-side-container {
+            left: 1rem;
+        }
+
+        /* Keep buttons LTR in RTL mode */
+        [dir="rtl"] .right-side-container * {
+            direction: ltr !important;
+        }
+        
+        [dir="rtl"] .right-side-container a,
+        [dir="rtl"] .right-side-container button,
+        [dir="rtl"] .right-side-container select {
+            text-align: center;
+            unicode-bidi: isolate;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Chevron rotation for RTL */
+        [dir="rtl"] .chevron-rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile responsiveness for corner positioning */
+        @media (max-width: 1024px) {
+            .nav-container {
+                display: none;
+            }
+            
+            .logo-container {
+                position: static;
+                transform: none;
+            }
+            
+            .right-side-container {
+                position: static;
+                transform: none;
+            }
+            
+            .header-container {
+                justify-content: space-between;
+                min-height: auto;
+            }
+        }
+
+        /* Mobile menu transitions */
+        .mobile-menu-enter {
+            transform: translateX(100%);
+        }
+        
+        [dir="rtl"] .mobile-menu-enter {
+            transform: translateX(-100%);
+        }
+        
+        .mobile-menu-enter-active {
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        [dir="rtl"] .mobile-menu-enter-active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-gray-50 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 left-0 z-50 transition-all duration-300">
+        <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+            <!-- Logo - Positioned in LEFT corner (LTR) or RIGHT corner (RTL) -->
+            <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                <img src="logo.png" alt="Logo" class="h-8 w-auto">
+            </div>
+            
+            <!-- Navigation - Stays in CENTER -->
+            <nav class="hidden lg:flex items-center ltr:space-x-8 rtl:space-x-reverse nav-container">
+                <!-- Home Dropdown -->
+                <div class="relative group">
+                    <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-home">Home</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="home.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Home 1</a>
+                        <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Home 2</a>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-about">
+                    About
+                </a>
+
+                <!-- Services Dropdown -->
+                <div class="relative group">
+                    <a href="services.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-services">Services</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="Residential Architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Commercial Projects</a>
+                        <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Interior Design</a>
+                        <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Architectural Planning</a>
+                        <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Renovation & Remodeling</a>
+                    </div>
+                </div>
+
+             <!-- Blog Dropdown -->
+<div x-data="{ open: false }" class="relative group">
+    <!-- Main Blog Link / Toggle -->
+    <button 
+        @click="open = !open" 
+        class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium focus:outline-none"
+    >
+        <span id="nav-blog">Blog</span>
+        <i class="fas fa-chevron-down ltr:ml-1 rtl:mr-1 text-xs transform transition-transform duration-300"
+           :class="{ 'rotate-180': open }"></i>
+    </button>
+
+    <!-- Dropdown Menu -->
+    <div 
+        x-show="open" 
+        @click.outside="open = false"
+        class="absolute ltr:left-0 rtl:right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 -translate-y-2"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-2"
+    >
+        <a href="Blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">
+            Design Trends
+        </a>
+        <a href="Blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">
+            Project Showcase
+        </a>
+        <a href="Blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">
+            Investment Insights
+        </a>
+    </div>
+</div>
+
+
+                <!-- Contact Us -->
+                <a href="Contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-contact">
+                    Contact Us
+                </a>
+            </nav>
+
+            <!-- Right Side - Positioned in RIGHT corner (LTR) or LEFT corner (RTL) -->
+            <div class="flex items-center ltr-space-x-4 rtl-space-x-reverse right-side-container">
+                <!-- Language Selector -->
+                <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="he">עברית</option>
+                </select>
+                
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- Login Button -->
+                <div class="hidden md:flex items-center ltr-space-x-3 rtl-space-x-reverse">
+                    <a href="login.html" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm">
+                        Log Out
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden fixed inset-0 bg-white dark:bg-gray-800 z-50 transform ltr-translate-x-full rtl--translate-x-full transition-transform duration-300">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700 rtl-flex-row-reverse">
+                <h2 class="text-xl font-bold text-primary dark:text-white" id="mobile-menu-title">Menu</h2>
+                <button id="closeMobileMenu" class="text-gray-600 dark:text-gray-300 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="p-4 space-y-4 rtl-text-right">
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-home">Home</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="home.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 1</a>
+                        <a href="home2.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-about">About</a>
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-services">Services</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Residential Architecture.html" class="block py-2 text-gray-600 dark:text-gray-400">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block py-2 text-gray-600 dark:text-gray-400">Commercial Projects</a>
+                        <a href="interior-design.html" class="block py-2 text-gray-600 dark:text-gray-400">Interior Design</a>
+                        <a href="architectural-planning.html" class="block py-2 text-gray-600 dark:text-gray-400">Architectural Planning</a>
+                        <a href="project-management.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block py-2 text-gray-600 dark:text-gray-400">Renovation & Remodeling</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-blog">Blog</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Blog1.html" class="block py-2 text-gray-600 dark:text-gray-400">Design Trends</a>
+                        <a href="Blog2.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Showcase</a>
+                        <a href="Blog3.html" class="block py-2 text-gray-600 dark:text-gray-400">Investment Insights</a>
+                    </div>
+                </div>
+                <a href="Contact.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-contact">Contact Us</a>
+                <a href="login.html" class="block text-lg font-medium text-primary dark:text-white py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-center">Log Out</a>
+            </nav>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="pt-16 rtl-content">
+        <!-- Hero Section - Full Width -->
+       <section class="relative full-width-section text-white hero-section min-h-screen flex items-center justify-center py-20 bg-cover bg-center bg-no-repeat"
+    style="background-image: url('https://i.pinimg.com/1200x/1c/0c/52/1c0c52006b1070b1b0bd725151ded00b.jpg');">
+    
+    <!-- Overlay for better text visibility -->
+    <div class="absolute inset-0 bg-black/50 z-0"></div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 sm:px-6 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block bg-purple-700/80 text-purple-200 px-4 py-1 rounded-full text-sm font-medium mb-4" id="hero-category">
+                Design Trends
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" id="hero-title">
+                2024 Design Trends
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-purple-100" id="hero-subtitle">
+                Exploring the most influential design trends shaping architecture and interiors this year
+            </p>
+            <div class="flex flex-wrap justify-center items-center gap-4 text-purple-200">
+                <div class="flex items-center">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    <span id="author-name">By Sarah Johnson</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    <span id="publish-date">April 10, 2024</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-clock mr-2"></i>
+                    <span id="read-time">15 min read</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <!-- Blog Content -->
+        <article class="py-16 bg-white dark:bg-gray-900">
+            <div class="blog-content">
+                
+                <!-- Section 1: Introduction - Full Width -->
+                <section class="full-width-section mb-16 bg-purple-50 dark:bg-purple-900/20 py-12">
+                    <div class="container mx-auto px-4 sm:px-6">
+                        <div class="max-w-4xl mx-auto">
+                            <h2 class="text-2xl font-bold mb-4 text-purple-800 dark:text-purple-200" id="section1-title">The Evolution of Design in 2024</h2>
+                            <p class="text-lg text-gray-700 dark:text-gray-300" id="section1-content">
+                                Design trends in 2024 reflect a world in transition, blending technological innovation with a renewed appreciation for natural materials and sustainable practices. This year, we're seeing a shift toward designs that prioritize wellbeing, connection to nature, and flexible living spaces that adapt to our changing needs.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Biophilic Design - Full Width -->
+              <section class="w-full mb-16 py-12 bg-gray-50 dark:bg-gray-900">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section2-title">1. Biophilic Design: Connecting with Nature</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4 text-purple-700 dark:text-purple-300" id="section2-subtitle1">What is Biophilic Design?</h3>
+                    <p class="mb-4" id="section2-content1">
+                        Biophilic design integrates natural elements, materials, and patterns into built environments to create spaces that promote health, wellbeing, and productivity. This approach recognizes our innate connection to nature and seeks to strengthen it through design.
+                    </p>
+                    <ul class="list-disc pl-5 space-y-2" id="section2-list1">
+                        <li>Incorporation of natural light and ventilation</li>
+                        <li>Use of organic materials like wood, stone, and natural fibers</li>
+                        <li>Integration of living plants and green walls</li>
+                        <li>Nature-inspired patterns and textures</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-100 dark:bg-gray-800 rounded-xl p-6">
+                    <h4 class="font-bold mb-3 text-lg text-purple-700 dark:text-purple-300" id="section2-subtitle2">Benefits of Biophilic Design</h4>
+                    <ul class="space-y-2" id="section2-list2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>15% increase in creativity and wellbeing</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Reduced stress levels and improved mental health</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Enhanced air quality and environmental comfort</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Increased property value and appeal</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section 3: Color Trends - Full Width -->
+<section class="w-full mb-16 bg-gray-50 dark:bg-gray-800 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section3-title">2. 2024 Color Palettes: Earthy & Bold</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white dark:bg-gray-700 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-700 dark:text-purple-300" id="section3-subtitle1">Popular Color Schemes</h3>
+                    <div class="space-y-6" id="section3-colors">
+                        <div>
+                            <h4 class="font-semibold mb-2">Earth Tones</h4>
+                            <div class="color-palette flex gap-2 mb-2">
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium" style="background-color: #8B7355;">Taupe</div>
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium" style="background-color: #A68A64;">Sand</div>
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium" style="background-color: #6B8E23;">Olive</div>
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium" style="background-color: #CD853F;">Terracotta</div>
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium text-white" style="background-color: #8B4513;">Sienna</div>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Warm, grounding colors that create cozy and inviting spaces.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2">Jewel Tones</h4>
+                            <div class="color-palette flex gap-2 mb-2">
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium text-white" style="background-color: #4B0082;">Indigo</div>
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium text-white" style="background-color: #8A2BE2;">Amethyst</div>
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium text-white" style="background-color: #008080;">Teal</div>
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium text-white" style="background-color: #DA70D6;">Orchid</div>
+                                <div class="color-swatch w-12 h-12 rounded-lg flex items-center justify-center text-xs font-medium text-white" style="background-color: #FF6347;">Coral</div>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Rich, saturated colors that add drama and sophistication.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-700 dark:text-purple-300">Color Psychology</h3>
+                    <p class="mb-4">Colors significantly impact mood and perception in interior spaces.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-palette text-purple-500 mt-1 mr-3"></i>
+                            <span>Earth tones create calm and stability</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-palette text-purple-500 mt-1 mr-3"></i>
+                            <span>Jewel tones stimulate creativity and energy</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-palette text-purple-500 mt-1 mr-3"></i>
+                            <span>Neutrals provide flexibility and timelessness</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 4: Material Trends - Full Width -->
+<section class="w-full mb-16 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section4-title">3. Material Innovations: Sustainable & Textured</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-green-600 dark:text-green-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" id="section4-card1-title">Sustainable Materials</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card1-desc">Eco-friendly options like bamboo, cork, and reclaimed wood are gaining popularity for their low environmental impact and natural beauty.</p>
+                    <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1" id="section4-card1-list">
+                        <li>• Bamboo - Fast-growing & durable</li>
+                        <li>• Cork - Renewable & sound-absorbing</li>
+                        <li>• Reclaimed wood - Character & history</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-cubes text-blue-600 dark:text-blue-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" id="section4-card2-title">Textured Surfaces</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card2-desc">From fluted glass to ribbed wood, textured surfaces add depth and tactile interest to interiors, creating visual and sensory appeal.</p>
+                    <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1" id="section4-card2-list">
+                        <li>• Fluted glass - Privacy with light</li>
+                        <li>• Ribbed wood - Warmth & texture</li>
+                        <li>• Plaster finishes - Organic & modern</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-recycle text-purple-600 dark:text-purple-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" id="section4-card3-title">Recycled & Upcycled</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card3-desc">Materials made from recycled content or creatively repurposed items bring unique character while reducing waste.</p>
+                    <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1" id="section4-card3-list">
+                        <li>• Recycled glass countertops</li>
+                        <li>• Upcycled metal fixtures</li>
+                        <li>• Reclaimed brick & stone</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 5: Flexible Spaces - Full Width -->
+<section class="w-full mb-16 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section5-title">4. Flexible Spaces: Adapting to Modern Lifestyles</h2>
+            
+            <div class="bg-white dark:bg-gray-700 rounded-xl p-8">
+                <h3 class="text-2xl font-bold mb-6 text-center text-blue-800 dark:text-blue-200" id="section5-subtitle">The Multi-Functional Home</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4 text-blue-700 dark:text-blue-300" id="section5-subtitle1">Design Strategies</h4>
+                        <ul class="space-y-3" id="section5-list1">
+                            <li class="flex items-start">
+                                <i class="fas fa-play text-blue-500 mt-1 mr-3"></i>
+                                <span>Movable partitions and sliding doors</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-play text-blue-500 mt-1 mr-3"></i>
+                                <span>Convertible furniture with hidden storage</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-play text-blue-500 mt-1 mr-3"></i>
+                                <span>Zoned lighting for different activities</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-play text-blue-500 mt-1 mr-3"></i>
+                                <span>Multi-purpose rooms that serve different functions</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4 text-blue-700 dark:text-blue-300" id="section5-subtitle2">Popular Flexible Spaces</h4>
+                        <div class="space-y-4" id="section5-spaces">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium" id="section5-space1">Home Office/Guest Room</span>
+                                    <span class="text-blue-600 dark:text-blue-400">45%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium" id="section5-space2">Open Kitchen/Living</span>
+                                    <span class="text-blue-600 dark:text-blue-400">60%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium" id="section5-space3">Outdoor Living Spaces</span>
+                                    <span class="text-blue-600 dark:text-blue-400">75%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 6: Tech Integration - Full Width -->
+<section class="w-full mb-16 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section6-title">5. Technology Integration: Smart & Seamless</h2>
+            
+            <div class="relative">
+                <!-- Process Timeline -->
+                <div class="border-l-2 border-blue-200 dark:border-blue-800 ml-4 pl-8 space-y-12">
+                    <!-- Step 1 -->
+                    <div class="relative">
+                        <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">1</div>
+                        <h3 class="text-xl font-semibold mb-2" id="section6-step1-title">Voice-Activated Systems</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step1-desc">
+                            Smart home assistants that control lighting, temperature, entertainment, and security through simple voice commands, creating truly hands-free living experiences.
+                        </p>
+                        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                            <h4 class="font-semibold text-blue-700 dark:text-blue-300 mb-2" id="section6-step1-note-title">Design Tip:</h4>
+                            <p class="text-sm" id="section6-step1-note">Conceal speakers and microphones within built-in cabinetry or architectural elements for a cleaner look.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="relative">
+                        <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">2</div>
+                        <h3 class="text-xl font-semibold mb-2" id="section6-step2-title">Integrated Lighting Control</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step2-desc">
+                            Smart lighting systems that adjust color temperature and intensity throughout the day to support circadian rhythms and create desired moods for different activities.
+                        </p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="relative">
+                        <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">3</div>
+                        <h3 class="text-xl font-semibold mb-2" id="section6-step3-title">Hidden Technology</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step3-desc">
+                            TVs that disappear into cabinetry, motorized window treatments, and charging stations integrated into furniture keep technology accessible but out of sight when not in use.
+                        </p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="relative">
+                        <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">4</div>
+                        <h3 class="text-xl font-semibold mb-2" id="section6-step4-title">Sustainable Tech Solutions</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step4-desc">
+                            Energy monitoring systems, smart thermostats, and automated irrigation that optimize resource usage while providing convenience and cost savings.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 7: Future Outlook - Full Width -->
+<section class="w-full mb-16 bg-gray-50 dark:bg-gray-800 py-12">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full">
+            <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section7-title">6. The Future of Design: What's Next?</h2>
+            
+            <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6 mb-8">
+                <h3 class="text-xl font-semibold mb-4 text-purple-700 dark:text-purple-300" id="section7-subtitle1">Emerging Trends to Watch</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="section7-trends">
+                    <div class="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                        <div class="text-2xl font-bold text-purple-700 dark:text-purple-300 mb-2">AI</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400" id="section7-trend1">AI-Assisted Design</div>
+                    </div>
+                    <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                        <div class="text-2xl font-bold text-green-700 dark:text-green-300 mb-2">3D</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400" id="section7-trend2">3D Printed Elements</div>
+                    </div>
+                    <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                        <div class="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">VR</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400" id="section7-trend3">Virtual Reality Planning</div>
+                    </div>
+                    <div class="text-center p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                        <div class="text-2xl font-bold text-orange-700 dark:text-orange-300 mb-2">Circular</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400" id="section7-trend4">Circular Economy Design</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-xl p-6">
+                <h3 class="text-xl font-semibold mb-4 text-green-700 dark:text-green-300" id="section7-subtitle2">The Human-Centric Approach</h3>
+                <p class="mb-4" id="section7-content">
+                    The most significant trend emerging across all design disciplines is a renewed focus on human experience and wellbeing. As technology becomes more integrated into our lives, designers are counterbalancing this with spaces that promote connection, comfort, and mindfulness. The future of design lies in creating environments that not only look beautiful but also support how we live, work, and thrive.
+                </p>
+                <div class="flex flex-wrap gap-4" id="section7-tags">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                        <i class="fas fa-heart mr-2"></i>
+                        <span id="section7-tag1">Wellbeing Focus</span>
+                    </span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                        <i class="fas fa-users mr-2"></i>
+                        <span id="section7-tag2">Community Spaces</span>
+                    </span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
+                        <i class="fas fa-leaf mr-2"></i>
+                        <span id="section7-tag3">Sustainable Future</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer - Full Width -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+    <div class="container mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Company Info -->
+            <div class="lg:col-span-1">
+               <div class="flex items-center mb-6">
+                   <div class="w-100 h-16 bg-gray-800 rounded-xl flex items-center justify-center shadow-md">
+                <div class="w-33 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-md">
+                            <img src="logo.png" alt="Company Logo" class="w-33 h-10 object-contain">
+                        </div>
+             </div>
+    </div>
+    <p class="mb-6 text-gray-400" id="footer-desc">
+        Creating exceptional architectural experiences through innovative design and quality construction.
+    </p>
+    <div class="flex space-x-4">
+        <a href="https://www.facebook.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://twitter.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://www.instagram.com/" class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+    </div>
+</div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-links-title">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="home.html" class="hover:text-blue-400 transition-colors" id="footer-link-home">Home</a></li>
+                        <li><a href="about.html" class="hover:text-blue-400 transition-colors" id="footer-link-about">About</a></li>
+                        <li><a href="services.html" class="hover:text-blue-400 transition-colors" id="footer-link-services">Services</a></li>
+                        <li><a href="blog.html" class="hover:text-blue-400 transition-colors" id="footer-link-projects">Projects</a></li>
+                        <li><a href="contact.html" class="hover:text-blue-400 transition-colors" id="footer-link-contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-services-title">Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="residential-projects.html" class="hover:text-blue-400 transition-colors" id="footer-service-1">Residential Projects</a></li>
+                        <li><a href="commercial-projects.html" class="hover:text-blue-400 transition-colors" id="footer-service-2">Commercial Projects</a></li>
+                        <li><a href="interior-design.html" class="hover:text-blue-400 transition-colors" id="footer-service-3">Interior Design</a></li>
+                        <li><a href="architectural-planning.html" class="hover:text-blue-400 transition-colors" id="footer-service-4">Architectural Planning</a></li>
+                        <li><a href="project-management.html" class="hover:text-blue-400 transition-colors" id="footer-service-5">Project Management</a></li>
+                        <li><a href="Renovation.html" class="hover:text-blue-400 transition-colors" id="footer-service-6">Renovation & Remodeling</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-contact-title">Contact Info</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <div>
+                                <p id="footer-address-1">123 Design Avenue</p>
+                                <p id="footer-address-2">Creative District, CD 10001</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors" id="footer-phone">
+                                +1 (555) 123-4567
+                            </a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <a href="mailto:info@Stackly.com" class="hover:text-blue-400 transition-colors" id="footer-email">
+                                info@Stackly.com
+                            </a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span id="footer-hours">Mon-Fri: 9AM-6PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p id="footer-copyright">&copy; 2025 Stackly. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Language translations with all sections
+        const translations = {
+            en: {
+                // Header
+                "header-logo": "Stackly",
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact",
+                "logout-btn": "Log Out",
+                "mobile-menu-title": "Menu",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact",
+                "mobile-logout-btn": "Log Out",
+                
+                // Hero
+                "hero-category": "Design Trends",
+                "hero-title": "2024 Design Trends",
+                "hero-subtitle": "Exploring the most influential design trends shaping architecture and interiors this year",
+                "author-name": "By Sarah Johnson",
+                "publish-date": "April 10, 2024",
+                "read-time": "15 min read",
+                
+                // Sections
+                "section1-title": "The Evolution of Design in 2024",
+                "section1-content": "Design trends in 2024 reflect a world in transition, blending technological innovation with a renewed appreciation for natural materials and sustainable practices. This year, we're seeing a shift toward designs that prioritize wellbeing, connection to nature, and flexible living spaces that adapt to our changing needs.",
+                
+                "section2-title": "1. Biophilic Design: Connecting with Nature",
+                "section2-subtitle1": "What is Biophilic Design?",
+                "section2-content1": "Biophilic design integrates natural elements, materials, and patterns into built environments to create spaces that promote health, wellbeing, and productivity. This approach recognizes our innate connection to nature and seeks to strengthen it through design.",
+                "section2-list1": ["Incorporation of natural light and ventilation", "Use of organic materials like wood, stone, and natural fibers", "Integration of living plants and green walls", "Nature-inspired patterns and textures"],
+                "section2-subtitle2": "Benefits of Biophilic Design",
+                "section2-list2": ["15% increase in creativity and wellbeing", "Reduced stress levels and improved mental health", "Enhanced air quality and environmental comfort", "Increased property value and appeal"],
+                
+                "section3-title": "2. 2024 Color Palettes: Earthy & Bold",
+                "section3-subtitle1": "Popular Color Schemes",
+                
+                "section4-title": "3. Material Innovations: Sustainable & Textured",
+                "section4-card1-title": "Sustainable Materials",
+                "section4-card1-desc": "Eco-friendly options like bamboo, cork, and reclaimed wood are gaining popularity for their low environmental impact and natural beauty.",
+                "section4-card1-list": ["Bamboo - Fast-growing & durable", "Cork - Renewable & sound-absorbing", "Reclaimed wood - Character & history"],
+                "section4-card2-title": "Textured Surfaces",
+                "section4-card2-desc": "From fluted glass to ribbed wood, textured surfaces add depth and tactile interest to interiors, creating visual and sensory appeal.",
+                "section4-card2-list": ["Fluted glass - Privacy with light", "Ribbed wood - Warmth & texture", "Plaster finishes - Organic & modern"],
+                "section4-card3-title": "Recycled & Upcycled",
+                "section4-card3-desc": "Materials made from recycled content or creatively repurposed items bring unique character while reducing waste.",
+                "section4-card3-list": ["Recycled glass countertops", "Upcycled metal fixtures", "Reclaimed brick & stone"],
+                
+                "section5-title": "4. Flexible Spaces: Adapting to Modern Lifestyles",
+                "section5-subtitle": "The Multi-Functional Home",
+                "section5-subtitle1": "Design Strategies",
+                "section5-list1": ["Movable partitions and sliding doors", "Convertible furniture with hidden storage", "Zoned lighting for different activities", "Multi-purpose rooms that serve different functions"],
+                "section5-subtitle2": "Popular Flexible Spaces",
+                "section5-space1": "Home Office/Guest Room",
+                "section5-space2": "Open Kitchen/Living",
+                "section5-space3": "Outdoor Living Spaces",
+                
+                "section6-title": "5. Technology Integration: Smart & Seamless",
+                "section6-step1-title": "Voice-Activated Systems",
+                "section6-step1-desc": "Smart home assistants that control lighting, temperature, entertainment, and security through simple voice commands, creating truly hands-free living experiences.",
+                "section6-step1-note-title": "Design Tip:",
+                "section6-step1-note": "Conceal speakers and microphones within built-in cabinetry or architectural elements for a cleaner look.",
+                "section6-step2-title": "Integrated Lighting Control",
+                "section6-step2-desc": "Smart lighting systems that adjust color temperature and intensity throughout the day to support circadian rhythms and create desired moods for different activities.",
+                "section6-step3-title": "Hidden Technology",
+                "section6-step3-desc": "TVs that disappear into cabinetry, motorized window treatments, and charging stations integrated into furniture keep technology accessible but out of sight when not in use.",
+                "section6-step4-title": "Sustainable Tech Solutions",
+                "section6-step4-desc": "Energy monitoring systems, smart thermostats, and automated irrigation that optimize resource usage while providing convenience and cost savings.",
+                
+                "section7-title": "6. The Future of Design: What's Next?",
+                "section7-subtitle1": "Emerging Trends to Watch",
+                "section7-trend1": "AI-Assisted Design",
+                "section7-trend2": "3D Printed Elements",
+                "section7-trend3": "Virtual Reality Planning",
+                "section7-trend4": "Circular Economy Design",
+                "section7-subtitle2": "The Human-Centric Approach",
+                "section7-content": "The most significant trend emerging across all design disciplines is a renewed focus on human experience and wellbeing. As technology becomes more integrated into our lives, designers are counterbalancing this with spaces that promote connection, comfort, and mindfulness. The future of design lies in creating environments that not only look beautiful but also support how we live, work, and thrive.",
+                "section7-tag1": "Wellbeing Focus",
+                "section7-tag2": "Community Spaces",
+                "section7-tag3": "Sustainable Future",
+
+                // Footer
+                "footer-desc": "Creating exceptional architectural experiences through innovative design and quality construction.",
+                "footer-links-title": "Quick Links",
+                "footer-link-home": "Home",
+                "footer-link-about": "About",
+                "footer-link-services": "Services",
+                "footer-link-projects": "Projects",
+                "footer-link-contact": "Contact Us",
+                "footer-services-title": "Services",
+                "footer-service-1": "Residential Projects",
+                "footer-service-2": "Commercial Projects",
+                "footer-service-3": "Interior Design",
+                "footer-service-4": "Architectural Planning",
+                "footer-service-5": "Project Management",
+                "footer-service-6": "Renovation & Remodeling",
+                "footer-contact-title": "Contact Info",
+                "footer-address-1": "123 Design Avenue",
+                "footer-address-2": "Creative District, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "Mon-Fri: 9AM-6PM",
+                "footer-copyright": "© 2025 Stackly. All Rights Reserved."
+            },
+            ar: {
+                // Header
+                "header-logo": "ستاكلي",
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                "logout-btn": "تسجيل خروج",
+                "mobile-menu-title": "القائمة",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                "mobile-logout-btn": "تسجيل خروج",
+                
+                // Hero
+                "hero-category": "اتجاهات التصميم",
+                "hero-title": "اتجاهات التصميم 2024",
+                "hero-subtitle": "استكشاف أهم اتجاهات التصميم المؤثرة التي تشكل الهندسة المعمارية والديكور الداخلي هذا العام",
+                "author-name": "بواسطة سارة جونسون",
+                "publish-date": "10 أبريل 2024",
+                "read-time": "15 دقيقة قراءة",
+                
+                // Sections
+                "section1-title": "تطور التصميم في 2024",
+                "section1-content": "تعكس اتجاهات التصميم في عام 2024 عالماً في حالة تحول، حيث تمزج بين الابتكار التكنولوجي وتقدير متجدد للمواد الطبيعية والممارسات المستدامة. هذا العام، نشهد تحولاً نحو التصاميم التي تعطي الأولوية للرفاهية، والاتصال بالطبيعة، ومساحات المعيشة المرنة التي تتكيف مع احتياجاتنا المتغيرة.",
+                
+                "section2-title": "1. التصميم الحيوي: التواصل مع الطبيعة",
+                "section2-subtitle1": "ما هو التصميم الحيوي؟",
+                "section2-content1": "يدمج التصميم الحيوي العناصر والمواد والأنماط الطبيعية في البيئات المبنية لخلق مساحات تعزز الصحة والرفاهية والإنتاجية. يعترف هذا النهج باتصالنا الفطري بالطبيعة ويسعى إلى تعزيزه من خلال التصميم.",
+                "section2-list1": ["دمج الإضاءة والتهوية الطبيعية", "استخدام المواد العضوية مثل الخشب والحجر والألياف الطبيعية", "دمج النباتات الحية والجدران الخضراء", "أنماط وقوام مستوحاة من الطبيعة"],
+                "section2-subtitle2": "فوائد التصميم الحيوي",
+                "section2-list2": ["15% زيادة في الإبداع والرفاهية", "انخفاض مستويات التوتر وتحسين الصحة العقلية", "تحسين جودة الهواء والراحة البيئية", "زيادة قيمة العقار وجاذبيته"],
+                
+                "section3-title": "2. لوحات الألوان 2024: ألوان ترابية وجريئة",
+                "section3-subtitle1": "أنظمة الألوان الشائعة",
+                
+                "section4-title": "3. ابتكارات المواد: مستدامة وملمسية",
+                "section4-card1-title": "المواد المستدامة",
+                "section4-card1-desc": "تكتسب الخيارات الصديقة للبيئة مثل الخيزران والفلين والخشب المعاد تدويره شعبية لتأثيرها البيئي المنخفض وجمالها الطبيعي.",
+                "section4-card1-list": ["الخيزران - سريع النمو ومتين", "الفلين - متجدد وامتصاص الصوت", "الخشب المعاد تدويره - شخصية وتاريخ"],
+                "section4-card2-title": "الأسطح ذات الملمس",
+                "section4-card2-desc": "من الزجاج المموج إلى الخشب المضلع، تضيف الأسطح ذات الملمس عمقاً واهتماماً لمسياً للديكورات الداخلية، مما يخلق جاذبية بصرية وحسية.",
+                "section4-card2-list": ["الزجاج المموج - خصوصية مع الضوء", "الخشب المضلع - دفء وملمس", "تشطيبات الجبس - عضوية وعصرية"],
+                "section4-card3-title": "معاد التدوير وإعادة الاستخدام",
+                "section4-card3-desc": "المواد المصنوعة من محتوى معاد تدويره أو العناصر المعاد استخدامها بشكل إبداعي تجلب شخصية فريدة مع تقليل النفايات.",
+                "section4-card3-list": ["أرضيات من الزجاج المعاد تدويره", "تركيبات معدنية معاد استخدامها", "طوب وحجر معاد تدويره"],
+                
+                "section5-title": "4. المساحات المرنة: التكيف مع أنماط الحياة الحديثة",
+                "section5-subtitle": "المنزل متعدد الوظائف",
+                "section5-subtitle1": "استراتيجيات التصميم",
+                "section5-list1": ["فواصل متحركة وأبواب منزلقة", "أثاث قابل للتحويل مع تخزين مخفي", "إضاءة مخصصة للأنشطة المختلفة", "غرف متعددة الأغراض تخدم وظائف مختلفة"],
+                "section5-subtitle2": "المساحات المرنة الشائعة",
+                "section5-space1": "مكتب منزلي/غرفة ضيوف",
+                "section5-space2": "مطبخ/معيشة مفتوحة",
+                "section5-space3": "مساحات المعيشة الخارجية",
+                
+                "section6-title": "5. تكامل التكنولوجيا: ذكية وسلسة",
+                "section6-step1-title": "أنظمة التنشيط الصوتي",
+                "section6-step1-desc": "مساعدات المنزل الذكي التي تتحكم في الإضاءة ودرجة الحرارة والترفيه والأمان من خلال أوامر صوتية بسيطة، مما يخلق تجارب معيشة خالية تماماً من اليدين.",
+                "section6-step1-note-title": "نصيحة تصميم:",
+                "section6-step1-note": "إخفاء مكبرات الصوت والميكروفونات داخل الخزائن المدمجة أو العناصر المعمارية لمظهر أنظف.",
+                "section6-step2-title": "التحكم المتكامل في الإضاءة",
+                "section6-step2-desc": "أنظمة الإضاءة الذكية التي تضبط درجة حرارة اللون والشدة طوال اليوم لدعم إيقاعات الساعة البيولوجية وخلق الحالات المزاجية المرغوبة للأنشطة المختلفة.",
+                "section6-step3-title": "التكنولوجيا المخفية",
+                "section6-step3-desc": "أجهزة التلفزيون التي تختفي في الخزائن، ومعالجات النوافذ الآلية، ومحطات الشحن المدمجة في الأثاث تحافظ على إمكانية الوصول إلى التكنولوجيا ولكن بعيداً عن الأنظار عندما لا تكون قيد الاستخدام.",
+                "section6-step4-title": "حلول التكنولوجيا المستدامة",
+                "section6-step4-desc": "أنظمة مراقبة الطاقة، ومنظمات الحرارة الذكية، والري الآلي التي تحسن استخدام الموارد مع توفير الراحة وتوفير التكاليف.",
+                
+                "section7-title": "6. مستقبل التصميم: ما الذي ينتظرنا؟",
+                "section7-subtitle1": "الاتجاهات الناشئة للمراقبة",
+                "section7-trend1": "التصميم بمساعدة الذكاء الاصطناعي",
+                "section7-trend2": "العناصر المطبوعة ثلاثية الأبعاد",
+                "section7-trend3": "التخطيط بالواقع الافتراضي",
+                "section7-trend4": "تصميم الاقتصاد الدائري",
+                "section7-subtitle2": "النهج المرتكز على الإنسان",
+                "section7-content": "الاتجاه الأكثر أهمية الذي يظهر عبر جميع تخصصات التصميم هو التركيز المتجدد على تجربة الإنسان والرفاهية. مع زيادة تكامل التكنولوجيا في حياتنا، يوازن المصممون هذا بمساحات تعزز الاتصال والراحة واليقظة. يكمن مستقبل التصميم في خلق بيئات لا تبدو جميلة فحسب، بل تدعم أيضًا كيفية عيشنا وعملنا وازدهارنا.",
+                "section7-tag1": "التركيز على الرفاهية",
+                "section7-tag2": "مساحات المجتمع",
+                "section7-tag3": "مستقبل مستدام",
+
+                // Footer
+                "footer-desc": "إنشاء تجارب معمارية استثنائية من خلال التصميم المبتكر والبناء عالي الجودة.",
+                "footer-links-title": "روابط سريعة",
+                "footer-link-home": "الرئيسية",
+                "footer-link-about": "من نحن",
+                "footer-link-services": "الخدمات",
+                "footer-link-projects": "المشاريع",
+                "footer-link-contact": "اتصل بنا",
+                "footer-services-title": "الخدمات",
+                "footer-service-1": "المشاريع السكنية",
+                "footer-service-2": "المشاريع التجارية",
+                "footer-service-3": "التصميم الداخلي",
+                "footer-service-4": "التخطيط المعماري",
+                "footer-service-5": "إدارة المشاريع",
+                "footer-service-6": "التجديد وإعادة التصميم",
+                "footer-contact-title": "معلومات الاتصال",
+                "footer-address-1": "123 شارع التصميم",
+                "footer-address-2": "الحي الإبداعي، CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "الإثنين-الجمعة: 9 صباحًا-6 مساءً",
+                "footer-copyright": "© 2025 ستاكلي. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Header
+                "header-logo": "Stackly",
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                "logout-btn": "התנתק",
+                "mobile-menu-title": "תפריט",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                "mobile-logout-btn": "התנתק",
+                
+                // Hero
+                "hero-category": "מגמות עיצוב",
+                "hero-title": "מגמות עיצוב 2024",
+                "hero-subtitle": "חקירת מגמות העיצוב המשפיעות ביותר שמעצבות את האדריכלות והעיצוב הפנימי השנה",
+                "author-name": "מאת שרה ג'ונסון",
+                "publish-date": "10 באפריל 2024",
+                "read-time": "15 דקות קריאה",
+                
+                // Sections
+                "section1-title": "האבולוציה של העיצוב ב-2024",
+                "section1-content": "מגמות העיצוב ב-2024 משקפות עולם במעבר, המשלב חדשנות טכנולוגית עם הערכה מחודשת לחומרים טבעיים ופרקטיקות בת קיימא. השנה, אנו רואים מעבר לעיצובים שנותנים עדיפות לרווחה, חיבור לטבע וחללי מגורים גמישים שמתאימים עצמם לצרכים המשתנים שלנו.",
+                
+                "section2-title": "1. עיצוב ביופילי: חיבור לטבע",
+                "section2-subtitle1": "מהו עיצוב ביופילי?",
+                "section2-content1": "עיצוב ביופילי משלב אלמנטים, חומרים ודפוסים טבעיים בסביבות בנויות כדי ליצור מרחבים שמקדמים בריאות, רווחה ופרודוקטיביות. גישה זו מכירה בחיבור המולד שלנו לטבע ושואפת לחזק אותו באמצעות עיצוב.",
+                "section2-list1": ["שילוב אור ואוורור טבעיים", "שימוש בחומרים אורגניים כמו עץ, אבן וסיבים טבעיים", "שילוב צמחים חיים וקירות ירוקים", "דפוסים ומרקמים בהשראת הטבע"],
+                "section2-subtitle2": "יתרונות העיצוב הביופילי",
+                "section2-list2": ["15% עלייה ביצירתיות וברווחה", "ירידה ברמות הלחץ ושיפור בבריאות הנפש", "שיפור באיכות האוויר ובנוחות הסביבתית", "עלייה בערך הנכס ובאטרקטיביות"],
+                
+                "section3-title": "2. פלטות צבעים 2024: אדמתיים ונועזים",
+                "section3-subtitle1": "סכמות צבעים פופולריות",
+                
+                "section4-title": "3. חדשנות בחומרים: בני קיימא ומרקמיים",
+                "section4-card1-title": "חומרים בני קיימא",
+                "section4-card1-desc": "אפשרויות ידידותיות לסביבה כמו במבוק, שעם ועץ משוחזר צוברות פופולריות בשל ההשפעה הסביבתית הנמוכה שלהם והיופי הטבעי.",
+                "section4-card1-list": ["במבוק - צמיחה מהירה ועמיד", "שעם - מתחדש ובולע קול", "עץ משוחזר - אופי והיסטוריה"],
+                "section4-card2-title": "משטחים מרקמיים",
+                "section4-card2-desc": "מזכוכית מחורצת לעץ מפוספס, משטחים מרקמיים מוסיפים עומק ועניין מישושי לפנים, ויוצרים אטרקטיביות ויזואלית וחושית.",
+                "section4-card2-list": ["זכוכית מחורצת - פרטיות עם אור", "עץ מפוספס - חום ומרקם", "גימורי טיח - אורגני ומודרני"],
+                "section4-card3-title": "ממוחזרים ומעוצבים מחדש",
+                "section4-card3-desc": "חומרים העשויים מתוכן ממוחזר או פריטים שעוצבו מחדש באופן יצירתי מביאים אופי ייחודי תוך הפחתת פסולת.",
+                "section4-card3-list": ["דלפקי זכוכית ממוחזרת", "אבזרי מתכת שעוצבו מחדש", "לבנים ואבן משוחזרים"],
+                
+                "section5-title": "4. חללים גמישים: התאמה לאורחות חיים מודרניים",
+                "section5-subtitle": "הבית הרב-תכליתי",
+                "section5-subtitle1": "אסטרטגיות עיצוב",
+                "section5-list1": ["מחיצות ניידות ודלתות הזזה", "ריהוט להסבה עם אחסון נסתר", "תאורה ממוקדת לפעילויות שונות", "חדרים רב-תכליתיים המשרתים פונקציות שונות"],
+                "section5-subtitle2": "חללים גמישים פופולריים",
+                "section5-space1": "משרד ביתי/חדר אורחים",
+                "section5-space2": "מטבח/סלון פתוח",
+                "section5-space3": "חללי מגורים חיצוניים",
+                
+                "section6-title": "5. אינטגרציה טכנולוגית: חכמה וחלקה",
+                "section6-step1-title": "מערכות מופעלות קול",
+                "section6-step1-desc": "עוזרות בית חכמות השולטות בתאורה, טמפרטורה, בידור ואבטחה באמצעות פקודות קול פשוטות, ויוצרות חוויות מגורים באמת ללא ידיים.",
+                "section6-step1-note-title": "טיפ עיצוב:",
+                "section6-step1-note": "הסתר רמקולים ומיקרופונים בתוך ארונות מובנים או אלמנטים אדריכליים למראה נקי יותר.",
+                "section6-step2-title": "בקרת תאורה משולבת",
+                "section6-step2-desc": "מערכות תאורה חכמות המתאימות את טמפרטורת הצבע והעוצמה לאורך היום כדי לתמוך במקצבים הצירקדיים וליצור מצבי רוח רצויים לפעילויות שונות.",
+                "section6-step3-title": "טכנולוגיה מוסתרת",
+                "section6-step3-desc": "טלוויזיות הנעלמות לתוך ארונות, טיפולי חלונות ממונעים ותחנות טעינה המשולבות בריהוט שומרים על הטכנולוגיה נגישה אך מחוץ לטווח הראייה כאשר לא בשימוש.",
+                "section6-step4-title": "פתרונות טכנולוגיה בת קיימא",
+                "section6-step4-desc": "מערכות ניטור אנרגיה, תרמוסטטים חכמים והשקיה אוטומטית הממטבות את השימוש במשאבים תוך מתן נוחות וחיסכון בעלויות.",
+                
+                "section7-title": "6. עתיד העיצוב: מה הלאה?",
+                "section7-subtitle1": "מגמות מתפתחות למעקב",
+                "section7-trend1": "עיצוב בסיוע בינה מלאכותית",
+                "section7-trend2": "אלמנטים מודפסים בתלת מימד",
+                "section7-trend3": "תכנון במציאות מדומה",
+                "section7-trend4": "עיצוב כלכלה מעגלית",
+                "section7-subtitle2": "הגישה הממוקדת באדם",
+                "section7-content": "המגמה המשמעותית ביותר העולה בכל תחומי העיצוב היא מיקוד מחודש בחוויה האנושית וברווחה. ככל שהטכנולוגיה הופכת משולבת יותר בחיינו, מעצבים מאזנים זאת עם חללים המקדמים חיבור, נוחות ומודעות. עתיד העיצוב טמון ביצירת סביבות שלא רק נראות יפות אלא גם תומכות באופן שבו אנו חיים, עובדים ומשגשגים.",
+                "section7-tag1": "מיקוד ברווחה",
+                "section7-tag2": "חללי קהילה",
+                "section7-tag3": "עתיד בר-קיימא",
+
+                // Footer
+                "footer-desc": "יצירת חוויות אדריכליות יוצאות דופן באמצעות עיצוב חדשני ובנייה איכותית.",
+                "footer-links-title": "קישורים מהירים",
+                "footer-link-home": "בית",
+                "footer-link-about": "אודות",
+                "footer-link-services": "שירותים",
+                "footer-link-projects": "פרויקטים",
+                "footer-link-contact": "צור קשר",
+                "footer-services-title": "שירותים",
+                "footer-service-1": "פרויקטים למגורים",
+                "footer-service-2": "פרויקטים מסחריים",
+                "footer-service-3": "עיצוב פנים",
+                "footer-service-4": "תכנון אדריכלי",
+                "footer-service-5": "ניהול פרויקטים",
+                "footer-service-6": "שיפוץ ועיצוב מחדש",
+                "footer-contact-title": "פרטי יצירת קשר",
+                "footer-address-1": "שדרת העיצוב 123",
+                "footer-address-2": "רובע יצירתי, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "א'-ה': 9:00-18:00",
+                "footer-copyright": "© 2025 Stackly. כל הזכויות שמורות."
+            }
+        };
+
+        // Language Selector
+        const languageSelect = document.getElementById('languageSelect');
+        
+        languageSelect.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            changeLanguage(selectedLanguage);
+        });
+
+        // Enhanced function to change language
+        function changeLanguage(language) {
+            // Update HTML direction and lang attribute
+            if (language === 'ar' || language === 'he') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = language;
+                document.body.classList.remove('ltr');
+                document.body.classList.add('rtl');
+                
+                // Add appropriate font class
+                if (language === 'ar') {
+                    document.body.classList.add('arabic-font');
+                    document.body.classList.remove('hebrew-font');
+                } else {
+                    document.body.classList.add('hebrew-font');
+                    document.body.classList.remove('arabic-font');
+                }
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = language;
+                document.body.classList.remove('rtl', 'arabic-font', 'hebrew-font');
+                document.body.classList.add('ltr');
+            }
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[language] && translations[language][id]) {
+                    if (id.includes('list')) {
+                        // Handle list elements
+                        const listItems = translations[language][id];
+                        element.innerHTML = '';
+                        listItems.forEach(item => {
+                            const li = document.createElement('li');
+                            li.textContent = item;
+                            element.appendChild(li);
+                        });
+                    } else {
+                        element.textContent = translations[language][id];
+                    }
+                }
+            });
+            
+            // Force reflow to fix layout issues
+            document.body.style.display = 'none';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.display = '';
+        }
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.theme = 'light';
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+        
+        function handleLogout() {
+            // In a real application, you would clear authentication tokens here
+            // For now, just redirect to login page
+            window.location.href = 'login.html';
+        }
+        
+        logoutBtn.addEventListener('click', handleLogout);
+        mobileLogoutBtn.addEventListener('click', handleLogout);
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+        
+        closeMobileMenu.addEventListener('click', function() {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        // Initialize with English language
+        changeLanguage('en');
+    </script>
+</body>
+</html>

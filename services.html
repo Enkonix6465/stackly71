@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly | Architectural Excellence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#e67e22',
+                        accent: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Header -->
+<header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 left-0 z-50 transition-all duration-300">
+    <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="flex items-center space-x-3">
+                <img src="logo.png" alt="Logo" class="h-8 w-auto">
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="hidden lg:flex items-center space-x-8 nav-container">
+            <!-- Home Dropdown -->
+            <div class="relative group">
+                <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                    <span id="nav-home">Home</span>
+                    <i class="fas fa-chevron-down ml-1 text-xs chevron-rotate"></i>
+                </a>
+                <div class="absolute dropdown-menu top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600">
+                    <a href="home.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Home 1</a>
+                    <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Home 2</a>
+                </div>
+            </div>
+
+            <!-- About -->
+            <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-about">
+                About
+            </a>
+
+            <!-- Services Dropdown -->
+            <div class="relative group">
+                <a href="services.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                    <span id="nav-services">Services</span>
+                    <i class="fas fa-chevron-down ml-1 text-xs chevron-rotate"></i>
+                </a>
+                <div class="absolute dropdown-menu top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600">
+                    <a href="Residential Architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Residential Projects</a>
+                    <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Commercial Projects</a>
+                    <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Interior Design</a>
+                    <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Architectural Planning</a>
+                    <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Management</a>
+                    <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Renovation & Remodeling</a>
+                </div>
+            </div>
+
+            <!-- Blog Dropdown -->
+            <div class="relative group">
+                <a href="Blog.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                    <span id="nav-blog">Blog</span>
+                    <i class="fas fa-chevron-down ml-1 text-xs chevron-rotate"></i>
+                </a>
+                <div class="absolute dropdown-menu top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600">
+                    <a href="Blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Design Trends</a>
+                    <a href="Blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Showcase</a>
+                    <a href="Blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Investment Insights</a>
+                </div>
+            </div>
+
+            <!-- Contact Us -->
+            <a href="Contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-contact">
+                Contact Us
+            </a>
+        </nav>
+
+        <!-- Right Side -->
+        <div class="right-side-container">
+            <div class="flex items-center space-x-4">
+                <!-- Language Selector -->
+                <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="he">עברית</option>
+                </select>
+                
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- Login Button -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <a href="login.html" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm">
+                        Log Out
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu (keep your existing mobile menu) -->
+    <!-- ... your mobile menu code ... -->
+</header>
+    
+    <!-- Rest of your sections remain exactly the same -->
+    <!-- 1️⃣ Hero / Introduction Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+        <!-- Background Video -->
+        <video autoplay muted loop playsinline class="absolute w-full h-full object-cover">
+            <source src="servers1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
+        
+        <!-- Content -->
+        <div class="container mx-auto px-4 sm:px-6 relative z-10 text-center text-white">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate-fade-in" id="hero-title">Transforming Visions into Architectural Reality</h1>
+            <p class="text-xl sm:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in" id="hero-subtitle">With over two decades of excellence, we create spaces that inspire, function, and endure for generations.</p>
+            
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+            <a href="#services" class="text-white animate-bounce">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 2️⃣ Services Section -->
+    <section id="services" class="py-16 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-white mb-4" id="services-title">Our Professional Services</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="services-subtitle">Comprehensive architectural solutions tailored to your unique vision and requirements</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-accent rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-home text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white text-center" id="service1-title">Residential Architecture</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-center" id="service1-desc">Custom home designs that reflect your lifestyle, from modern villas to sustainable family residences.</p>
+                    <div class="text-center">
+                        <a href="Residential Architecture.html" class="inline-flex items-center text-accent font-semibold hover:text-blue-700 transition-colors" id="service1-link">
+                            <span id="explore-service-text">Explore Service</span> <i class="fas fa-arrow-right ltr:ml-2 rtl:mr-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-green-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-building text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white text-center" id="service2-title">Commercial Architecture</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-center" id="service2-desc">Innovative commercial spaces including offices, retail centers, and mixed-use developments.</p>
+                    <div class="text-center">
+                        <a href="commercial-projects.html" class="inline-flex items-center text-accent font-semibold hover:text-blue-700 transition-colors" id="service2-link">
+                            <span id="explore-service-text2">Explore Service</span> <i class="fas fa-arrow-right ltr:ml-2 rtl:mr-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-pencil-ruler text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white text-center" id="service3-title">Interior Design</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-center" id="service3-desc">Creating beautiful, functional interior spaces that complement your architectural vision.</p>
+                    <div class="text-center">
+                        <a href="interior-design.html" class="inline-flex items-center text-accent font-semibold hover:text-blue-700 transition-colors" id="service3-link">
+                            <span id="explore-service-text3">Explore Service</span> <i class="fas fa-arrow-right ltr:ml-2 rtl:mr-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-yellow-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-drafting-compass text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white text-center" id="service4-title">Architectural Planning</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-center" id="service4-desc">Comprehensive planning services from site analysis to regulatory compliance and master planning.</p>
+                    <div class="text-center">
+                        <a href="architectural-planning.html" class="inline-flex items-center text-accent font-semibold hover:text-blue-700 transition-colors" id="service4-link">
+                            <span id="explore-service-text4">Explore Service</span> <i class="fas fa-arrow-right ltr:ml-2 rtl:mr-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-red-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-tasks text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white text-center" id="service5-title">Project Management</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-center" id="service5-desc">End-to-end project management ensuring quality, timeline, and budget adherence.</p>
+                    <div class="text-center">
+                        <a href="project-management.html" class="inline-flex items-center text-accent font-semibold hover:text-blue-700 transition-colors" id="service5-link">
+                            <span id="explore-service-text5">Explore Service</span> <i class="fas fa-arrow-right ltr:ml-2 rtl:mr-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-sync-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white text-center" id="service6-title">Renovation & Remodeling</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-center" id="service6-desc">Transforming existing spaces to meet modern needs while preserving architectural character.</p>
+                    <div class="text-center">
+                        <a href="renovation-remodeling.html" class="inline-flex items-center text-accent font-semibold hover:text-blue-700 transition-colors" id="service6-link">
+                            <span id="explore-service-text6">Explore Service</span> <i class="fas fa-arrow-right ltr:ml-2 rtl:mr-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center mt-12">
+                <div class="bg-gradient-to-r from-accent to-blue-600 rounded-xl p-8 text-white max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-4" id="cta-title">Ready to Start Your Project?</h3>
+                    <p class="text-lg mb-6 max-w-2xl mx-auto" id="cta-subtitle">Let's discuss how we can bring your architectural vision to life with our comprehensive services.</p>
+                    <a href="Contact.html" class="bg-white text-accent px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 inline-flex items-center" id="consultation-btn">
+                        <span id="consultation-text">Get Free Consultation</span> <i class="fas fa-arrow-right ltr:ml-2 rtl:mr-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3️⃣ Years of Experience / Key Stats Section -->
+   <section id="stats" class="py-16 relative overflow-hidden">
+    <!-- Background Image with Gradient Overlay -->
+    <div class="absolute inset-0 bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/90 to-gray-800/90"></div>
+    
+    <div class="container mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" id="stats-title">Two Decades of Excellence</h2>
+            <p class="text-xl text-gray-200 max-w-3xl mx-auto" id="stats-subtitle">Building a legacy of quality and innovation since 2003</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center text-white">
+                <p class="text-4xl md:text-5xl font-bold mb-2">20+</p>
+                <p class="text-gray-200" id="years-exp">Years Experience</p>
+            </div>
+            
+            <div class="text-center text-white">
+                <p class="text-4xl md:text-5xl font-bold mb-2">350+</p>
+                <p class="text-gray-200" id="projects-completed">Projects Completed</p>
+            </div>
+            
+            <div class="text-center text-white">
+                <p class="text-4xl md:text-5xl font-bold mb-2">95%</p>
+                <p class="text-gray-200" id="client-satisfaction">Client Satisfaction</p>
+            </div>
+            
+            <div class="text-center text-white">
+                <p class="text-4xl md:text-5xl font-bold mb-2">25+</p>
+                <p class="text-gray-200" id="team-members">Team Members</p>
+            </div>
+        </div>
+        
+        <div class="mt-12 bg-white/10 backdrop-blur-sm rounded-xl p-8 text-white border border-white/20">
+            <h3 class="text-2xl font-bold mb-4 text-center" id="journey-title">Our Journey</h3>
+            <p class="text-center max-w-3xl mx-auto" id="journey-desc">Founded in 2003, ArchiCraft has grown from a small design studio to a leading architectural firm. Our journey is marked by continuous learning, adaptation to new technologies, and an unwavering commitment to design excellence that has earned us the trust of clients across residential, commercial, and institutional sectors.</p>
+        </div>
+    </div>
+</section>
+
+    <!-- 4️⃣ Awards & Achievements Section -->
+    <section id="awards" class="py-16 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-white mb-4" id="awards-title">Awards & Recognition</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" id="awards-subtitle">Celebrating excellence in architectural design and innovation</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center ltr:mr-4 rtl:ml-4">
+                            <i class="fas fa-trophy text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white" id="award1-title">International Design Award 2023</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300" id="award1-desc">Recognized for innovative sustainable design in the "Green Architecture" category for our Eco-Residence project in California.</p>
+                </div>
+                
+                <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center ltr:mr-4 rtl:ml-4">
+                            <i class="fas fa-award text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white" id="award2-title">Architectural Excellence Award 2022</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300" id="award2-desc">Awarded by the National Association of Architects for outstanding commercial design in the Tech Innovation Center project.</p>
+                </div>
+                
+                <div class="card-hover bg-gray-50 dark:bg-gray-700 p-6 rounded-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center ltr:mr-4 rtl:ml-4">
+                            <i class="fas fa-medal text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white" id="award3-title">Sustainable Design Prize 2021</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300" id="award3-desc">Honored for our commitment to environmental responsibility in the "Urban Renewal Project" that transformed a city block.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5️⃣ Client / Partners Logos Section -->
+   <section id="partners" class="py-16 bg-black">
+    <div class="container mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" id="partners-title">Trusted By Industry Leaders</h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto" id="partners-subtitle">We're proud to collaborate with forward-thinking organizations and developers</p>
+        </div>
+        
+        <div class="bg-gray-900 rounded-xl p-8 shadow-lg border border-gray-800">
+            <div class="flex overflow-hidden py-4">
+                <div class="flex space-x-12 logo-slider animate-marquee">
+                    <!-- Client Logos -->
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">TechCorp</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">UrbanDev</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">GreenLife</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">InnovateCo</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">BuildRight</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">SkyLine</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">EcoStruct</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">ModernSpace</span>
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">TechCorp</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">UrbanDev</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">GreenLife</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">InnovateCo</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">BuildRight</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">SkyLine</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">EcoStruct</span>
+                    </div>
+                    <div class="flex items-center justify-center w-40 h-20 bg-gray-800 rounded-lg border border-gray-700">
+                        <span class="font-bold text-white">ModernSpace</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes marquee {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+    
+    .animate-marquee {
+        animation: marquee 20s linear infinite;
+    }
+    
+    .logo-slider:hover {
+        animation-play-state: paused;
+    }
+</style>
+
+    <!-- 6️⃣ Contact / Get in Touch Section -->
+   <section id="contact" class="w-full bg-cover bg-center bg-no-repeat py-20" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://i.pinimg.com/736x/7b/69/7b/7b697b1645db85548602b7d338a58360.jpg')">
+        <div class="container mx-auto px-4 text-center text-white">
+            <h2 class="text-4xl font-bold mb-4" id="contact-title">Contact Us Today</h2>
+            <p class="text-xl max-w-2xl mx-auto mb-8" id="contact-subtitle">Ready to start your project? Get in touch with our team and let's discuss how we can help bring your ideas to life.</p>
+            <a href="contact.html" class="inline-block bg-secondary hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 transform hover:scale-105" id="contact-btn">
+                Contact Us Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse mb-6 sm:mb-0">
+                        <div class="w-33 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-md">
+                            <img src="logo.png" alt="Company Logo" class="w-33 h-10 object-contain">
+                        </div>
+                    </div>
+                    <p class="mb-6 text-gray-400 rtl:text-right" id="footer-desc">
+                        Creating exceptional architectural experiences through innovative design and quality construction.
+                    </p>
+                    <div class="flex ltr:space-x-4 rtl:space-x-reverse">
+                        <a href="https://www.facebook.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/" class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 rtl:text-right" id="footer-links-title">Quick Links</h3>
+                    <ul class="space-y-3 rtl:text-right">
+                        <li><a href="home.html" class="hover:text-blue-400 transition-colors" id="footer-link-home">Home</a></li>
+                        <li><a href="about.html" class="hover:text-blue-400 transition-colors" id="footer-link-about">About</a></li>
+                        <li><a href="services.html" class="hover:text-blue-400 transition-colors" id="footer-link-services">Services</a></li>
+                        <li><a href="Blog.html" class="hover:text-blue-400 transition-colors" id="footer-link-projects">Blogs</a></li>
+                        <li><a href="Contact.html" class="hover:text-blue-400 transition-colors" id="footer-link-contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 rtl:text-right" id="footer-services-title">Services</h3>
+                    <ul class="space-y-3 rtl:text-right">
+                        <li><a href="Residential Projects.html" class="hover:text-blue-400 transition-colors" id="footer-service-1">Residential Projects</a></li>
+                        <li><a href="commercial-projects.html" class="hover:text-blue-400 transition-colors" id="footer-service-2">Commercial Projects</a></li>
+                        <li><a href="interior-design.html" class="hover:text-blue-400 transition-colors" id="footer-service-3">Interior Design</a></li>
+                        <li><a href="architectural-planning.html" class="hover:text-blue-400 transition-colors" id="footer-service-4">Architectural Planning</a></li>
+                        <li><a href="project-management.html" class="hover:text-blue-400 transition-colors" id="footer-service-5">Project Management</a></li>
+                        <li><a href="renovation.html" class="hover:text-blue-400 transition-colors" id="footer-service-6">Renovation & Remodeling</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6 rtl:text-right" id="footer-contact-title">Contact Info</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <div class="rtl:text-right">
+                                <p id="footer-address-1">123 Design Avenue</p>
+                                <p id="footer-address-2">Creative District, CD 10001</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors rtl:text-right" id="footer-phone">
+                                +1 (555) 123-4567
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <a href="mailto:info@Stackly.com" class="hover:text-blue-400 transition-colors rtl:text-right" id="footer-email">
+                                info@Stackly.com
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span class="rtl:text-right" id="footer-hours">Mon-Fri: 9AM-6PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p id="footer-copyright">&copy; 2025 Stackly. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Complete Language translations for entire page
+        const translations = {
+            en: {
+                // Header
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact",
+                "logout-btn": "Log Out",
+                "mobile-menu-title": "Menu",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact",
+                "mobile-logout-btn": "Log Out",
+                
+                // Hero Section
+                "hero-title": "Transforming Visions into Architectural Reality",
+                "hero-subtitle": "With over two decades of excellence, we create spaces that inspire, function, and endure for generations.",
+                
+                // Services Section
+                "services-title": "Our Professional Services",
+                "services-subtitle": "Comprehensive architectural solutions tailored to your unique vision and requirements",
+                "service1-title": "Residential Architecture",
+                "service1-desc": "Custom home designs that reflect your lifestyle, from modern villas to sustainable family residences.",
+                "service2-title": "Commercial Architecture",
+                "service2-desc": "Innovative commercial spaces including offices, retail centers, and mixed-use developments.",
+                "service3-title": "Interior Design",
+                "service3-desc": "Creating beautiful, functional interior spaces that complement your architectural vision.",
+                "service4-title": "Architectural Planning",
+                "service4-desc": "Comprehensive planning services from site analysis to regulatory compliance and master planning.",
+                "service5-title": "Project Management",
+                "service5-desc": "End-to-end project management ensuring quality, timeline, and budget adherence.",
+                "service6-title": "Renovation & Remodeling",
+                "service6-desc": "Transforming existing spaces to meet modern needs while preserving architectural character.",
+                "explore-service-text": "Explore Service",
+                "explore-service-text2": "Explore Service",
+                "explore-service-text3": "Explore Service",
+                "explore-service-text4": "Explore Service",
+                "explore-service-text5": "Explore Service",
+                "explore-service-text6": "Explore Service",
+                "cta-title": "Ready to Start Your Project?",
+                "cta-subtitle": "Let's discuss how we can bring your architectural vision to life with our comprehensive services.",
+                "consultation-text": "Get Free Consultation",
+                
+                // Stats Section
+                "stats-title": "Two Decades of Excellence",
+                "stats-subtitle": "Building a legacy of quality and innovation since 2003",
+                "years-exp": "Years Experience",
+                "projects-completed": "Projects Completed",
+                "client-satisfaction": "Client Satisfaction",
+                "team-members": "Team Members",
+                "journey-title": "Our Journey",
+                "journey-desc": "Founded in 2003, ArchiCraft has grown from a small design studio to a leading architectural firm. Our journey is marked by continuous learning, adaptation to new technologies, and an unwavering commitment to design excellence that has earned us the trust of clients across residential, commercial, and institutional sectors.",
+                
+                // Awards Section
+                "awards-title": "Awards & Recognition",
+                "awards-subtitle": "Celebrating excellence in architectural design and innovation",
+                "award1-title": "International Design Award 2023",
+                "award1-desc": "Recognized for innovative sustainable design in the 'Green Architecture' category for our Eco-Residence project in California.",
+                "award2-title": "Architectural Excellence Award 2022",
+                "award2-desc": "Awarded by the National Association of Architects for outstanding commercial design in the Tech Innovation Center project.",
+                "award3-title": "Sustainable Design Prize 2021",
+                "award3-desc": "Honored for our commitment to environmental responsibility in the 'Urban Renewal Project' that transformed a city block.",
+                
+                // Partners Section
+                "partners-title": "Trusted By Industry Leaders",
+                "partners-subtitle": "We're proud to collaborate with forward-thinking organizations and developers",
+                
+                // Contact Section
+                "contact-title": "Contact Us Today",
+                "contact-subtitle": "Ready to start your project? Get in touch with our team and let's discuss how we can help bring your ideas to life.",
+                "contact-btn": "Contact Us Now",
+                
+                // Footer Section
+                "footer-desc": "Creating exceptional architectural experiences through innovative design and quality construction.",
+                "footer-links-title": "Quick Links",
+                "footer-link-home": "Home",
+                "footer-link-about": "About",
+                "footer-link-services": "Services",
+                "footer-link-projects": "Projects",
+                "footer-link-contact": "Contact Us",
+                "footer-services-title": "Services",
+                "footer-service-1": "Residential Projects",
+                "footer-service-2": "Commercial Projects",
+                "footer-service-3": "Interior Design",
+                "footer-service-4": "Architectural Planning",
+                "footer-service-5": "Project Management",
+                "footer-service-6": "Renovation & Remodeling",
+                "footer-contact-title": "Contact Info",
+                "footer-address-1": "123 Design Avenue",
+                "footer-address-2": "Creative District, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "Mon-Fri: 9AM-6PM",
+                "footer-copyright": "© 2025 Stackly. All Rights Reserved."
+            },
+            ar: {
+                // Header
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                "logout-btn": "تسجيل خروج",
+                "mobile-menu-title": "القائمة",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                "mobile-logout-btn": "تسجيل خروج",
+                
+                // Hero Section
+                "hero-title": "تحويل الرؤى إلى واقع معماري",
+                "hero-subtitle": "بخبرة تزيد عن عقدين من التميز، نخلق مساحات تلهم وتعمل وتدوم للأجيال القادمة.",
+                
+                // Services Section
+                "services-title": "خدماتنا المهنية",
+                "services-subtitle": "حلول معمارية شاملة مصممة خصيصًا لرؤيتك ومتطلباتك الفريدة",
+                "service1-title": "العمارة السكنية",
+                "service1-desc": "تصاميم منازل مخصصة تعكس نمط حياتك، من الفلل الحديثة إلى المساكن العائلية المستدامة.",
+                "service2-title": "العمارة التجارية",
+                "service2-desc": "مساحات تجارية مبتكرة تشمل المكاتب ومراكز التسوق والمشاريع متعددة الاستخدامات.",
+                "service3-title": "التصميم الداخلي",
+                "service3-desc": "إنشاء مساحات داخلية جميلة وعملية تكمل رؤيتك المعمارية.",
+                "service4-title": "التخطيط المعماري",
+                "service4-desc": "خدمات تخطيط شاملة من تحليل الموقع إلى الامتثال التنظيمي والتخطيط الشامل.",
+                "service5-title": "إدارة المشاريع",
+                "service5-desc": "إدارة مشاريع شاملة تضمن الجودة والالتزام بالجدول الزمني والميزانية.",
+                "service6-title": "التجديد وإعادة التصميم",
+                "service6-desc": "تحويل المساحات الحالية لتلبية الاحتياجات الحديثة مع الحفاظ على الطابع المعماري.",
+                "explore-service-text": "استكشف الخدمة",
+                "explore-service-text2": "استكشف الخدمة",
+                "explore-service-text3": "استكشف الخدمة",
+                "explore-service-text4": "استكشف الخدمة",
+                "explore-service-text5": "استكشف الخدمة",
+                "explore-service-text6": "استكشف الخدمة",
+                "cta-title": "مستعد لبدء مشروعك؟",
+                "cta-subtitle": "دعنا نناقش كيف يمكننا إحياء رؤيتك المعمارية من خلال خدماتنا الشاملة.",
+                "consultation-text": "احصل على استشارة مجانية",
+                
+                // Stats Section
+                "stats-title": "عقدان من التميز",
+                "stats-subtitle": "بناء إرث من الجودة والابتكار منذ عام 2003",
+                "years-exp": "سنوات الخبرة",
+                "projects-completed": "المشاريع المكتملة",
+                "client-satisfaction": "رضا العملاء",
+                "team-members": "أعضاء الفريق",
+                "journey-title": "رحلتنا",
+                "journey-desc": "تأسست أركي كرافت في عام 2003، ونمت من استوديو تصميم صغير إلى شركة معمارية رائدة. تميزت رحلتنا بالتعلم المستمر والتكيف مع التقنيات الجديدة والالتزام الثابت بالتميز في التصميم الذي أكسبنا ثقة العملاء عبر القطاعات السكنية والتجارية والمؤسسية.",
+                
+                // Awards Section
+                "awards-title": "الجوائز والتقدير",
+                "awards-subtitle": "الاحتفاء بالتميز في التصميم المعماري والابتكار",
+                "award1-title": "جائزة التصميم الدولية 2023",
+                "award1-desc": "تم الاعتراف بالتصميم المستدام المبتكر في فئة 'العمارة الخضراء' لمشروع الإقامة البيئي في كاليفورنيا.",
+                "award2-title": "جائزة التميز المعماري 2022",
+                "award2-desc": "منحت من قبل الجمعية الوطنية للمهندسين المعماريين للتصميم التجاري المتميز في مشروع مركز الابتكار التكنولوجي.",
+                "award3-title": "جائزة التصميم المستدام 2021",
+                "award3-desc": "تم تكريمنا لالتزامنا بالمسؤولية البيئية في 'مشروع التجديد الحضري' الذي حول مبنى سكني.",
+                
+                // Partners Section
+                "partners-title": "موثوق من قادة الصناعة",
+                "partners-subtitle": "نحن فخورون بالتعاون مع المنظمات والمطورين ذوي الرؤية المستقبلية",
+                
+                // Contact Section
+                "contact-title": "اتصل بنا اليوم",
+                "contact-subtitle": "مستعد لبدء مشروعك؟ تواصل مع فريقنا ودعنا نناقش كيف يمكننا المساعدة في إحياء أفكارك.",
+                "contact-btn": "اتصل بنا الآن",
+                
+                // Footer Section
+                "footer-desc": "إنشاء تجارب معمارية استثنائية من خلال التصميم المبتكر والبناء عالي الجودة.",
+                "footer-links-title": "روابط سريعة",
+                "footer-link-home": "الرئيسية",
+                "footer-link-about": "من نحن",
+                "footer-link-services": "الخدمات",
+                "footer-link-Blogs": "المدونة",
+                "footer-link-contact": "اتصل بنا",
+                "footer-services-title": "الخدمات",
+                "footer-service-1": "المشاريع السكنية",
+                "footer-service-2": "المشاريع التجارية",
+                "footer-service-3": "التصميم الداخلي",
+                "footer-service-4": "التخطيط المعماري",
+                "footer-service-5": "إدارة المشاريع",
+                "footer-service-6": "التجديد وإعادة التصميم",
+                "footer-contact-title": "معلومات الاتصال",
+                "footer-address-1": "123 شارع التصميم",
+                "footer-address-2": "الحي الإبداعي، CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "الإثنين-الجمعة: 9 صباحًا-6 مساءً",
+                "footer-copyright": "© 2025 ستاكلي. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Header
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                "logout-btn": "התנתק",
+                "mobile-menu-title": "תפריט",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                "mobile-logout-btn": "התנתק",
+                
+                // Hero Section
+                "hero-title": "הפיכת חזונות למציאות אדריכלית",
+                "hero-subtitle": "עם למעלה משני עשורים של מצוינות, אנו יוצרים מרחבים שמעוררים השראה, פונקציונליים ומחזיקים מעמד לדורות הבאים.",
+                
+                // Services Section
+                "services-title": "השירותים המקצועיים שלנו",
+                "services-subtitle": "פתרונות אדריכליים מקיפים המותאמים לחזון הייחודי שלך ולדרישותיך",
+                "service1-title": "אדריכלות למגורים",
+                "service1-desc": "עיצובי בתים מותאמים אישית המשקפים את אורח החיים שלך, מווילות מודרניות ועד מגורים משפחתיים בני קיימא.",
+                "service2-title": "אדריכלות מסחרית",
+                "service2-desc": "מרחבים מסחריים חדשניים כולל משרדים, מרכזי קניות ופיתוחים מעורבים.",
+                "service3-title": "עיצוב פנים",
+                "service3-desc": "יצירת מרחבים פנימיים יפים ופונקציונליים המשלימים את החזון האדריכלי שלך.",
+                "service4-title": "תכנון אדריכלי",
+                "service4-desc": "שירותי תכנון מקיפים מניתוח אתר ועד לעמידה בתקנות ותכנון מאסטר.",
+                "service5-title": "ניהול פרויקטים",
+                "service5-desc": "ניהול פרויקטים מקצה לקצה המבטיח איכות, עמידה בלוח זמנים ותקציב.",
+                "service6-title": "שיפוץ ועיצוב מחדש",
+                "service6-desc": "שינוי מרחבים קיימים כדי לענות על צרכים מודרניים תוך שמירה על אופי אדריכלי.",
+                "explore-service-text": "חקור שירות",
+                "explore-service-text2": "חקור שירות",
+                "explore-service-text3": "חקור שירות",
+                "explore-service-text4": "חקור שירות",
+                "explore-service-text5": "חקור שירות",
+                "explore-service-text6": "חקור שירות",
+                "cta-title": "מוכן להתחיל את הפרויקט שלך?",
+                "cta-subtitle": "בואו נדון כיצד נוכל להחיות את החזון האדריכלי שלך עם השירותים המקיפים שלנו.",
+                "consultation-text": "קבל ייעוץ חינם",
+                
+                // Stats Section
+                "stats-title": "שני עשורים של מצוינות",
+                "stats-subtitle": "בונים מורשת של איכות וחדשנות מאז 2003",
+                "years-exp": "שנות ניסיון",
+                "projects-completed": "פרויקטים שהושלמו",
+                "client-satisfaction": "שביעות רצון לקוחות",
+                "team-members": "חברי צוות",
+                "journey-title": "המסע שלנו",
+                "journey-desc": "נוסדה בשנת 2003, ארכי קראפט צמחה מסטודיו לעיצוב קטן לחברת אדריכלות מובילה. המסע שלנו מסומן על ידי למידה מתמדת, התאמה לטכנולוגיות חדשות ומחויבות בלתי מעורערת למצוינות בעיצוב שזכתה לאמון לקוחות בכל המגזרים המגורים, המסחריים והמוסדיים.",
+                
+                // Awards Section
+                "awards-title": "פרסים והכרה",
+                "awards-subtitle": "חוגגים מצוינות בעיצוב אדריכלי וחדשנות",
+                "award1-title": "פרס העיצוב הבינלאומי 2023",
+                "award1-desc": "הוכר על עיצוב בר-קיימא חדשני בקטגוריית 'אדריכלות ירוקה' לפרויקט המגורים האקולוגי שלנו בקליפורניה.",
+                "award2-title": "פרס המצוינות האדריכלית 2022",
+                "award2-desc": "הוענק על ידי האגודה הלאומית של אדריכלים לעיצוב מסחרי יוצא דופן בפרויקט מרכז החדשנות הטכנולוגית.",
+                "award3-title": "פרס העיצוב בר-הקיימא 2021",
+                "award3-desc": "הוענק לנו על מחויבותנו לאחריות סביבתית ב'פרויקט התחדשות עירונית' ששינה בניין מגורים.",
+                
+                // Partners Section
+                "partners-title": "מהימן על ידי מנהיגי תעשייה",
+                "partners-subtitle": "אנו גאים לשתף פעולה עם ארגונים ומפתחים בעלי חשיבה קדימה",
+                
+                // Contact Section
+                "contact-title": "צור קשר היום",
+                "contact-subtitle": "מוכן להתחיל את הפרויקט שלך? צור קשר עם הצוות שלנו ובוא נדון כיצד נוכל לעזור להחיות את הרעיונות שלך.",
+                "contact-btn": "צור קשר עכשיו",
+                
+                // Footer Section
+                "footer-desc": "יצירת חוויות אדריכליות יוצאות דופן באמצעות עיצוב חדשני ובנייה איכותית.",
+                "footer-links-title": "קישורים מהירים",
+                "footer-link-home": "בית",
+                "footer-link-about": "אודות",
+                "footer-link-services": "שירותים",
+                "footer-link-projects": "פרויקטים",
+                "footer-link-contact": "צור קשר",
+                "footer-services-title": "שירותים",
+                "footer-service-1": "פרויקטים למגורים",
+                "footer-service-2": "פרויקטים מסחריים",
+                "footer-service-3": "עיצוב פנים",
+                "footer-service-4": "תכנון אדריכלי",
+                "footer-service-5": "ניהול פרויקטים",
+                "footer-service-6": "שיפוץ ועיצוב מחדש",
+                "footer-contact-title": "פרטי יצירת קשר",
+                "footer-address-1": "שדרת העיצוב 123",
+                "footer-address-2": "רובע יצירתי, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "א'-ה': 9:00-18:00",
+                "footer-copyright": "© 2025 Stackly. כל הזכויות שמורות."
+            }
+        };
+
+        // Language Selector
+        const languageSelect = document.getElementById('languageSelect');
+        
+        languageSelect.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            changeLanguage(selectedLanguage);
+        });
+
+        // Function to change language for entire page
+        function changeLanguage(language) {
+            // Update HTML direction and lang attribute
+            if (language === 'ar' || language === 'he') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = language;
+                document.body.classList.add('rtl');
+                
+                // Add appropriate font class
+                if (language === 'ar') {
+                    document.body.classList.add('arabic-font');
+                    document.body.classList.remove('hebrew-font');
+                } else {
+                    document.body.classList.add('hebrew-font');
+                    document.body.classList.remove('arabic-font');
+                }
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = language;
+                document.body.classList.remove('rtl', 'arabic-font', 'hebrew-font');
+            }
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[language] && translations[language][id]) {
+                    element.textContent = translations[language][id];
+                }
+            });
+        }
+
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.remove('translate-x-full', 'rtl:-translate-x-full');
+        });
+        
+        closeMobileMenu.addEventListener('click', function() {
+            mobileMenu.classList.add('translate-x-full', 'rtl:-translate-x-full');
+        });
+        
+        // Mobile dropdown functionality
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.theme = 'light';
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('translate-x-full', 'rtl:-translate-x-full');
+                    
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.card-hover');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animate-fade-in');
+                }
+            });
+        }
+
+        // Initial check on page load
+        window.addEventListener('load', animateOnScroll);
+        // Check on scroll
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Initialize with English language
+        changeLanguage('en');
+    </script>
+</body>
+</html>

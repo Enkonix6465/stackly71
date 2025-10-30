@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Insights | Stackly Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+   <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#e67e22',
+                        accent: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* RTL Direction Handling */
+        [dir="rtl"] .ltr-text-left {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .ltr-ml-2 {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-mr-2 {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-8 > * + * {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+        
+        [dir="rtl"] .ltr-pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-border-l-2 {
+            border-left: 0;
+            border-right: 2px solid;
+        }
+        
+        [dir="rtl"] .ltr-rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-text-right {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .ltr-left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .ltr-translate-x-full {
+            transform: translateX(-100%);
+        }
+        
+        /* RTL-specific adjustments */
+        [dir="rtl"] .rtl-text-right {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .rtl-text-left {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .rtl-mr-2 {
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-ml-2 {
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-space-x-reverse > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .rtl-flex-row-reverse {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .rtl-items-end {
+            align-items: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-justify-end {
+            justify-content: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-border-r-2 {
+            border-right: 0;
+            border-left: 2px solid;
+        }
+        
+        [dir="rtl"] .rtl-pr-4 {
+            padding-right: 0;
+            padding-left: 1rem;
+        }
+
+        /* Corner positioning for header elements */
+        .header-container {
+            position: relative;
+            min-height: 80px;
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .logo-container {
+            left: 1rem;
+        }
+        
+        [dir="rtl"] .logo-container {
+            right: 1rem;
+        }
+        
+        .nav-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .right-side-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .right-side-container {
+            right: 1rem;
+        }
+        
+        [dir="rtl"] .right-side-container {
+            left: 1rem;
+        }
+
+        /* Keep buttons LTR in RTL mode */
+        [dir="rtl"] .right-side-container * {
+            direction: ltr !important;
+        }
+        
+        [dir="rtl"] .right-side-container a,
+        [dir="rtl"] .right-side-container button,
+        [dir="rtl"] .right-side-container select {
+            text-align: center;
+            unicode-bidi: isolate;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Chevron rotation for RTL */
+        [dir="rtl"] .chevron-rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile responsiveness for corner positioning */
+        @media (max-width: 1024px) {
+            .nav-container {
+                display: none;
+            }
+            
+            .logo-container {
+                position: static;
+                transform: none;
+            }
+            
+            .right-side-container {
+                position: static;
+                transform: none;
+            }
+            
+            .header-container {
+                justify-content: space-between;
+                min-height: auto;
+            }
+        }
+
+        /* Mobile menu transitions */
+        .mobile-menu-enter {
+            transform: translateX(100%);
+        }
+        
+        [dir="rtl"] .mobile-menu-enter {
+            transform: translateX(-100%);
+        }
+        
+        .mobile-menu-enter-active {
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        [dir="rtl"] .mobile-menu-enter-active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-gray-50 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 left-0 z-50 transition-all duration-300">
+        <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+            <!-- Logo - Positioned in LEFT corner (LTR) or RIGHT corner (RTL) -->
+            <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                <img src="logo.png" alt="Logo" class="h-8 w-auto">
+            </div>
+            
+            <!-- Navigation - Stays in CENTER -->
+            <nav class="hidden lg:flex items-center ltr:space-x-8 rtl:space-x-reverse nav-container">
+                <!-- Home Dropdown -->
+                <div class="relative group">
+                    <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-home">Home</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="home.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Home 1</a>
+                        <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Home 2</a>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-about">
+                    About
+                </a>
+
+                <!-- Services Dropdown -->
+                <div class="relative group">
+                    <a href="services.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-services">Services</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="Residential Architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Commercial Projects</a>
+                        <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Interior Design</a>
+                        <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Architectural Planning</a>
+                        <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Renovation & Remodeling</a>
+                    </div>
+                </div>
+
+                <!-- Blog Dropdown -->
+                <div class="relative group">
+                    <a href="Blog.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium">
+                        <span id="nav-blog">Blog</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="Blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Design Trends</a>
+                        <a href="Blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Showcase</a>
+                        <a href="Blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Investment Insights</a>
+                    </div>
+                </div>
+
+                <!-- Contact Us -->
+                <a href="Contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium" id="nav-contact">
+                    Contact Us
+                </a>
+            </nav>
+
+            <!-- Right Side - Positioned in RIGHT corner (LTR) or LEFT corner (RTL) -->
+            <div class="flex items-center ltr-space-x-4 rtl-space-x-reverse right-side-container">
+                <!-- Language Selector -->
+                <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="he">עברית</option>
+                </select>
+                
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- Login Button -->
+                <div class="hidden md:flex items-center ltr-space-x-3 rtl-space-x-reverse">
+                    <a href="login.html" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm">
+                        Log Out
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden fixed inset-0 bg-white dark:bg-gray-800 z-50 transform ltr-translate-x-full rtl--translate-x-full transition-transform duration-300">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700 rtl-flex-row-reverse">
+                <h2 class="text-xl font-bold text-primary dark:text-white" id="mobile-menu-title">Menu</h2>
+                <button id="closeMobileMenu" class="text-gray-600 dark:text-gray-300 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="p-4 space-y-4 rtl-text-right">
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-home">Home</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="home.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 1</a>
+                        <a href="home2.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-about">About</a>
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-services">Services</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Residential Architecture.html" class="block py-2 text-gray-600 dark:text-gray-400">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block py-2 text-gray-600 dark:text-gray-400">Commercial Projects</a>
+                        <a href="interior-design.html" class="block py-2 text-gray-600 dark:text-gray-400">Interior Design</a>
+                        <a href="architectural-planning.html" class="block py-2 text-gray-600 dark:text-gray-400">Architectural Planning</a>
+                        <a href="project-management.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block py-2 text-gray-600 dark:text-gray-400">Renovation & Remodeling</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-blog">Blog</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Blog1.html" class="block py-2 text-gray-600 dark:text-gray-400">Design Trends</a>
+                        <a href="Blog2.html" class="block py-2 text-gray-600 dark:text-gray-400">Project Showcase</a>
+                        <a href="Blog3.html" class="block py-2 text-gray-600 dark:text-gray-400">Investment Insights</a>
+                    </div>
+                </div>
+                <a href="Contact.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2" id="mobile-nav-contact">Contact Us</a>
+                <a href="login.html" class="block text-lg font-medium text-primary dark:text-white py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-center">Log Out</a>
+            </nav>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="pt-16 rtl-content">
+        <!-- Hero Section - Full Width -->
+       <section 
+    class="relative full-width-section min-h-screen flex items-center justify-center text-white py-20 bg-cover bg-center bg-no-repeat" 
+    style="background-image: url('https://i.pinimg.com/736x/a3/1f/c3/a31fc313ee657b32e61c2a2ced6ae8c7.jpg');"
+>
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-green-900/80 to-emerald-800/80"></div>
+
+    <!-- Content -->
+    <div class="relative container mx-auto px-4 sm:px-6 z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block bg-green-600/80 text-green-200 px-4 py-1 rounded-full text-sm font-medium mb-4" id="hero-category">
+                Investment Analysis
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" id="hero-title">
+                Investment Insights
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-green-100" id="hero-subtitle">
+                Strategic analysis and market trends for smart real estate investment decisions
+            </p>
+            <div class="flex flex-wrap justify-center items-center gap-4 text-green-200">
+                <div class="flex items-center">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    <span id="author-name">By Sarah Johnson</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    <span id="publish-date">June 15, 2024</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-clock mr-2"></i>
+                    <span id="read-time">12 min read</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+       <style>
+        .full-width-section {
+            width: 100%;
+        }
+        .market-indicator {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .indicator-item {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .indicator-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .indicator-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-top: 2rem;
+        }
+        .chart-placeholder {
+            text-align: center;
+            padding: 3rem;
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            border: 2px dashed #d1d5db;
+        }
+        .investment-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .investment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .investment-image {
+            height: 120px;
+            width: 100%;
+        }
+        .timeline-dot {
+            box-shadow: 0 0 0 4px white;
+        }
+        .dark .timeline-dot {
+            box-shadow: 0 0 0 4px #1f2937;
+        }
+        .feature-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 transition-colors duration-300">
+    <article class="py-16 bg-white dark:bg-gray-900 w-full">
+        <div class="blog-content">
+            
+            <!-- Section 1: Introduction - Full Width -->
+            <section class="full-width-section mb-16 bg-green-50 dark:bg-green-900/20 py-12">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-full">
+                        <h2 class="text-2xl font-bold mb-4 text-green-800 dark:text-green-200" id="section1-title">Navigating Real Estate Investments</h2>
+                        <p class="text-lg text-gray-700 dark:text-gray-300" id="section1-content">
+                            In today's dynamic market, strategic real estate investment requires careful analysis of economic indicators, market trends, and emerging opportunities. This comprehensive guide provides insights into current market conditions, investment strategies, and future projections to help investors make informed decisions in the architectural and construction sectors.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Market Overview - Full Width -->
+            <section class="full-width-section mb-16 py-12">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-full">
+                        <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section2-title">1. Current Market Overview</h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 text-green-700 dark:text-green-300" id="section2-subtitle1">Economic Indicators</h3>
+                                <p class="mb-4" id="section2-content1">
+                                    The real estate market continues to show resilience despite economic headwinds. Key indicators suggest a balanced market with moderate growth potential in select sectors. Commercial real estate is experiencing a transformation as hybrid work models reshape office space demand.
+                                </p>
+                                <ul class="list-disc pl-5 space-y-2 feature-list" id="section2-list1">
+                                    <li>Interest rates stabilizing at 5.5-6.5% range</li>
+                                    <li>Inflation moderating to 3-4% annually</li>
+                                    <li>Employment growth in key metropolitan areas</li>
+                                    <li>Construction costs increasing by 4-6% annually</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-100 dark:bg-gray-800 rounded-xl p-6">
+                                <h4 class="font-bold mb-3 text-lg text-green-700 dark:text-green-300" id="section2-subtitle2">Market Performance</h4>
+                                <div class="market-indicator">
+                                    <div class="indicator-item">
+                                        <div class="indicator-value">+4.2%</div>
+                                        <div class="indicator-label">Residential Growth</div>
+                                    </div>
+                                    <div class="indicator-item">
+                                        <div class="indicator-value">-2.1%</div>
+                                        <div class="indicator-label">Office Vacancy</div>
+                                    </div>
+                                    <div class="indicator-item">
+                                        <div class="indicator-value">+7.8%</div>
+                                        <div class="indicator-label">Industrial Demand</div>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <h5 class="font-semibold mb-2">Key Trends:</h5>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Sustainability focus, technology integration, suburban migration</p>
+                                </div>
+                                <div class="mt-4">
+                                    <h5 class="font-semibold mb-2">Opportunities:</h5>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Mixed-use developments, adaptive reuse, green buildings</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Market Chart -->
+                        <div class="chart-container">
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-line text-4xl mb-2"></i>
+                                <p>Real Estate Market Performance Chart</p>
+                                <p class="text-sm">(Residential vs Commercial vs Industrial)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Investment Strategies - Full Width -->
+            <section class="full-width-section mb-16 bg-gray-50 dark:bg-gray-800 py-12">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-full">
+                        <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section3-title">2. Strategic Investment Approaches</h2>
+                        
+                        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 mb-8">
+                            <h3 class="text-xl font-semibold mb-4 text-green-700 dark:text-green-300" id="section3-subtitle1">Portfolio Diversification</h3>
+                            <div class="space-y-6">
+                                <div class="project-feature bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-lg p-6">
+                                    <h4 class="font-semibold mb-2 text-green-800 dark:text-green-200" id="section3-approach1-title">Core Investments</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 rtl:leading-8 ltr:leading-7" id="section3-approach1-desc">
+                                        Stable, income-producing properties in prime locations with long-term leases to creditworthy tenants. Lower risk with moderate returns.
+                                    </p>
+                                </div>
+                                
+                                <div class="project-feature bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-6">
+                                    <h4 class="font-semibold mb-2 text-blue-800 dark:text-blue-200" id="section3-approach2-title">Value-Add Opportunities</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 rtl:leading-8 ltr:leading-7" id="section3-approach2-desc">
+                                        Properties requiring renovation, repositioning, or operational improvements to increase cash flow and property value.
+                                    </p>
+                                </div>
+                                
+                                <div class="project-feature bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg p-6">
+                                    <h4 class="font-semibold mb-2 text-purple-800 dark:text-purple-200" id="section3-approach3-title">Development Projects</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 rtl:leading-8 ltr:leading-7" id="section3-approach3-desc">
+                                        Higher-risk investments in new construction or major redevelopment projects with potential for significant returns.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                                <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+                                    <div class="text-2xl font-bold text-green-700 dark:text-green-300 mb-2">5-7%</div>
+                                    <div class="text-sm" id="section3-return1">Core Returns</div>
+                                </div>
+                                <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                                    <div class="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">8-12%</div>
+                                    <div class="text-sm" id="section3-return2">Value-Add Returns</div>
+                                </div>
+                                <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
+                                    <div class="text-2xl font-bold text-purple-700 dark:text-purple-300 mb-2">12%+</div>
+                                    <div class="text-sm" id="section3-return3">Development Returns</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Opportunity Analysis - Full Width -->
+            <section class="full-width-section mb-16 py-12">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-full">
+                        <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section4-title">3. Emerging Opportunities</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl overflow-hidden investment-card">
+                                <div class="investment-image bg-gradient-to-br from-green-400 to-teal-500"></div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-semibold mb-3" id="section4-card1-title">Sustainable Developments</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card1-desc">Properties with green certifications and energy-efficient features command premium rents and have lower vacancy rates in today's market.</p>
+                                    <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+                                        <span><i class="fas fa-chart-line mr-1"></i> <span id="section4-card1-growth">+15% Premium</span></span>
+                                        <span><i class="fas fa-calendar mr-1"></i> <span id="section4-card1-trend">Growing</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl overflow-hidden investment-card">
+                                <div class="investment-image bg-gradient-to-br from-blue-400 to-indigo-500"></div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-semibold mb-3" id="section4-card2-title">Technology Hubs</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card2-desc">Properties in emerging tech corridors and innovation districts show strong growth potential as companies seek talent-rich locations.</p>
+                                    <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+                                        <span><i class="fas fa-chart-line mr-1"></i> <span id="section4-card2-growth">+22% Value</span></span>
+                                        <span><i class="fas fa-calendar mr-1"></i> <span id="section4-card2-trend">Accelerating</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl overflow-hidden investment-card">
+                                <div class="investment-image bg-gradient-to-br from-orange-400 to-amber-500"></div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-semibold mb-3" id="section4-card3-title">Mixed-Use Communities</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card3-desc">Walkable neighborhoods combining residential, retail, and office spaces continue to outperform single-use properties.</p>
+                                    <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+                                        <span><i class="fas fa-chart-line mr-1"></i> <span id="section4-card3-growth">+18% ROI</span></span>
+                                        <span><i class="fas fa-calendar mr-1"></i> <span id="section4-card3-trend">Stable</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl overflow-hidden investment-card">
+                                <div class="investment-image bg-gradient-to-br from-purple-400 to-pink-500"></div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-semibold mb-3" id="section4-card4-title">Industrial & Logistics</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" id="section4-card4-desc">The e-commerce boom continues to drive demand for warehouse, distribution, and last-mile delivery facilities.</p>
+                                    <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+                                        <span><i class="fas fa-chart-line mr-1"></i> <span id="section4-card4-growth">+25% Demand</span></span>
+                                        <span><i class="fas fa-calendar mr-1"></i> <span id="section4-card4-trend">Strong</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Risk Assessment - Full Width -->
+            <section class="full-width-section mb-16 bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 py-12">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-full">
+                        <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section5-title">4. Risk Assessment & Mitigation</h2>
+                        
+                        <div class="bg-white dark:bg-gray-700 rounded-xl p-8 mb-8">
+                            <h3 class="text-2xl font-bold mb-6 text-center text-green-800 dark:text-green-200" id="section5-subtitle">Managing Investment Risks</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="text-xl font-semibold mb-4 text-green-700 dark:text-green-300" id="section5-subtitle1">Common Risk Factors</h4>
+                                    <ul class="space-y-3 feature-list" id="section5-list1">
+                                        <li>Market volatility and economic downturns</li>
+                                        <li>Interest rate fluctuations impacting financing costs</li>
+                                        <li>Regulatory changes and zoning restrictions</li>
+                                        <li>Environmental liabilities and climate risks</li>
+                                        <li>Tenant concentration and lease rollover risk</li>
+                                        <li>Construction delays and cost overruns</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold mb-4 text-green-700 dark:text-green-300" id="section5-subtitle2">Risk Mitigation Strategies</h4>
+                                    <div class="space-y-4" id="section5-mitigation">
+                                        <div>
+                                            <div class="flex justify-between mb-1">
+                                                <span class="font-medium" id="section5-strategy1">Thorough Due Diligence</span>
+                                                <span class="text-green-600 dark:text-green-400">95%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                                <div class="bg-green-600 h-2 rounded-full" style="width: 95%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between mb-1">
+                                                <span class="font-medium" id="section5-strategy2">Portfolio Diversification</span>
+                                                <span class="text-green-600 dark:text-green-400">85%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                                <div class="bg-green-600 h-2 rounded-full" style="width: 85%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between mb-1">
+                                                <span class="font-medium" id="section5-strategy3">Conservative Underwriting</span>
+                                                <span class="text-green-600 dark:text-green-400">90%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                                <div class="bg-green-600 h-2 rounded-full" style="width: 90%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-6 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                                        <p class="text-sm text-blue-800 dark:text-blue-200">"Successful real estate investing isn't about avoiding risks, but about properly identifying, pricing, and mitigating them through strategic planning and disciplined execution."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Investment Timeline - Full Width -->
+            <section class="full-width-section mb-16 py-12">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-full">
+                        <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section6-title">5. Investment Process: From Analysis to Execution</h2>
+                        
+                        <div class="relative">
+                            <!-- Process Timeline -->
+                            <div class="border-l-2 border-green-200 dark:border-green-800 ml-4 pl-8 space-y-12 timeline-container rtl:border-l-0 rtl:border-r-2 rtl:ml-0 rtl:mr-4 rtl:pl-0 rtl:pr-8">
+                                <!-- Step 1 -->
+                                <div class="relative">
+                                    <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold timeline-dot rtl:left-auto rtl:-right-11">1</div>
+                                    <h3 class="text-xl font-semibold mb-2" id="section6-step1-title">Market Research & Opportunity Identification</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step1-desc">
+                                        Comprehensive analysis of economic trends, demographic shifts, and market dynamics to identify promising investment opportunities aligned with strategic objectives.
+                                    </p>
+                                    <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                                        <h4 class="font-semibold text-green-700 dark:text-green-300 mb-2" id="section6-step1-note-title">Key Activities:</h4>
+                                        <p class="text-sm" id="section6-step1-note">Market analysis, demographic studies, economic forecasting, competitor analysis</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 2 -->
+                                <div class="relative">
+                                    <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold timeline-dot rtl:left-auto rtl:-right-11">2</div>
+                                    <h3 class="text-xl font-semibold mb-2" id="section6-step2-title">Financial Analysis & Due Diligence</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step2-desc">
+                                        Detailed financial modeling, property inspection, and legal review to assess investment viability, potential returns, and risk factors.
+                                    </p>
+                                </div>
+                                
+                                <!-- Step 3 -->
+                                <div class="relative">
+                                    <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold timeline-dot rtl:left-auto rtl:-right-11">3</div>
+                                    <h3 class="text-xl font-semibold mb-2" id="section6-step3-title">Capital Structuring & Financing</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step3-desc">
+                                        Development of optimal capital structure, negotiation of financing terms, and arrangement of debt and equity components to fund the acquisition or development.
+                                    </p>
+                                </div>
+                                
+                                <!-- Step 4 -->
+                                <div class="relative">
+                                    <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold timeline-dot rtl:left-auto rtl:-right-11">4</div>
+                                    <h3 class="text-xl font-semibold mb-2" id="section6-step4-title">Acquisition & Portfolio Integration</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step4-desc">
+                                        Execution of purchase agreement, transfer of ownership, and integration of the property into the investment portfolio with appropriate management structure.
+                                    </p>
+                                </div>
+                                
+                                <!-- Step 5 -->
+                                <div class="relative">
+                                    <div class="absolute -left-11 mt-1 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold timeline-dot rtl:left-auto rtl:-right-11">5</div>
+                                    <h3 class="text-xl font-semibold mb-2" id="section6-step5-title">Asset Management & Performance Monitoring</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3" id="section6-step5-desc">
+                                        Ongoing management, performance tracking, and strategic decision-making to optimize returns and execute the investment exit strategy at the appropriate time.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: Future Outlook - Full Width -->
+            <section class="full-width-section mb-16 bg-gray-50 dark:bg-gray-800 py-12">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-full">
+                        <h2 class="text-3xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700" id="section7-title">6. Future Outlook & Strategic Recommendations</h2>
+                        
+                        <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6 mb-8">
+                            <h3 class="text-xl font-semibold mb-4 text-green-700 dark:text-green-300" id="section7-subtitle1">2024-2026 Projections</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="section7-projections">
+                                <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                                    <div class="text-2xl font-bold text-green-700 dark:text-green-300 mb-2">3-5%</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400" id="section7-projection1">Residential Appreciation</div>
+                                </div>
+                                <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                                    <div class="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">4-7%</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400" id="section7-projection2">Industrial Growth</div>
+                                </div>
+                                <div class="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                                    <div class="text-2xl font-bold text-purple-700 dark:text-purple-300 mb-2">2-4%</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400" id="section7-projection3">Office Recovery</div>
+                                </div>
+                                <div class="text-center p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                                    <div class="text-2xl font-bold text-orange-700 dark:text-orange-300 mb-2">5-8%</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400" id="section7-projection4">Retail Reimagined</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6">
+                            <h3 class="text-xl font-semibold mb-4 text-blue-700 dark:text-blue-300" id="section7-subtitle2">Strategic Recommendations</h3>
+                            <p class="mb-4" id="section7-content">
+                                "In the current market environment, we recommend a balanced approach with emphasis on properties that demonstrate strong fundamentals, adaptability to changing market conditions, and alignment with long-term demographic and technological trends. Focus on markets with diversified economies, population growth, and pro-business policies."
+                            </p>
+                            <div class="flex flex-wrap gap-4" id="section7-tags">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                                    <i class="fas fa-balance-scale mr-2"></i>
+                                    <span id="section7-tag1">Balanced Portfolio</span>
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                                    <i class="fas fa-search mr-2"></i>
+                                    <span id="section7-tag2">Selective Acquisition</span>
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
+                                    <i class="fas fa-leaf mr-2"></i>
+                                    <span id="section7-tag3">Sustainable Focus</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </article>
+    </main>
+
+    <!-- Footer - Full Width -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center mb-6">
+                        <div class="w-33 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-md">
+                            <img src="logo.png" alt="Company Logo" class="w-33 h-10 object-contain">
+                        </div>
+                    </div>
+                    <p class="mb-6 text-gray-400" id="footer-desc">
+                        Creating exceptional architectural experiences through innovative design and quality construction.
+                    </p>
+                    <div class="flex ltr:space-x-4 rtl:space-x-reverse">
+                        <a href="https://www.facebook.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/" class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-links-title">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="home.html" class="hover:text-blue-400 transition-colors" id="footer-link-home">Home</a></li>
+                        <li><a href="about.html" class="hover:text-blue-400 transition-colors" id="footer-link-about">About</a></li>
+                        <li><a href="services.html" class="hover:text-blue-400 transition-colors" id="footer-link-services">Services</a></li>
+                        <li><a href="blog.html" class="hover:text-blue-400 transition-colors" id="footer-link-projects">Projects</a></li>
+                        <li><a href="contact.html" class="hover:text-blue-400 transition-colors" id="footer-link-contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-services-title">Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="residential-projects.html" class="hover:text-blue-400 transition-colors" id="footer-service-1">Residential Projects</a></li>
+                        <li><a href="commercial-projects.html" class="hover:text-blue-400 transition-colors" id="footer-service-2">Commercial Projects</a></li>
+                        <li><a href="interior-design.html" class="hover:text-blue-400 transition-colors" id="footer-service-3">Interior Design</a></li>
+                        <li><a href="architectural-planning.html" class="hover:text-blue-400 transition-colors" id="footer-service-4">Architectural Planning</a></li>
+                        <li><a href="project-management.html" class="hover:text-blue-400 transition-colors" id="footer-service-5">Project Management</a></li>
+                        <li><a href="Renovation.html" class="hover:text-blue-400 transition-colors" id="footer-service-6">Renovation & Remodeling</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-contact-title">Contact Info</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <div>
+                                <p id="footer-address-1">123 Design Avenue</p>
+                                <p id="footer-address-2">Creative District, CD 10001</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors" id="footer-phone">
+                                +1 (555) 123-4567
+                            </a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <a href="mailto:info@Stackly.com" class="hover:text-blue-400 transition-colors" id="footer-email">
+                                info@Stackly.com
+                            </a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span id="footer-hours">Mon-Fri: 9AM-6PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p id="footer-copyright">&copy; 2025 Stackly. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Language translations with all sections
+        const translations = {
+            en: {
+                // Header
+                "header-logo": "Stackly",
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact",
+                "logout-btn": "Log Out",
+                "mobile-menu-title": "Menu",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact",
+                "mobile-logout-btn": "Log Out",
+                
+                // Hero
+                "hero-category": "Investment Analysis",
+                "hero-title": "Investment Insights",
+                "hero-subtitle": "Strategic analysis and market trends for smart real estate investment decisions",
+                "author-name": "By Sarah Johnson",
+                "publish-date": "June 15, 2024",
+                "read-time": "12 min read",
+                
+                // Sections
+                "section1-title": "Navigating Real Estate Investments",
+                "section1-content": "In today's dynamic market, strategic real estate investment requires careful analysis of economic indicators, market trends, and emerging opportunities. This comprehensive guide provides insights into current market conditions, investment strategies, and future projections to help investors make informed decisions in the architectural and construction sectors.",
+                
+                "section2-title": "1. Current Market Overview",
+                "section2-subtitle1": "Economic Indicators",
+                "section2-content1": "The real estate market continues to show resilience despite economic headwinds. Key indicators suggest a balanced market with moderate growth potential in select sectors. Commercial real estate is experiencing a transformation as hybrid work models reshape office space demand.",
+                "section2-list1": ["Residential property values stabilizing", "Commercial vacancy rates adjusting post-pandemic", "Construction costs moderating after inflationary period", "Interest rate environment impacting financing options"],
+                "section2-subtitle2": "Market Performance",
+                
+                "section3-title": "2. Strategic Investment Approaches",
+                "section3-subtitle1": "Portfolio Diversification",
+                "section3-approach1-title": "Core Investments",
+                "section3-approach1-desc": "Stable, income-producing properties in prime locations with long-term leases to creditworthy tenants. Lower risk with moderate returns.",
+                "section3-approach2-title": "Value-Add Opportunities",
+                "section3-approach2-desc": "Properties requiring renovation, repositioning, or operational improvements to increase cash flow and property value.",
+                "section3-approach3-title": "Development Projects",
+                "section3-approach3-desc": "Higher-risk investments in new construction or major redevelopment projects with potential for significant returns.",
+                "section3-return1": "Core Returns",
+                "section3-return2": "Value-Add Returns",
+                "section3-return3": "Development Returns",
+                
+                "section4-title": "3. Emerging Opportunities",
+                "section4-card1-title": "Sustainable Developments",
+                "section4-card1-desc": "Properties with green certifications and energy-efficient features command premium rents and have lower vacancy rates in today's market.",
+                "section4-card1-growth": "+15% Premium",
+                "section4-card1-trend": "Growing",
+                "section4-card2-title": "Technology Hubs",
+                "section4-card2-desc": "Properties in emerging tech corridors and innovation districts show strong growth potential as companies seek talent-rich locations.",
+                "section4-card2-growth": "+22% Value",
+                "section4-card2-trend": "Accelerating",
+                "section4-card3-title": "Mixed-Use Communities",
+                "section4-card3-desc": "Walkable neighborhoods combining residential, retail, and office spaces continue to outperform single-use properties.",
+                "section4-card3-growth": "+18% ROI",
+                "section4-card3-trend": "Stable",
+                "section4-card4-title": "Industrial & Logistics",
+                "section4-card4-desc": "The e-commerce boom continues to drive demand for warehouse, distribution, and last-mile delivery facilities.",
+                "section4-card4-growth": "+25% Demand",
+                "section4-card4-trend": "Strong",
+                
+                "section5-title": "4. Risk Assessment & Mitigation",
+                "section5-subtitle": "Managing Investment Risks",
+                "section5-subtitle1": "Common Risk Factors",
+                "section5-list1": ["Market Volatility & Economic Cycles", "Interest Rate Fluctuations", "Regulatory Changes", "Tenant Default & Vacancy Risk", "Construction Cost Overtuns", "Environmental Liabilities"],
+                "section5-subtitle2": "Risk Mitigation Strategies",
+                "section5-strategy1": "Thorough Due Diligence",
+                "section5-strategy2": "Portfolio Diversification",
+                "section5-strategy3": "Conservative Underwriting",
+                
+                "section6-title": "5. Investment Process: From Analysis to Execution",
+                "section6-step1-title": "Market Research & Opportunity Identification",
+                "section6-step1-desc": "Comprehensive analysis of economic trends, demographic shifts, and market dynamics to identify promising investment opportunities aligned with strategic objectives.",
+                "section6-step1-note-title": "Key Activities:",
+                "section6-step1-note": "Market analysis, demographic studies, economic forecasting, competitor analysis",
+                "section6-step2-title": "Financial Analysis & Due Diligence",
+                "section6-step2-desc": "Detailed financial modeling, property inspection, and legal review to assess investment viability, potential returns, and risk factors.",
+                "section6-step3-title": "Capital Structuring & Financing",
+                "section6-step3-desc": "Development of optimal capital structure, negotiation of financing terms, and arrangement of debt and equity components to fund the acquisition or development.",
+                "section6-step4-title": "Acquisition & Portfolio Integration",
+                "section6-step4-desc": "Execution of purchase agreement, transfer of ownership, and integration of the property into the investment portfolio with appropriate management structure.",
+                "section6-step5-title": "Asset Management & Performance Monitoring",
+                "section6-step5-desc": "Ongoing management, performance tracking, and strategic decision-making to optimize returns and execute the investment exit strategy at the appropriate time.",
+                
+                "section7-title": "6. Future Outlook & Strategic Recommendations",
+                "section7-subtitle1": "2024-2026 Projections",
+                "section7-projection1": "Residential Appreciation",
+                "section7-projection2": "Industrial Growth",
+                "section7-projection3": "Office Recovery",
+                "section7-projection4": "Retail Reimagined",
+                "section7-subtitle2": "Strategic Recommendations",
+                "section7-content": "\"In the current market environment, we recommend a balanced approach with emphasis on properties that demonstrate strong fundamentals, adaptability to changing market conditions, and alignment with long-term demographic and technological trends. Focus on markets with diversified economies, population growth, and pro-business policies.\"",
+                "section7-tag1": "Balanced Portfolio",
+                "section7-tag2": "Selective Acquisition",
+                "section7-tag3": "Sustainable Focus",
+
+                // Footer
+                "footer-desc": "Creating exceptional architectural experiences through innovative design and quality construction.",
+                "footer-links-title": "Quick Links",
+                "footer-link-home": "Home",
+                "footer-link-about": "About",
+                "footer-link-services": "Services",
+                "footer-link-projects": "Projects",
+                "footer-link-contact": "Contact Us",
+                "footer-services-title": "Services",
+                "footer-service-1": "Residential Projects",
+                "footer-service-2": "Commercial Projects",
+                "footer-service-3": "Interior Design",
+                "footer-service-4": "Architectural Planning",
+                "footer-service-5": "Project Management",
+                "footer-service-6": "Renovation & Remodeling",
+                "footer-contact-title": "Contact Info",
+                "footer-address-1": "123 Design Avenue",
+                "footer-address-2": "Creative District, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "Mon-Fri: 9AM-6PM",
+                "footer-copyright": "© 2025 Stackly. All Rights Reserved."
+            },
+            ar: {
+                // Header
+                "header-logo": "ستاكلي",
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                "logout-btn": "تسجيل خروج",
+                "mobile-menu-title": "القائمة",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                "mobile-logout-btn": "تسجيل خروج",
+                
+                // Hero
+                "hero-category": "تحليل الاستثمار",
+                "hero-title": "رؤى استثمارية",
+                "hero-subtitle": "تحليل استراتيجي واتجاهات السوق لاتخاذ قرارات استثمارية عقارية ذكية",
+                "author-name": "بواسطة سارة جونسون",
+                "publish-date": "15 يونيو 2024",
+                "read-time": "12 دقيقة قراءة",
+                
+                // Sections
+                "section1-title": "التنقل في استثمارات العقارات",
+                "section1-content": "في السوق الديناميكي اليوم، يتطلب الاستثمار العقاري الاستراتيجي تحليلاً دقيقاً للمؤشرات الاقتصادية واتجاهات السوق والفرص الناشئة. يوفر هذا الدليل الشامل رؤى حول ظروف السوق الحالية واستراتيجيات الاستثمار والتوقعات المستقبلية لمساعدة المستثمرين على اتخاذ قرارات مستنيرة في قطاعي الهندسة المعمارية والبناء.",
+                
+                "section2-title": "1. نظرة عامة على السوق الحالي",
+                "section2-subtitle1": "المؤشرات الاقتصادية",
+                "section2-content1": "يستمر سوق العقارات في إظهار المرونة على الرغم من الرياح الاقتصادية المعاكسة. تشير المؤشرات الرئيسية إلى سوق متوازن بإمكانيات نمو معتدلة في قطاعات مختارة. يشهد العقار التجاري تحولاً مع إعادة تشكيل نماذج العمل الهجينة لطلب مساحات المكاتب.",
+                "section2-list1": ["تثبيت قيم العقارات السكنية", "تعديل معدلات الشغور التجاري بعد الجائحة", "تخفيف تكاليف البناء بعد الفترة التضخمية", "تأثير بيئة أسعار الفائدة على خيارات التمويل"],
+                "section2-subtitle2": "أداء السوق",
+                
+                "section3-title": "2. نهج الاستثمار الاستراتيجي",
+                "section3-subtitle1": "تنويع المحفظة",
+                "section3-approach1-title": "استثمارات أساسية",
+                "section3-approach1-desc": "عقارات مستقرة ومدرة للدخل في مواقع متميزة مع عقود إيجار طويلة الأجل لمستأجرين جديرين بالائتمان. مخاطر أقل مع عوائد معتدلة.",
+                "section3-approach2-title": "فرص إضافة القيمة",
+                "section3-approach2-desc": "عقارات تتطلب تجديدًا أو إعادة تموضع أو تحسينات تشغيلية لزيادة التدفق النقدي وقيمة العقار.",
+                "section3-approach3-title": "مشاريع التطوير",
+                "section3-approach3-desc": "استثمارات عالية المخاطر في البناء الجديد أو مشاريع إعادة التطوير الكبرى مع إمكانية تحقيق عوائد كبيرة.",
+                "section3-return1": "عوائد أساسية",
+                "section3-return2": "عوائد إضافة القيمة",
+                "section3-return3": "عوائد التطوير",
+                
+                "section4-title": "3. الفرص الناشئة",
+                "section4-card1-title": "التنمية المستدامة",
+                "section4-card1-desc": "العقارات ذات الشهادات الخضراء والميزات الموفرة للطاقة تحقق إيجارات مميزة ولديها معدلات شغور أقل في سوق اليوم.",
+                "section4-card1-growth": "+15% علاوة",
+                "section4-card1-trend": "متنامي",
+                "section4-card2-title": "مراكز التكنولوجيا",
+                "section4-card2-desc": "تظهر العقارات في ممرات التكنولوجيا الناشئة ومناطق الابتكار إمكانات نمو قوية حيث تبحث الشركات عن مواقع غنية بالمواهب.",
+                "section4-card2-growth": "+22% قيمة",
+                "section4-card2-trend": "متسارع",
+                "section4-card3-title": "المجتمعات متعددة الاستخدامات",
+                "section4-card3-desc": "تستمر الأحياء التي يمكن المشي فيها والجمع بين المساحات السكنية والتجارية والمكتبية في التفوق على العقارات ذات الاستخدام الواحد.",
+                "section4-card3-growth": "+18% عائد الاستثمار",
+                "section4-card3-trend": "مستقر",
+                "section4-card4-title": "الصناعي واللوجستي",
+                "section4-card4-desc": "يستمر ازدهار التجارة الإلكترونية في دفع الطلب على مرافق المستودعات والتوزيع والتوصيل من الميل الأخير.",
+                "section4-card4-growth": "+25% طلب",
+                "section4-card4-trend": "قوي",
+                
+                "section5-title": "4. تقييم المخاطر والتخفيف",
+                "section5-subtitle": "إدارة مخاطر الاستثمار",
+                "section5-subtitle1": "عوامل الخطر الشائعة",
+                "section5-list1": ["تقلبات السوق والدورات الاقتصادية", "تقلبات أسعار الفائدة", "التغييرات التنظيمية", "تخلف المستأجرين ومخاطر الشغور", "تجاوزات تكاليف البناء", "الالتزامات البيئية"],
+                "section5-subtitle2": "استراتيجيات التخفيف من المخاطر",
+                "section5-strategy1": "العناية الواجبة الشاملة",
+                "section5-strategy2": "تنويع المحفظة",
+                "section5-strategy3": "اكتتاب محافظ",
+                
+                "section6-title": "5. عملية الاستثمار: من التحليل إلى التنفيذ",
+                "section6-step1-title": "بحث السوق وتحديد الفرص",
+                "section6-step1-desc": "تحليل شامل للاتجاهات الاقتصادية والتحولات الديموغرافية وديناميكيات السوق لتحديد فرص الاستثمار الواعدة المتوافقة مع الأهداف الاستراتيجية.",
+                "section6-step1-note-title": "الأنشطة الرئيسية:",
+                "section6-step1-note": "تحليل السوق، الدراسات الديموغرافية، التنبؤ الاقتصادي، تحليل المنافسين",
+                "section6-step2-title": "التحليل المالي والعناية الواجبة",
+                "section6-step2-desc": "النمذجة المالية التفصيلية وتفتيش العقار والمراجعة القانونية لتقييم جدوى الاستثمار والعوائد المحتملة وعوامل الخطر.",
+                "section6-step3-title": "هيكلة رأس المال والتمويل",
+                "section6-step3-desc": "تطوير هيكل رأس المال الأمثل، التفاوض على شروط التمويل، وترتيب مكونات الدخل والديون لتمويل الاستحواذ أو التطوير.",
+                "section6-step4-title": "الاستحواذ ودمج المحفظة",
+                "section6-step4-desc": "تنفيذ اتفاقية الشراء، نقل الملكية، ودمج العقار في محفظة الاستثمار مع هيكل إدارة مناسب.",
+                "section6-step5-title": "إدارة الأصول ومراقبة الأداء",
+                "section6-step5-desc": "الإدارة المستمرة، تتبع الأداء، واتخاذ القرارات الاستراتيجية لتحسين العوائد وتنفيذ استراتيجية خروج الاستثمار في الوقت المناسب.",
+                
+                "section7-title": "6. التوقعات المستقبلية والتوصيات الاستراتيجية",
+                "section7-subtitle1": "توقعات 2024-2026",
+                "section7-projection1": "تقدير السكني",
+                "section7-projection2": "النمو الصناعي",
+                "section7-projection3": "تعافي المكاتب",
+                "section7-projection4": "إعادة تخيل التجزئة",
+                "section7-subtitle2": "توصيات استراتيجية",
+                "section7-content": "\"في بيئة السوق الحالية، نوصي باتباع نهج متوازن مع التركيز على العقارات التي تظهر أساسيات قوية وقدرة على التكيف مع ظروف السوق المتغيرة والمواءمة مع الاتجاهات الديموغرافية والتكنولوجية طويلة الأجل. ركز على الأسواق ذات الاقتصادات المتنوعة ونمو السكان والسياسات المؤيدة للأعمال.\"",
+                "section7-tag1": "محفظة متوازنة",
+                "section7-tag2": "استحواذ انتقائي",
+                "section7-tag3": "تركيز مستدام",
+
+                // Footer
+                "footer-desc": "إنشاء تجارب معمارية استثنائية من خلال التصميم المبتكر والبناء عالي الجودة.",
+                "footer-links-title": "روابط سريعة",
+                "footer-link-home": "الرئيسية",
+                "footer-link-about": "من نحن",
+                "footer-link-services": "الخدمات",
+                "footer-link-projects": "المشاريع",
+                "footer-link-contact": "اتصل بنا",
+                "footer-services-title": "الخدمات",
+                "footer-service-1": "المشاريع السكنية",
+                "footer-service-2": "المشاريع التجارية",
+                "footer-service-3": "التصميم الداخلي",
+                "footer-service-4": "التخطيط المعماري",
+                "footer-service-5": "إدارة المشاريع",
+                "footer-service-6": "التجديد وإعادة التصميم",
+                "footer-contact-title": "معلومات الاتصال",
+                "footer-address-1": "123 شارع التصميم",
+                "footer-address-2": "الحي الإبداعي، CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "الإثنين-الجمعة: 9 صباحًا-6 مساءً",
+                "footer-copyright": "© 2025 ستاكلي. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Header
+                "header-logo": "Stackly",
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                "logout-btn": "התנתק",
+                "mobile-menu-title": "תפריט",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                "mobile-logout-btn": "התנתק",
+                
+                // Hero
+                "hero-category": "ניתוח השקעות",
+                "hero-title": "תובנות השקעה",
+                "hero-subtitle": "ניתוח אסטרטגי ומגמות שוק לקבלת החלטות השקעה נדל\"ן חכמות",
+                "author-name": "מאת שרה ג'ונסון",
+                "publish-date": "15 ביוני 2024",
+                "read-time": "12 דקות קריאה",
+                
+                // Sections
+                "section1-title": "ניווט בהשקעות נדל\"ן",
+                "section1-content": "בשוק הדינמי של היום, השקעה אסטרטגית בנדל\"ן דורשת ניתוח קפדני של אינדיקטורים כלכליים, מגמות שוק והזדמנויות מתעוררות. מדריך מקיף זה מספק תובנות על תנאי השוק הנוכחיים, אסטרטגיות השקעה ותחזיות עתידיות כדי לסייע למשקיעים לקבל החלטות מושכלות במגזרי האדריכלות והבנייה.",
+                
+                "section2-title": "1. סקירת שוק נוכחית",
+                "section2-subtitle1": "אינדיקטורים כלכליים",
+                "section2-content1": "שוק הנדל\"ן ממשיך להראות חוסן למרות רוחות כלכליות נגדיות. אינדיקטורים מרכזיים מצביעים על שוק מאוזן עם פוטנציאל צמיחה מתון במגזרים נבחרים. נדל\"ן מסחרי עובר טרנספורמציה כאשר מודלי עבודה היברידיים מעצבים מחדש את הביקוש למרחבי משרדים.",
+                "section2-list1": ["ייצוב ערכי נכסים למגורים", "התאמת שיעורי פנויים מסחריים לאחר המגיפה", "התייעלות עלויות בנייה לאחר תקופה אינפלציונית", "השפעת סביבת ריביות על אפשרויות מימון"],
+                "section2-subtitle2": "ביצועי שוק",
+                
+                "section3-title": "2. גישות השקעה אסטרטגיות",
+                "section3-subtitle1": "גיוון תיק השקעות",
+                "section3-approach1-title": "השקעות ליבה",
+                "section3-approach1-desc": "נכסים יציבים המייצרים הכנסה במיקומים פרימיום עם חוזי שכירות ארוכי טווח לדיירים אמינים. סיכון נמוך עם תשואות מתונות.",
+                "section3-approach2-title": "הזדמנויות להוספת ערך",
+                "section3-approach2-desc": "נכסים הדורשים שיפוץ, מיקום מחדש או שיפורים תפעוליים כדי להגדיל את תזרים המזומנים ואת ערך הנכס.",
+                "section3-approach3-title": "פרויקטי פיתוח",
+                "section3-approach3-desc": "השקעות בסיכון גבוה בבנייה חדשה או פרויקטי פיתוח מחדש גדולים עם פוטנציאל לתשואות משמעותיות.",
+                "section3-return1": "תשואות ליבה",
+                "section3-return2": "תשואות הוספת ערך",
+                "section3-return3": "תשואות פיתוח",
+                
+                "section4-title": "3. הזדמנויות מתעוררות",
+                "section4-card1-title": "פיתוח בר-קיימא",
+                "section4-card1-desc": "נכסים עם תעודות ירוקות ותכונות חסכוניות באנרגיה משיגים דמי שכירות פרמיה ויש להם שיעורי פנויים נמוכים יותר בשוק של היום.",
+                "section4-card1-growth": "+15% פרמיה",
+                "section4-card1-trend": "גדל",
+                "section4-card2-title": "מרכזי טכנולוגיה",
+                "section4-card2-desc": "נכסים במסדרונות טק מתעוררים ומחוזות חדשנות מראים פוטנציאל צמיחה חזק כחברות מחפשות מיקומים עשירים בכישרונות.",
+                "section4-card2-growth": "+22% ערך",
+                "section4-card2-trend": "מאיץ",
+                "section4-card3-title": "קהילות מעורבות שימוש",
+                "section4-card3-desc": "שכונות שניתן ללכת בהן המשלבת מרחבי מגורים, קמעונאות ומשרדים ממשיכות להשיג ביצועים טובים יותר מנכסים לשימוש יחיד.",
+                "section4-card3-growth": "+18% ROI",
+                "section4-card3-trend": "יציב",
+                "section4-card4-title": "תעשייה ולוגיסטיקה",
+                "section4-card4-desc": "הבום של המסחר האלקטרוני ממשיך להניע ביקוש למתקני מחסנים, הפצה ומשלוח מייל אחרון.",
+                "section4-card4-growth": "+25% ביקוש",
+                "section4-card4-trend": "חזק",
+                
+                "section5-title": "4. הערכת סיכונים והפחתה",
+                "section5-subtitle": "ניהול סיכוני השקעה",
+                "section5-subtitle1": "גורמי סיכון נפוצים",
+                "section5-list1": ["תנודתיות שוק ומחזורים כלכליים", "תנודות ריבית", "שינויים רגולטוריים", "אי-תשלום דיירים וסיכון פנויים", "חריגות עלות בנייה", "התחייבויות סביבתיות"],
+                "section5-subtitle2": "אסטרטגיות הפחתת סיכונים",
+                "section5-strategy1": "בדיקת נאותות יסודית",
+                "section5-strategy2": "גיוון תיק השקעות",
+                "section5-strategy3": "כתב ביטוח שמרני",
+                
+                "section6-title": "5. תהליך השקעה: מניתוח לביצוע",
+                "section6-step1-title": "מחקר שוק וזיהוי הזדמנויות",
+                "section6-step1-desc": "ניתוח מקיף של מגמות כלכליות, שינויים דמוגרפיים ודינמיקות שוק לזיהוי הזדמנויות השקעה מבטיחות התואמות למטרות אסטרטגיות.",
+                "section6-step1-note-title": "פעילויות מפתח:",
+                "section6-step1-note": "ניתוח שוק, מחקרים דמוגרפיים, תחזיות כלכליות, ניתוח מתחרים",
+                "section6-step2-title": "ניתוח פיננסי ובדיקת נאותות",
+                "section6-step2-desc": "מודלים פיננסיים מפורטים, בדיקת נכס וסקירה משפטית להערכת כדאיות ההשקעה, תשואות פוטנציאליות וגורמי סיכון.",
+                "section6-step3-title": "מבנה הון ומימון",
+                "section6-step3-desc": "פיתוח מבנה הון אופטימלי, משא ומתן על תנאי מימון, וארגון מרכיבי חוב והון למימון הרכישה או הפיתוח.",
+                "section6-step4-title": "רכישה ואינטגרציה לתיק",
+                "section6-step4-desc": "ביצוע הסכם רכישה, העברת בעלות, ואינטגרציה של הנכס לתיק ההשקעות עם מבנה ניהול מתאים.",
+                "section6-step5-title": "ניהול נכסים ומעקב ביצועים",
+                "section6-step5-desc": "ניהול מתמשך, מעקב ביצועים, וקבלת החלטות אסטרטגיות לשיפור תשואות וביצוע אסטרטגיית יציאת ההשקעה בזמן המתאים.",
+                
+                "section7-title": "6. Outlook עתידי והמלצות אסטרטגיות",
+                "section7-subtitle1": "תחזיות 2024-2026",
+                "section7-projection1": "הערכת מגורים",
+                "section7-projection2": "צמיחה תעשייתית",
+                "section7-projection3": "התאוששות משרדים",
+                "section7-projection4": "קמעונאות מחדשת",
+                "section7-subtitle2": "המלצות אסטרטגיות",
+                "section7-content": "\"בסביבת השוק הנוכחית, אנו ממליצים על גישה מאוזנת עם דגש על נכסים המדגימים יסודות חזקים, יכולת הסתגלות לתנאי שוק משתנים, ויישור קו עם מגמות דמוגרפיות וטכנולוגיות ארוכות טווח. התמקדו בשווקים עם כלכלות מגוונות, גידול אוכלוסייה ומדיניות פרו-עסקית.\"",
+                "section7-tag1": "תיק מאוזן",
+                "section7-tag2": "רכישה סלקטיבית",
+                "section7-tag3": "מיקוד בר-קיימא",
+
+                // Footer
+                "footer-desc": "יצירת חוויות אדריכליות יוצאות דופן באמצעות עיצוב חדשני ובנייה איכותית.",
+                "footer-links-title": "קישורים מהירים",
+                "footer-link-home": "בית",
+                "footer-link-about": "אודות",
+                "footer-link-services": "שירותים",
+                "footer-link-projects": "פרויקטים",
+                "footer-link-contact": "צור קשר",
+                "footer-services-title": "שירותים",
+                "footer-service-1": "פרויקטים למגורים",
+                "footer-service-2": "פרויקטים מסחריים",
+                "footer-service-3": "עיצוב פנים",
+                "footer-service-4": "תכנון אדריכלי",
+                "footer-service-5": "ניהול פרויקטים",
+                "footer-service-6": "שיפוץ ועיצוב מחדש",
+                "footer-contact-title": "פרטי יצירת קשר",
+                "footer-address-1": "שדרת העיצוב 123",
+                "footer-address-2": "רובע יצירתי, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "א'-ה': 9:00-18:00",
+                "footer-copyright": "© 2025 Stackly. כל הזכויות שמורות."
+            }
+        };
+
+        // Language Selector
+        const languageSelect = document.getElementById('languageSelect');
+        
+        languageSelect.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            changeLanguage(selectedLanguage);
+        });
+
+        // Enhanced function to change language
+        function changeLanguage(language) {
+            // Update HTML direction and lang attribute
+            if (language === 'ar' || language === 'he') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = language;
+                document.body.classList.add('rtl');
+                
+                // Add appropriate font class
+                if (language === 'ar') {
+                    document.body.classList.add('arabic-font');
+                    document.body.classList.remove('hebrew-font');
+                } else {
+                    document.body.classList.add('hebrew-font');
+                    document.body.classList.remove('arabic-font');
+                }
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = language;
+                document.body.classList.remove('rtl', 'arabic-font', 'hebrew-font');
+            }
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[language] && translations[language][id]) {
+                    if (id.includes('list')) {
+                        // Handle list elements
+                        const listItems = translations[language][id];
+                        element.innerHTML = '';
+                        listItems.forEach(item => {
+                            const li = document.createElement('li');
+                            li.innerHTML = `<i class="fas fa-check-circle"></i> ${item}`;
+                            element.appendChild(li);
+                        });
+                    } else {
+                        element.textContent = translations[language][id];
+                    }
+                }
+            });
+            
+            // Force reflow to fix layout issues
+            document.body.style.display = 'none';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.display = '';
+        }
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.theme = 'light';
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+        
+        function handleLogout() {
+            // In a real application, you would clear authentication tokens here
+            // For now, just redirect to login page
+            window.location.href = 'login.html';
+        }
+        
+        logoutBtn.addEventListener('click', handleLogout);
+        mobileLogoutBtn.addEventListener('click', handleLogout);
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+        
+        closeMobileMenu.addEventListener('click', function() {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        // Initialize with English language
+        changeLanguage('en');
+    </script>
+</body>
+</html>

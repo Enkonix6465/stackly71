@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Architecture Firm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+      <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#e67e22',
+                        accent: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* RTL Direction Handling */
+        [dir="rtl"] .ltr-text-left {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .ltr-ml-2 {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-mr-2 {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-space-x-8 > * + * {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+        
+        [dir="rtl"] .ltr-pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .ltr-border-l-2 {
+            border-left: 0;
+            border-right: 2px solid;
+        }
+        
+        [dir="rtl"] .ltr-rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+        
+        [dir="rtl"] .ltr-text-right {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .ltr-left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .ltr-translate-x-full {
+            transform: translateX(-100%);
+        }
+        
+        /* RTL-specific adjustments */
+        [dir="rtl"] .rtl-text-right {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .rtl-text-left {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .rtl-mr-2 {
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-ml-2 {
+            margin-left: 0.5rem;
+        }
+        
+        [dir="rtl"] .rtl-space-x-reverse > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+        
+        [dir="rtl"] .rtl-flex-row-reverse {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .rtl-items-end {
+            align-items: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-justify-end {
+            justify-content: flex-end;
+        }
+        
+        [dir="rtl"] .rtl-border-r-2 {
+            border-right: 0;
+            border-left: 2px solid;
+        }
+        
+        [dir="rtl"] .rtl-pr-4 {
+            padding-right: 0;
+            padding-left: 1rem;
+        }
+
+        /* FIXED: Header RTL Text Spacing */
+        [dir="rtl"] .nav-link {
+            padding: 10px 15px !important;
+            margin: 0 5px !important;
+        }
+        
+        [dir="rtl"] .nav-container .nav-item {
+            margin: 0 8px !important;
+        }
+        
+        [dir="rtl"] .nav-link span {
+            display: inline-block;
+            padding: 0 5px;
+        }
+        
+        [dir="rtl"] .dropdown-menu {
+            text-align: right;
+            padding: 8px 0;
+        }
+        
+        [dir="rtl"] .dropdown-item {
+            padding: 12px 20px;
+            text-align: right;
+        }
+
+        /* Corner positioning for header elements */
+        .header-container {
+            position: relative;
+            min-height: 80px;
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .logo-container {
+            left: 1rem;
+        }
+        
+        [dir="rtl"] .logo-container {
+            right: 1rem;
+        }
+        
+        .nav-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .right-side-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        [dir="ltr"] .right-side-container {
+            right: 1rem;
+        }
+        
+        [dir="rtl"] .right-side-container {
+            left: 1rem;
+        }
+
+        /* Keep buttons LTR in RTL mode */
+        [dir="rtl"] .right-side-container * {
+            direction: ltr !important;
+        }
+        
+        [dir="rtl"] .right-side-container a,
+        [dir="rtl"] .right-side-container button,
+        [dir="rtl"] .right-side-container select {
+            text-align: center;
+            unicode-bidi: isolate;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Chevron rotation for RTL */
+        [dir="rtl"] .chevron-rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile responsiveness for corner positioning */
+        @media (max-width: 1024px) {
+            .nav-container {
+                display: none;
+            }
+            
+            .logo-container {
+                position: static;
+                transform: none;
+            }
+            
+            .right-side-container {
+                position: static;
+                transform: none;
+            }
+            
+            .header-container {
+                justify-content: space-between;
+                min-height: auto;
+            }
+        }
+
+        /* Mobile menu transitions */
+        .mobile-menu-enter {
+            transform: translateX(100%);
+        }
+        
+        [dir="rtl"] .mobile-menu-enter {
+            transform: translateX(-100%);
+        }
+        
+        .mobile-menu-enter-active {
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        [dir="rtl"] .mobile-menu-enter-active {
+            transform: translateX(0);
+        }
+
+        /* FIXED: Mobile menu RTL spacing */
+        [dir="rtl"] .mobile-nav-link,
+        [dir="rtl"] .mobile-dropdown-btn {
+            padding: 12px 20px !important;
+            text-align: right;
+        }
+        
+        [dir="rtl"] .mobile-dropdown-content {
+            padding-right: 20px;
+            padding-left: 0;
+        }
+        
+        [dir="rtl"] .mobile-dropdown-item {
+            text-align: right;
+            padding: 10px 15px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-gray-50 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 left-0 z-50 transition-all duration-300">
+        <div class="container mx-auto flex items-center justify-between px-4 sm:px-6 py-4 header-container">
+            <!-- Logo - Positioned in LEFT corner (LTR) or RIGHT corner (RTL) -->
+            <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse logo-container">
+                <img src="logo.png" alt="Logo" class="h-8 w-auto">
+            </div>
+            
+            <!-- Navigation - Stays in CENTER -->
+            <nav class="hidden lg:flex items-center ltr:space-x-8 rtl:space-x-reverse nav-container">
+                <!-- Home Dropdown -->
+                <div class="relative group">
+                    <a href="home.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium nav-link">
+                        <span id="nav-home">Home</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="home.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Home 1</a>
+                        <a href="home2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Home 2</a>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium nav-link" id="nav-about">
+                    About
+                </a>
+
+                <!-- Services Dropdown -->
+                <div class="relative group">
+                    <a href="services.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium nav-link">
+                        <span id="nav-services">Services</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-56 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="Residential Architecture.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Commercial Projects</a>
+                        <a href="interior-design.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Interior Design</a>
+                        <a href="architectural-planning.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Architectural Planning</a>
+                        <a href="project-management.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Renovation & Remodeling</a>
+                    </div>
+                </div>
+
+                <!-- Blog Dropdown -->
+                <div class="relative group">
+                    <a href="Blog.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium nav-link">
+                        <span id="nav-blog">Blog</span>
+                        <i class="fas fa-chevron-down ltr-ml-1 rtl-mr-1 text-xs chevron-rotate"></i>
+                    </a>
+                    <div class="absolute ltr-left-0 rtl-right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border dark:border-gray-600 rtl-text-right">
+                        <a href="Blog1.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-t-lg border-b dark:border-gray-600">Design Trends</a>
+                        <a href="Blog2.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 border-b dark:border-gray-600">Project Showcase</a>
+                        <a href="Blog3.html" class="block px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-b-lg">Investment Insights</a>
+                    </div>
+                </div>
+
+                <!-- Contact Us -->
+                <a href="Contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 font-medium nav-link" id="nav-contact">
+                    Contact Us
+                </a>
+            </nav>
+
+            <!-- Right Side - Positioned in RIGHT corner (LTR) or LEFT corner (RTL) -->
+            <div class="flex items-center ltr-space-x-4 rtl-space-x-reverse right-side-container">
+                <!-- Language Selector -->
+                <select id="languageSelect" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="he">עברית</option>
+                </select>
+                
+                <!-- Dark Mode Toggle -->
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- Login Button -->
+                <div class="hidden md:flex items-center ltr-space-x-3 rtl-space-x-reverse">
+                    <a href="login.html" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm">
+                        Log Out
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-primary dark:text-white text-2xl hover:text-secondary transition-colors" id="mobileMenuButton">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden fixed inset-0 bg-white dark:bg-gray-800 z-50 transform ltr-translate-x-full rtl--translate-x-full transition-transform duration-300">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700 rtl-flex-row-reverse">
+                <h2 class="text-xl font-bold text-primary dark:text-white" id="mobile-menu-title">Menu</h2>
+                <button id="closeMobileMenu" class="text-gray-600 dark:text-gray-300 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="p-4 space-y-4 rtl-text-right">
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-home">Home</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="home.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 1</a>
+                        <a href="home2.html" class="block py-2 text-gray-600 dark:text-gray-400">Home 2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2 mobile-nav-link" id="mobile-nav-about">About</a>
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-services">Services</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Residential Architecture.html" class="block py-2 text-gray-600 dark:text-gray-400 mobile-dropdown-item">Residential Projects</a>
+                        <a href="commercial-projects.html" class="block py-2 text-gray-600 dark:text-gray-400 mobile-dropdown-item">Commercial Projects</a>
+                        <a href="interior-design.html" class="block py-2 text-gray-600 dark:text-gray-400 mobile-dropdown-item">Interior Design</a>
+                        <a href="architectural-planning.html" class="block py-2 text-gray-600 dark:text-gray-400 mobile-dropdown-item">Architectural Planning</a>
+                        <a href="project-management.html" class="block py-2 text-gray-600 dark:text-gray-400 mobile-dropdown-item">Project Management</a>
+                        <a href="renovation-remodeling.html" class="block py-2 text-gray-600 dark:text-gray-400 mobile-dropdown-item">Renovation & Remodeling</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <button class="mobile-dropdown-toggle flex justify-between items-center w-full text-left text-lg font-medium text-gray-800 dark:text-white py-2 rtl-flex-row-reverse">
+                        <span id="mobile-nav-blog">Blog</span> <i class="fas fa-chevron-down chevron-rotate"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ltr-pl-4 rtl-pr-4 mt-2 space-y-2 ltr-border-l-2 rtl-border-r-2 border-gray-200 dark:border-gray-600">
+                        <a href="Blog1.html" class="block py-2 text-gray-600 dark:text-gray-400 mobile-dropdown-item">Design Trends</a>
+                        <a href="Blog2.html" class="block py-2 text-gray-600 dark:text-gray-400 mobile-dropdown-item">Project Showcase</a>
+                        <a href="Blog3.html" class="block py-2 text-gray-600 dark:text-gray-400 mobile-dropdown-item">Investment Insights</a>
+                    </div>
+                </div>
+                <a href="Contact.html" class="block text-lg font-medium text-gray-800 dark:text-white py-2 mobile-nav-link" id="mobile-nav-contact">Contact Us</a>
+                <a href="login.html" class="block text-lg font-medium text-primary dark:text-white py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-center">Log Out</a>
+            </nav>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section - Full Screen -->
+        <section class="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+        <source src="Contact.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Blue Overlay for contrast -->
+    <div class="absolute inset-0 bg-blue-800/60 mix-blend-multiply"></div>
+
+    <!-- Gradient Overlay for depth -->
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-600/50 to-indigo-700/50"></div>
+
+    <!-- Main Content -->
+    <div class="relative container mx-auto px-4 sm:px-6 text-center z-10">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg" id="hero-title">
+            Get In Touch
+        </h1>
+        <p class="text-lg md:text-2xl max-w-3xl mx-auto mb-8 text-blue-100 drop-shadow-md" id="hero-description">
+            We'd love to hear from you. Let's discuss your architectural vision and bring it to life.
+        </p>
+        
+    </div>
+</section>
+
+
+        <!-- Contact Form Section - Full Width -->
+        <section id="contact-form" class="section-padding bg-white dark:bg-gray-800 full-width">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4" id="form-title">Send Us a Message</h2>
+                        <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" id="form-description">Fill out the form below and our team will get back to you within 24 hours.</p>
+                    </div>
+                    
+                    <form class="contact-form grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2" id="form-label-name">Full Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Your Name" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2" id="form-label-email">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" placeholder="your.email@example.com" required>
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-gray-700 dark:text-gray-300 mb-2" id="form-label-phone">Phone Number</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" placeholder="+1 (555) 123-4567">
+                        </div>
+                        <div>
+                            <label for="service" class="block text-gray-700 dark:text-gray-300 mb-2" id="form-label-service">Service Interested In</label>
+                            <select id="service" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select a service</option>
+                                <option value="residential">Residential Projects</option>
+                                <option value="commercial">Commercial Projects</option>
+                                <option value="interior">Interior Design</option>
+                                <option value="planning">Architectural Planning</option>
+                                <option value="management">Project Management</option>
+                                <option value="renovation">Renovation & Remodeling</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="message" class="block text-gray-700 dark:text-gray-300 mb-2" id="form-label-message">Your Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Tell us about your project..." required></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <button type="submit" class="w-full bg-primary hover:bg-secondary text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300" id="form-button-submit">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Info Section - Full Width -->
+        <section id="contact-info" class="py-16 bg-gray-50 dark:bg-gray-900 full-width">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4" id="contact-info-title">Our Contact Information</h2>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" id="contact-info-description">Reach out to us through any of these channels</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md text-center">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-map-marker-alt text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2" id="contact-info-visit">Visit Our Office</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="contact-info-address">123 Design Avenue<br>Creative District, CD 10001</p>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md text-center">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-phone text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2" id="contact-info-call">Call Us</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="contact-info-phone">+1 (555) 123-4567<br>Mon-Fri: 9AM-6PM</p>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md text-center">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-envelope text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2" id="contact-info-email">Email Us</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="contact-info-emails">info@Stackly.com<br>support@Stackly.com</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section - Full Width -->
+       <section class="w-full py-16 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4" id="faq-title">
+                Frequently Asked Questions
+            </h2>
+            <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" id="faq-description">
+                Find answers to common questions about our services and process.
+            </p>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="max-w-4xl mx-auto space-y-6">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-blue-500/30 hover:-translate-y-2 border border-transparent hover:border-blue-500/30">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2" id="faq-question-1">
+                    How long does a typical residential project take?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-300" id="faq-answer-1">
+                    The timeline varies depending on the scope and complexity of the project. A standard residential project typically takes between 6–12 months from initial design to completion.
+                </p>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-blue-500/30 hover:-translate-y-2 border border-transparent hover:border-blue-500/30">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2" id="faq-question-2">
+                    Do you provide 3D visualizations of projects?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-300" id="faq-answer-2">
+                    Yes, we create detailed 3D visualizations for all our projects so you can see exactly how your space will look before construction begins.
+                </p>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-blue-500/30 hover:-translate-y-2 border border-transparent hover:border-blue-500/30">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2" id="faq-question-3">
+                    What is your design process?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-300" id="faq-answer-3">
+                    Our process includes initial consultation, site analysis, concept development, design development, construction documentation, and project management during construction.
+                </p>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-blue-500/30 hover:-translate-y-2 border border-transparent hover:border-blue-500/30">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2" id="faq-question-4">
+                    Do you work with international clients?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-300" id="faq-answer-4">
+                    Yes, we have experience working with clients worldwide. We utilize modern communication tools to ensure seamless collaboration regardless of location.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <!-- Process Section - Replaced Team Section - Full Width -->
+        <section class="py-16 bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 full-width">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4" id="process-title">Our Process</h2>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" id="process-description">How we bring your architectural vision to life</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md text-center">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-primary text-xl font-bold">1</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2" id="process-step-1-title">Consultation</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="process-step-1-desc">We discuss your vision, requirements, and budget to understand your needs.</p>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md text-center">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-primary text-xl font-bold">2</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2" id="process-step-2-title">Design</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="process-step-2-desc">Our architects create initial concepts and 3D visualizations of your project.</p>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md text-center">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-primary text-xl font-bold">3</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2" id="process-step-3-title">Development</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="process-step-3-desc">We refine the design and create detailed construction documents.</p>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md text-center">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-primary text-xl font-bold">4</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2" id="process-step-4-title">Execution</h3>
+                        <p class="text-gray-600 dark:text-gray-300" id="process-step-4-desc">We manage the construction process to ensure quality and timely completion.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section - Full Width -->
+        <section class="py-16 bg-white dark:bg-gray-800 full-width">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4" id="testimonials-title">What Our Clients Say</h2>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" id="testimonials-description">Hear from our satisfied clients about their experience working with us</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center rtl:mr-4">
+                                <i class="fas fa-user text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 dark:text-white" id="testimonial-1-name">Jennifer Smith</h4>
+                                <p class="text-gray-600 dark:text-gray-400" id="testimonial-1-project">Residential Project</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300" id="testimonial-1-text">"The team transformed our outdated home into a modern masterpiece. Their attention to detail and creative solutions exceeded our expectations."</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center rtl:mr-4">
+                                <i class="fas fa-user text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 dark:text-white" id="testimonial-2-name">Robert Johnson</h4>
+                                <p class="text-gray-600 dark:text-gray-400" id="testimonial-2-project">Commercial Project</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300" id="testimonial-2-text">"Working with this firm on our office redesign was seamless. They understood our brand and created a space that perfectly reflects our company culture."</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center rtl:mr-4">
+                                <i class="fas fa-user text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 dark:text-white" id="testimonial-3-name">Maria Garcia</h4>
+                                <p class="text-gray-600 dark:text-gray-400" id="testimonial-3-project">Interior Design</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300" id="testimonial-3-text">"The interior design team created a space that is both beautiful and functional. They listened to our needs and delivered beyond what we imagined."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section - Full Width -->
+        <section class="py-16 bg-gray-50 dark:bg-gray-900 full-width">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4" id="map-title">Find Us</h2>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" id="map-description">Visit our office to discuss your project in person</p>
+                </div>
+                
+                <div class="max-w-6xl mx-auto bg-gray-200 dark:bg-gray-700 rounded-xl overflow-hidden shadow-md h-96">
+                    <!-- Map placeholder - you would integrate a real map service here -->
+                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-r from-blue-400 to-indigo-500">
+                        <div class="text-center text-white">
+                            <i class="fas fa-map-marked-alt text-5xl mb-4"></i>
+                            <p class="text-xl font-semibold" id="map-placeholder-title">Interactive Map</p>
+                            <p class="mt-2" id="map-placeholder-address">123 Design Avenue, Creative District</p>
+                            <button class="mt-4 bg-white text-primary px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors" id="map-button-directions">
+                                Get Directions
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12 full-width">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse mb-6 sm:mb-0">
+                        <div class="w-33 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-md">
+                            <div class="w-33 h-12 bg-gray-800 rounded-xl flex items-center justify-center shadow-md">
+                            <img src="logo.png" alt="Company Logo" class="w-33 h-10 object-contain">
+                        </div>
+                        </div>
+                    </div>
+                    <p class="mb-6 text-gray-400" id="footer-desc">
+                        Creating exceptional architectural experiences through innovative design and quality construction.
+                    </p>
+                    <div class="flex ltr:space-x-4 rtl:space-x-reverse">
+                        <a href="https://www.facebook.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/" class="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/" class="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-links-title">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="home.html" class="hover:text-blue-400 transition-colors" id="footer-link-home">Home</a></li>
+                        <li><a href="AboutUs.html" class="hover:text-blue-400 transition-colors" id="footer-link-about">About</a></li>
+                        <li><a href="Servers.html" class="hover:text-blue-400 transition-colors" id="footer-link-services">Services</a></li>
+                        <li><a href="Blog.html" class="hover:text-blue-400 transition-colors" id="footer-link-projects">Blog</a></li>
+                        <li><a href="ContactUs.html" class="hover:text-blue-400 transition-colors" id="footer-link-contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-services-title">Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="service1.html" class="hover:text-blue-400 transition-colors" id="footer-service-1">Residential Projects</a></li>
+                        <li><a href="service2.html" class="hover:text-blue-400 transition-colors" id="footer-service-2">Commercial Projects</a></li>
+                        <li><a href="service3.html" class="hover:text-blue-400 transition-colors" id="footer-service-3">Interior Design</a></li>
+                        <li><a href="service4.html" class="hover:text-blue-400 transition-colors" id="footer-service-4">Architectural Planning</a></li>
+                        <li><a href="service5.html" class="hover:text-blue-400 transition-colors" id="footer-service-5">Project Management</a></li>
+                        <li><a href="Renovation.html" class="hover:text-blue-400 transition-colors" id="footer-service-6">Renovation & Remodeling</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6" id="footer-contact-title">Contact Info</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <div>
+                                <p id="footer-address-1">123 Design Avenue</p>
+                                <p id="footer-address-2">Creative District, CD 10001</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-phone text-blue-400"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-400 transition-colors" id="footer-phone">
+                                +1 (555) 123-4567
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <a href="mailto:info@Stackly.com" class="hover:text-blue-400 transition-colors" id="footer-email">
+                                info@Stackly.com
+                            </a>
+                        </div>
+                        <div class="flex items-center ltr:space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span id="footer-hours">Mon-Fri: 9AM-6PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p id="footer-copyright">&copy; 2025 Stackly. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                // Navigation
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-blog": "Blog",
+                "nav-contact": "Contact Us",
+                
+                // Mobile Navigation
+                "mobile-menu-title": "Menu",
+                "mobile-nav-home": "Home",
+                "mobile-nav-about": "About",
+                "mobile-nav-services": "Services",
+                "mobile-nav-blog": "Blog",
+                "mobile-nav-contact": "Contact Us",
+                
+                // Hero Section
+                "hero-title": "Get In Touch",
+                "hero-description": "We'd love to hear from you. Let's discuss your architectural vision and bring it to life.",
+                "hero-button-message": "Send a Message",
+                "hero-button-contact": "Contact Info",
+                
+                // Contact Form
+                "form-title": "Send Us a Message",
+                "form-description": "Fill out the form below and our team will get back to you within 24 hours.",
+                "form-label-name": "Full Name",
+                "form-label-email": "Email Address",
+                "form-label-phone": "Phone Number",
+                "form-label-service": "Service Interested In",
+                "form-label-message": "Your Message",
+                "form-button-submit": "Send Message",
+                
+                // Contact Info
+                "contact-info-title": "Our Contact Information",
+                "contact-info-description": "Reach out to us through any of these channels",
+                "contact-info-visit": "Visit Our Office",
+                "contact-info-address": "123 Design Avenue<br>Creative District, CD 10001",
+                "contact-info-call": "Call Us",
+                "contact-info-phone": "+1 (555) 123-4567<br>Mon-Fri: 9AM-6PM",
+                "contact-info-email": "Email Us",
+                "contact-info-emails": "info@Stackly.com<br>support@Stackly.com",
+                
+                // FAQ
+                "faq-title": "Frequently Asked Questions",
+                "faq-description": "Find answers to common questions about our services and process",
+                "faq-question-1": "How long does a typical residential project take?",
+                "faq-answer-1": "The timeline varies depending on the scope and complexity of the project. A standard residential project typically takes between 6-12 months from initial design to completion.",
+                "faq-question-2": "Do you provide 3D visualizations of projects?",
+                "faq-answer-2": "Yes, we create detailed 3D visualizations for all our projects so you can see exactly how your space will look before construction begins.",
+                "faq-question-3": "What is your design process?",
+                "faq-answer-3": "Our process includes initial consultation, site analysis, concept development, design development, construction documentation, and project management during construction.",
+                "faq-question-4": "Do you work with international clients?",
+                "faq-answer-4": "Yes, we have experience working with clients worldwide. We utilize modern communication tools to ensure seamless collaboration regardless of location.",
+                
+                // Process
+                "process-title": "Our Process",
+                "process-description": "How we bring your architectural vision to life",
+                "process-step-1-title": "Consultation",
+                "process-step-1-desc": "We discuss your vision, requirements, and budget to understand your needs.",
+                "process-step-2-title": "Design",
+                "process-step-2-desc": "Our architects create initial concepts and 3D visualizations of your project.",
+                "process-step-3-title": "Development",
+                "process-step-3-desc": "We refine the design and create detailed construction documents.",
+                "process-step-4-title": "Execution",
+                "process-step-4-desc": "We manage the construction process to ensure quality and timely completion.",
+                
+                // Testimonials
+                "testimonials-title": "What Our Clients Say",
+                "testimonials-description": "Hear from our satisfied clients about their experience working with us",
+                "testimonial-1-name": "Jennifer Smith",
+                "testimonial-1-project": "Residential Project",
+                "testimonial-1-text": "\"The team transformed our outdated home into a modern masterpiece. Their attention to detail and creative solutions exceeded our expectations.\"",
+                "testimonial-2-name": "Robert Johnson",
+                "testimonial-2-project": "Commercial Project",
+                "testimonial-2-text": "\"Working with this firm on our office redesign was seamless. They understood our brand and created a space that perfectly reflects our company culture.\"",
+                "testimonial-3-name": "Maria Garcia",
+                "testimonial-3-project": "Interior Design",
+                "testimonial-3-text": "\"The interior design team created a space that is both beautiful and functional. They listened to our needs and delivered beyond what we imagined.\"",
+                
+                // Map
+                "map-title": "Find Us",
+                "map-description": "Visit our office to discuss your project in person",
+                "map-placeholder-title": "Interactive Map",
+                "map-placeholder-address": "123 Design Avenue, Creative District",
+                "map-button-directions": "Get Directions",
+                
+                // Footer
+                "footer-desc": "Creating exceptional architectural experiences through innovative design and quality construction.",
+                "footer-links-title": "Quick Links",
+                "footer-link-home": "Home",
+                "footer-link-about": "About",
+                "footer-link-services": "Services",
+                "footer-link-projects": "Blog",
+                "footer-link-contact": "Contact Us",
+                "footer-services-title": "Services",
+                "footer-service-1": "Residential Projects",
+                "footer-service-2": "Commercial Projects",
+                "footer-service-3": "Interior Design",
+                "footer-service-4": "Architectural Planning",
+                "footer-service-5": "Project Management",
+                "footer-service-6": "Renovation & Remodeling",
+                "footer-contact-title": "Contact Info",
+                "footer-address-1": "123 Design Avenue",
+                "footer-address-2": "Creative District, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "Mon-Fri: 9AM-6PM",
+                "footer-copyright": "© 2025 Stackly. All Rights Reserved."
+            },
+            ar: {
+                // Navigation
+                "nav-home": "الرئيسية",
+                "nav-about": "من نحن",
+                "nav-services": "الخدمات",
+                "nav-blog": "المدونة",
+                "nav-contact": "اتصل بنا",
+                
+                // Mobile Navigation
+                "mobile-menu-title": "القائمة",
+                "mobile-nav-home": "الرئيسية",
+                "mobile-nav-about": "من نحن",
+                "mobile-nav-services": "الخدمات",
+                "mobile-nav-blog": "المدونة",
+                "mobile-nav-contact": "اتصل بنا",
+                
+                // Hero Section
+                "hero-title": "تواصل معنا",
+                "hero-description": "نحن نحب أن نسمع منك. دعنا نناقش رؤيتك المعمارية ونحققها على أرض الواقع.",
+                "hero-button-message": "إرسال رسالة",
+                "hero-button-contact": "معلومات الاتصال",
+                
+                // Contact Form
+                "form-title": "أرسل لنا رسالة",
+                "form-description": "املأ النموذج أدناه وسيعود فريقنا إليك خلال 24 ساعة.",
+                "form-label-name": "الاسم الكامل",
+                "form-label-email": "البريد الإلكتروني",
+                "form-label-phone": "رقم الهاتف",
+                "form-label-service": "الخدمة المهتم بها",
+                "form-label-message": "رسالتك",
+                "form-button-submit": "إرسال الرسالة",
+                
+                // Contact Info
+                "contact-info-title": "معلومات الاتصال بنا",
+                "contact-info-description": "تواصل معنا من خلال أي من هذه القنوات",
+                "contact-info-visit": "زيارة مكتبنا",
+                "contact-info-address": "123 شارع التصميم<br>حي الإبداع، CD 10001",
+                "contact-info-call": "اتصل بنا",
+                "contact-info-phone": "+1 (555) 123-4567<br>الإثنين-الجمعة: 9 صباحًا-6 مساءً",
+                "contact-info-email": "راسلنا عبر البريد",
+                "contact-info-emails": "info@Stackly.com<br>support@Stackly.com",
+                
+                // FAQ
+                "faq-title": "الأسئلة الشائعة",
+                "faq-description": "ابحث عن إجابات للأسئلة الشائعة حول خدماتنا وعملية العمل",
+                "faq-question-1": "كم من الوقت تستغرق مشاريع السكن النموذجية؟",
+                "faq-answer-1": "يختلف الجدول الزمني اعتمادًا على نطاق المشروع وتعقيده. يستغرق المشروع السكني القياسي عادةً ما بين 6-12 شهرًا من التصميم الأولي إلى الاكتمال.",
+                "faq-question-2": "هل تقدمون تصورات ثلاثية الأبعاد للمشاريع؟",
+                "faq-answer-2": "نعم، ننشئ تصورات ثلاثية الأبعاد مفصلة لجميع مشاريعنا حتى تتمكن من رؤية كيف سيبدو مساحتك بالضبط قبل بدء البناء.",
+                "faq-question-3": "ما هي عملية التصميم الخاصة بكم؟",
+                "faq-answer-3": "تشمل عملية العمل لدينا الاستشارة الأولية، وتحليل الموقع، وتطوير المفهوم، وتطوير التصميم، ووثائق البناء، وإدارة المشروع أثناء البناء.",
+                "faq-question-4": "هل تعملون مع عملاء دوليين؟",
+                "faq-answer-4": "نعم، لدينا خبرة في العمل مع عملاء من جميع أنحاء العالم. نستخدم أدوات اتصال حديثة لضمان التعاون السلس بغض النظر عن الموقع.",
+                
+                // Process
+                "process-title": "عملية العمل لدينا",
+                "process-description": "كيف نحقق رؤيتك المعمارية على أرض الواقع",
+                "process-step-1-title": "استشارة",
+                "process-step-1-desc": "نناقش رؤيتك ومتطلباتك وميزانيتك لفهم احتياجاتك.",
+                "process-step-2-title": "تصميم",
+                "process-step-2-desc": "ينشئ مهندسونا المعماريون مفاهيم أولية وتصورات ثلاثية الأبعاد لمشروعك.",
+                "process-step-3-title": "تطوير",
+                "process-step-3-desc": "نقوم بتنقية التصميم وإنشاء وثائق بناء مفصلة.",
+                "process-step-4-title": "تنفيذ",
+                "process-step-4-desc": "ندير عملية البناء لضمان الجودة والانتهاء في الوقت المحدد.",
+                
+                // Testimonials
+                "testimonials-title": "ماذا يقول عملاؤنا",
+                "testimonials-description": "استمع من عملائنا الراضين عن تجربتهم في العمل معنا",
+                "testimonial-1-name": "جينيفر سميث",
+                "testimonial-1-project": "مشروع سكني",
+                "testimonial-1-text": "\"حول الفريق منزلنا القديم إلى تحفة حديثة. تجاوزت اهتمامهم بالتفاصيل وحلولهم الإبداعية توقعاتنا.\"",
+                "testimonial-2-name": "روبرت جونسون",
+                "testimonial-2-project": "مشروع تجاري",
+                "testimonial-2-text": "\"كان العمل مع هذه الشركة على إعادة تصميم مكتبنا سلسًا. فهموا علامتنا التجارية وخلقوا مساحة تعكس ثقافة شركتنا تمامًا.\"",
+                "testimonial-3-name": "ماريا غارسيا",
+                "testimonial-3-project": "تصميم داخلي",
+                "testimonial-3-text": "\"أنشأ فريق التصميم الداخلي مساحة جميلة وعملية في نفس الوقت. استمعوا لاحتياجاتنا وقدموا ما يتجاوز ما تخيلناه.\"",
+                
+                // Map
+                "map-title": "ابحث عنا",
+                "map-description": "قم بزيارة مكتبنا لمناقشة مشروعك شخصيًا",
+                "map-placeholder-title": "خريطة تفاعلية",
+                "map-placeholder-address": "123 شارع التصميم، حي الإبداع",
+                "map-button-directions": "احصل على الاتجاهات",
+                
+                // Footer
+                "footer-desc": "نحن نخلق تجارب معمارية استثنائية من خلال التصميم المبتكر والبناء عالي الجودة.",
+                "footer-links-title": "روابط سريعة",
+                "footer-link-home": "الرئيسية",
+                "footer-link-about": "من نحن",
+                "footer-link-services": "الخدمات",
+                "footer-link-projects": "المدونة",
+                "footer-link-contact": "اتصل بنا",
+                "footer-services-title": "الخدمات",
+                "footer-service-1": "المشاريع السكنية",
+                "footer-service-2": "المشاريع التجارية",
+                "footer-service-3": "التصميم الداخلي",
+                "footer-service-4": "التخطيط المعماري",
+                "footer-service-5": "إدارة المشاريع",
+                "footer-service-6": "التجديد وإعادة التصميم",
+                "footer-contact-title": "معلومات الاتصال",
+                "footer-address-1": "123 شارع التصميم",
+                "footer-address-2": "حي الإبداع، CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "الإثنين-الجمعة: 9 صباحًا-6 مساءً",
+                "footer-copyright": "© 2025 Stackly. جميع الحقوق محفوظة."
+            },
+            he: {
+                // Navigation
+                "nav-home": "בית",
+                "nav-about": "אודות",
+                "nav-services": "שירותים",
+                "nav-blog": "בלוג",
+                "nav-contact": "צור קשר",
+                
+                // Mobile Navigation
+                "mobile-menu-title": "תפריט",
+                "mobile-nav-home": "בית",
+                "mobile-nav-about": "אודות",
+                "mobile-nav-services": "שירותים",
+                "mobile-nav-blog": "בלוג",
+                "mobile-nav-contact": "צור קשר",
+                
+                // Hero Section
+                "hero-title": "צור קשר",
+                "hero-description": "נשמח לשמוע ממך. בוא נדון בחזון האדריכלי שלך וניתן לו חיים.",
+                "hero-button-message": "שלח הודעה",
+                "hero-button-contact": "פרטי יצירת קשר",
+                
+                // Contact Form
+                "form-title": "שלח לנו הודעה",
+                "form-description": "מלא את הטופס למטה והצוות שלנו יחזור אליך תוך 24 שעות.",
+                "form-label-name": "שם מלא",
+                "form-label-email": "כתובת אימייל",
+                "form-label-phone": "מספר טלפון",
+                "form-label-service": "השירות שמעניין אותך",
+                "form-label-message": "ההודעה שלך",
+                "form-button-submit": "שלח הודעה",
+                
+                // Contact Info
+                "contact-info-title": "פרטי יצירת הקשר שלנו",
+                "contact-info-description": "צור איתנו קשר דרך כל אחד מהערוצים הבאים",
+                "contact-info-visit": "בקר במשרד שלנו",
+                "contact-info-address": "שדרת העיצוב 123<br>רובע היצירתיות, CD 10001",
+                "contact-info-call": "התקשר אלינו",
+                "contact-info-phone": "+1 (555) 123-4567<br>ימים א'-ה': 9:00-18:00",
+                "contact-info-email": "שלח לנו אימייל",
+                "contact-info-emails": "info@Stackly.com<br>support@Stackly.com",
+                
+                // FAQ
+                "faq-title": "שאלות נפוצות",
+                "faq-description": "מצא תשובות לשאלות נפוצות על השירותים והתהליך שלנו",
+                "faq-question-1": "כמה זמן לוקח פרויקט מגורים טיפוסי?",
+                "faq-answer-1": "לוח הזמנים משתנה בהתאם להיקף הפרויקט ולמורכבותו. פרויקט מגורים סטנדרטי בדרך כלל לוקח בין 6-12 חודשים מהעיצוב הראשוני ועד להשלמה.",
+                "faq-question-2": "האם אתם מספקים הדמיות תלת מימד של פרויקטים?",
+                "faq-answer-2": "כן, אנו יוצרים הדמיות תלת מימד מפורטות לכל הפרויקטים שלנו כך שתוכל לראות בדיוק איך החלל שלך ייראה לפני תחילת הבנייה.",
+                "faq-question-3": "מהו תהליך העיצוב שלכם?",
+                "faq-answer-3": "התהליך שלנו כולל ייעוץ ראשוני, ניתוח אתר, פיתוח קונספט, פיתוח עיצוב, תיעוד בנייה וניהול פרויקט במהלך הבנייה.",
+                "faq-question-4": "האם אתם עובדים עם לקוחות בינלאומיים?",
+                "faq-answer-4": "כן, יש לנו ניסיון בעבודה עם לקוחות מכל רחבי העולם. אנו משתמשים בכלי תקשורת מודרניים כדי להבטיח שיתוף פעולה חלק ללא קשר למיקום.",
+                
+                // Process
+                "process-title": "התהליך שלנו",
+                "process-description": "איך אנחנו נותנים חיים לחזון האדריכלי שלך",
+                "process-step-1-title": "ייעוץ",
+                "process-step-1-desc": "אנו דנים בחזון שלך, בדרישותיך ובתקציב כדי להבין את צרכיך.",
+                "process-step-2-title": "עיצוב",
+                "process-step-2-desc": "האדריכלים שלנו יוצרים קונספטים ראשוניים והדמיות תלת מימד לפרויקט שלך.",
+                "process-step-3-title": "פיתוח",
+                "process-step-3-desc": "אנו משפרים את העיצוב ויוצרים מסמכי בנייה מפורטים.",
+                "process-step-4-title": "ביצוע",
+                "process-step-4-desc": "אנו מנהלים את תהליך הבנייה כדי להבטיח איכות והשלמה בזמן.",
+                
+                // Testimonials
+                "testimonials-title": "מה הלקוחות שלנו אומרים",
+                "testimonials-description": "שמע מלקוחותינו המרוצים על חווית העבודה איתנו",
+                "testimonial-1-name": "ג'ניפר סמית'",
+                "testimonial-1-project": "פרויקט מגורים",
+                "testimonial-1-text": "\"הצוות שינה את הבית הישן שלנו ליצירת מודרנית. תשומת הלב לפרטים והפתרונות היצירתיים שלהם עלו על הציפיות שלנו.\"",
+                "testimonial-2-name": "רוברט ג'ונסון",
+                "testimonial-2-project": "פרויקט מסחרי",
+                "testimonial-2-text": "\"העבודה עם החברה הזו על עיצוב מחדש של המשרד שלנו הייתה חלקה. הם הבינו את המותג שלנו ויצרו חלל המשקף בצורה מושלמת את תרבות החברה שלנו.\"",
+                "testimonial-3-name": "מריה גרסיה",
+                "testimonial-3-project": "עיצוב פנים",
+                "testimonial-3-text": "\"צוות עיצוב הפנים יצר חלל שהוא גם יפה וגם פונקציונלי. הם הקשיבו לצרכים שלנו וסיפקו מעבר למה שדמיינו.\"",
+                
+                // Map
+                "map-title": "מצא אותנו",
+                "map-description": "בקר במשרד שלנו כדי לדון בפרויקט שלך באופן אישי",
+                "map-placeholder-title": "מפה אינטראקטיבית",
+                "map-placeholder-address": "שדרת העיצוב 123, רובע היצירתיות",
+                "map-button-directions": "קבל הנחיות",
+                
+                // Footer
+                "footer-desc": "יוצרים חוויות אדריכליות יוצאות דופן באמצעות עיצוב חדשני ובנייה איכותית.",
+                "footer-links-title": "קישורים מהירים",
+                "footer-link-home": "בית",
+                "footer-link-about": "אודות",
+                "footer-link-services": "שירותים",
+                "footer-link-projects": "בלוג",
+                "footer-link-contact": "צור קשר",
+                "footer-services-title": "שירותים",
+                "footer-service-1": "פרויקטים למגורים",
+                "footer-service-2": "פרויקטים מסחריים",
+                "footer-service-3": "עיצוב פנים",
+                "footer-service-4": "תכנון אדריכלי",
+                "footer-service-5": "ניהול פרויקטים",
+                "footer-service-6": "שיפוץ ועיצוב מחדש",
+                "footer-contact-title": "פרטי יצירת קשר",
+                "footer-address-1": "שדרת העיצוב 123",
+                "footer-address-2": "רובע היצירתיות, CD 10001",
+                "footer-phone": "+1 (555) 123-4567",
+                "footer-email": "info@Stackly.com",
+                "footer-hours": "ימים א'-ה': 9:00-18:00",
+                "footer-copyright": "© 2025 Stackly. כל הזכויות שמורות."
+            }
+        };
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme or prefer-color-scheme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            // Toggle theme
+            document.documentElement.classList.toggle('dark');
+            
+            // Update icon
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('color-theme', 'light');
+            }
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.remove('ltr:translate-x-full', 'rtl:-translate-x-full');
+        });
+        
+        closeMobileMenu.addEventListener('click', function() {
+            mobileMenu.classList.add('ltr:translate-x-full', 'rtl:-translate-x-full');
+        });
+        
+        // Mobile Dropdown Toggles
+        const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+        
+        mobileDropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+        
+        // Form Submission
+        const contactForm = document.querySelector('.contact-form');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            
+            // In a real application, you would send this data to a server
+            // For demonstration, we'll just show an alert
+            alert(`Thank you ${name}! Your message has been sent. We'll contact you at ${email} soon.`);
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Language Selector
+        const languageSelect = document.getElementById('languageSelect');
+        
+        // Set initial language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+        languageSelect.value = currentLanguage;
+        updateLanguage(currentLanguage);
+        
+        languageSelect.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            updateLanguage(selectedLanguage);
+            localStorage.setItem('language', selectedLanguage);
+        });
+
+        // Function to update language
+        function updateLanguage(language) {
+            // Update HTML direction
+            if (language === 'ar' || language === 'he') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = language;
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = language;
+            }
+            
+            // Update all translatable elements
+            const translation = translations[language];
+            for (const key in translation) {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (key.includes('address') || key.includes('emails') || key.includes('description') || key.includes('desc')) {
+                        element.innerHTML = translation[key];
+                    } else {
+                        element.textContent = translation[key];
+                    }
+                }
+            }
+            
+            // Update form placeholders
+            if (language === 'ar' || language === 'he') {
+                document.getElementById('name').placeholder = 'الاسم الكامل';
+                document.getElementById('email').placeholder = 'بريدك الإلكتروني';
+                document.getElementById('phone').placeholder = '+1 (555) 123-4567';
+                document.getElementById('message').placeholder = 'أخبرنا عن مشروعك...';
+            } else {
+                document.getElementById('name').placeholder = 'Your Name';
+                document.getElementById('email').placeholder = 'your.email@example.com';
+                document.getElementById('phone').placeholder = '+1 (555) 123-4567';
+                document.getElementById('message').placeholder = 'Tell us about your project...';
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
